@@ -1,0 +1,35 @@
+<ion-content padding [ngStyle]="{'background-image': 'url(' + backgroundImage +')'}">
+  <div padding>
+    <ion-row>
+      <ion-col>
+        <img class="logo" src="assets/imgs/logo/logo_400.png" />
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list inset class="no-border">
+          <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-input type="email" #email></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Senha</ion-label>
+            <ion-input type="password" #password></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button class="login-button" (click)="login()">Login</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div (click)="goToSignup()">
+          <span>Ou Crie Uma Conta.</span>
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

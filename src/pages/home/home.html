@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Inicio</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+          <ion-icon name="locate" item-start ></ion-icon>
+          <ion-label>Cidade Atual</ion-label>
+          <ion-select [(ngModel)]="CidadeAtual">
+            <ion-option selected value="nes">Quixáda</ion-option>
+            <ion-option value="n64">Juazeiro do Norte</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-grid style="margin-bottom:10px;">
+          <ion-row>
+            <ion-col col-33>
+              <ion-card class="card card-1">
+                  <ion-icon name="cash"></ion-icon><br>
+                  <b style="font-size: 1.3rem;">Saldo</b>
+                  <p>12 R$</p>
+              </ion-card>
+              <ion-card class="card card-1">
+                  <ion-icon name="card"></ion-icon><br>
+                  <b style="font-size: 1.3rem;">Cads</b>
+                  <p>10</p>
+              </ion-card>
+              <ion-card class="card card-1">
+                  <ion-icon name="warning"></ion-icon><br>
+                  <b style="font-size: 1.3rem;">Alertas</b>
+                  <p>3</p>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+      </ion-grid>
+
+      <b style="font-size: 2rem;">Meus Veículos</b>
+
+      {{teste}}
+
+</ion-content>
