@@ -13,7 +13,8 @@ import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { UserServiceProvider } from '../providers/user-service/user-service';
+import { AuthProvider } from '../providers/auth/auth';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot({name:'_mydb'}),
     HttpClientModule
   ],
   bootstrap: [IonicApp],
@@ -40,7 +42,7 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserServiceProvider,
+    AuthProvider,
   ]
 })
 export class AppModule {}

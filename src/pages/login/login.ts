@@ -1,12 +1,6 @@
 import { Component , ViewChild } from '@angular/core';
 import { IonicPage, NavController, AlertController, LoadingController } from 'ionic-angular';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
 @Component({
@@ -14,13 +8,18 @@ import { IonicPage, NavController, AlertController, LoadingController } from 'io
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  public backgroundImage = 'assets/imgs/login/background-1.jpg';
   
-  @ViewChild('email') UEmail;
-  @ViewChild('password') Upassword;
+  public backgroundImage = 'assets/imgs/login/background-1.jpg';
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController) {
+  private credentials:object = {
+    email : '',
+    password : ''
+  };
+
+  constructor(public navCtrl: NavController, 
+    public loadingCtrl: LoadingController,
+    public alertCtrl: AlertController,
+    public authService: AuthProvider) {
   }
 
   ionViewDidLoad() {
@@ -28,22 +27,23 @@ export class LoginPage {
   }
 
   login() {
-    console.log(this.UEmail.value, this.Upassword.value);
     
-    const loading = this.loadingCtrl.create({
-      duration: 500
-    });
+    this.authService.login(this.credentials);
 
-    loading.onDidDismiss(() => {
-      const alert = this.alertCtrl.create({
-        title: 'Logged in!',
-        subTitle: 'Thanks for logging in.',
-        buttons: ['Dismiss']
-      });
-      alert.present();
-    });
+    // const loading = this.loadingCtrl.create({
+    //   duration: 500
+    // });
 
-    loading.present();
+    // loading.onDidDismiss(() => {
+    //   const alert = this.alertCtrl.create({
+    //     title: 'Logged in!',
+    //     subTitle: 'Thanks for logging in.',
+    //     buttons: ['Dismiss']
+    //   });
+    //   alert.present();
+    // });
+
+    // loading.present();
 
   }
 
