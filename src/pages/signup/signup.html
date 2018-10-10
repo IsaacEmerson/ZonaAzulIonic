@@ -1,35 +1,43 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>signup</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding class="transparent-header">
-  <ion-header>
-    <ion-navbar>
-    </ion-navbar>
-  </ion-header>
-  <div padding>
-    <ion-item>
-      <ion-input type="text" placeholder="Username"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input type="password" placeholder="Password"></ion-input>
-    </ion-item>
-    <button ion-button block outline (click)="login()" color="light" class="login-button">Login</button>
-  </div>
-  <div class="strike">
-    <span>OR</span>
-  </div>
-  <button ion-button block clear (click)="login()" color="light" class="login-button"><ion-icon name="logo-facebook"></ion-icon> Login with Facebook</button>
-</ion-content>
-<ion-footer>
-  <ion-toolbar class="footer">
-    <div (click)="goToSignup()">
-      <span>Don't have an account? <strong>Sign up here</strong>.</span>
+    <ion-header >
+      <ion-navbar color="primary" >
+        <ion-title>Cadastre-se</ion-title>
+      </ion-navbar>
+    </ion-header>
+   <div style="margin-top:50px;" padding>
+        <form [formGroup]="userData" (ngSubmit)="register()">
+          <ion-item>
+            <ion-input type="text" formControlName="user_cpf_cnpj" name="cpf" placeholder="CPF/CNPJ" [brmasker]="{person: true}"></ion-input>
+          </ion-item>
+          <p *ngIf="!userData.controls.user_cpf_cnpj.valid  && userData.controls.user_cpf_cnpj.dirty" >CPF ou CNPJ inválido</p>
+
+          <ion-item>
+            <ion-input type="text" formControlName="user_name" placeholder="Nome de Usuário"></ion-input>
+          </ion-item>
+          <p *ngIf="!userData.controls.user_name.valid  && userData.controls.user_name.dirty" >Nome de usuário inválido</p>
+
+          <ion-item>
+            <ion-input type="email" formControlName="user_email" placeholder="Email"></ion-input>
+          </ion-item>
+          <p *ngIf="!userData.controls.user_email.valid  && userData.controls.user_email.dirty">Email inválido</p>
+          
+          <ion-item>
+            <ion-input [brmasker]="{mask:'000-0000',len:8}" type="text" formControlName="user_plaque" placeholder="Placa ex: ABC-1234"></ion-input>
+          </ion-item>
+          <p *ngIf="!userData.controls.user_plaque.valid  && userData.controls.user_plaque.dirty" >Placa inválido</p>
+          
+          <ion-item>
+            <ion-input type="text" formControlName="user_contact" [brmasker]="{phone: true}" placeholder="Contato"></ion-input>
+          </ion-item>
+          
+          <button ion-button block outline type="submit" [disabled]="!userData.valid" color="light" class="login-button">Login</button>
+       </form>
     </div>
-  </ion-toolbar>
-</ion-footer>
+  
+    <div class="strike">
+      <span>OU</span>
+    </div>
+    <button ion-button block clear (click)="goToLogin()" color="light" class="login-button"><ion-icon name="return-left"></ion-icon> Já possui uma conta?</button>
+  
+  </ion-content>
+  

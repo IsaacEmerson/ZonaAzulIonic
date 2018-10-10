@@ -10,13 +10,13 @@ import { BuyCreditsPage } from '../pages/buy-credits/buy-credits';
 import { SignupPage } from '../pages/signup/signup';
 import { LoginPage } from '../pages/login/login';
 
-
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpServiceProvider } from '../providers/http-service/http-service';
+
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,8 @@ import { HttpServiceProvider } from '../providers/http-service/http-service';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({name:'_mydb'}),
-    HttpClientModule
+    HttpClientModule,
+    BrMaskerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

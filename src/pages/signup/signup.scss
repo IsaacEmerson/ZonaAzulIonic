@@ -31,8 +31,9 @@ page-signup {
   }
   // Fullscreen animated rainbow gradient
   ion-content {
-    background:  #2b1de8;
+    background: linear-gradient(316deg,  #2b5de8, #161692, #406ad8, #406ad8);
     background-size: 1800% 1800%;
+    animation: rainbow 50s linear infinite;
   }
   @keyframes rainbow {
     0% {
