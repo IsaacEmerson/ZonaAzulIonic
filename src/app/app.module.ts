@@ -9,6 +9,12 @@ import { ListPage } from '../pages/list/list';
 import { BuyCreditsPage } from '../pages/buy-credits/buy-credits';
 import { SignupPage } from '../pages/signup/signup';
 import { LoginPage } from '../pages/login/login';
+import { PlaquesPage } from '../pages/plaques/plaques';
+import { ProfilePage } from '../pages/profile/profile';
+import { IrregularitiesPage } from '../pages/irregularities/irregularities';
+import { FogotPassPage } from '../pages/fogot-pass/fogot-pass';
+
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,14 +24,19 @@ import { HttpServiceProvider } from '../providers/http-service/http-service';
 
 import { BrMaskerModule } from 'brmasker-ionic-3';
 
+
 @NgModule({
   declarations: [
     MyApp,
     SignupPage,
+    FogotPassPage,
     LoginPage,
     HomePage,
     ListPage,
-    BuyCreditsPage
+    BuyCreditsPage,
+    PlaquesPage,
+    ProfilePage,
+    IrregularitiesPage
   ],
   imports: [
     BrowserModule,
@@ -38,10 +49,14 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
   entryComponents: [
     MyApp,
     SignupPage,
+    FogotPassPage,
     LoginPage,
     HomePage,
     ListPage,
-    BuyCreditsPage
+    BuyCreditsPage,
+    PlaquesPage,
+    ProfilePage,
+    IrregularitiesPage
   ],
   providers: [
     StatusBar,

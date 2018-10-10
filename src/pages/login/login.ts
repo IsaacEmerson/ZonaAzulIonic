@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, MenuController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { SignupPage } from '../signup/signup';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -18,15 +19,25 @@ export class LoginPage {
   };
 
   constructor(public navCtrl: NavController,
-    public authService: AuthProvider) {
+    public authService: AuthProvider,
+    public menu:MenuController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
+  ionViewDidEnter(){
+    this.menu.enable(false);
+  }
+
+  ionViewWillLeave(){
+    this.menu.enable(true);
+  }
+
   login() {
-    this.authService.login(this.credentials);
+    //this.authService.login(this.credentials);
+    this.navCtrl.setRoot(HomePage);
   }
 
   goToSignup() {

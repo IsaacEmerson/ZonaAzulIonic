@@ -7,6 +7,9 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { BuyCreditsPage } from '../pages/buy-credits/buy-credits';
+import { ProfilePage } from '../pages/profile/profile';
+import { PlaquesPage } from '../pages/plaques/plaques';
+import { IrregularitiesPage } from '../pages/irregularities/irregularities';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,8 +27,12 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { icon: 'home', title: 'Inicio', component: HomePage},
+      { icon: 'person', title: 'Meus Dados', component: ProfilePage},
+      { icon: 'car', title: 'Minhas Placas', component: PlaquesPage},
       { icon: 'wifi', title: 'List', component: ListPage },
-      { icon: 'cart', title: 'Comprar Créditos', component: BuyCreditsPage}
+      { icon: 'cart', title: 'Comprar Créditos', component: BuyCreditsPage},
+      { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
+      { icon: 'logout', title: 'Sair', component: LoginPage}
     ];
 
   }

@@ -27,7 +27,7 @@ export class HomePage {
   }
 
   ionViewCanEnter(){
-    return this.authService.userIsLogged();
+    //return this.authService.userIsLogged();
   }
 
 }
