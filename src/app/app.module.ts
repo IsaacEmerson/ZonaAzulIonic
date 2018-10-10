@@ -7,6 +7,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { BuyCreditsPage } from '../pages/buy-credits/buy-credits';
+import { SignupPage } from '../pages/signup/signup';
 import { LoginPage } from '../pages/login/login';
 
 
@@ -15,10 +16,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { IonicStorageModule } from '@ionic/storage';
+import { HttpServiceProvider } from '../providers/http-service/http-service';
 
 @NgModule({
   declarations: [
     MyApp,
+    SignupPage,
     LoginPage,
     HomePage,
     ListPage,
@@ -33,6 +36,7 @@ import { IonicStorageModule } from '@ionic/storage';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    SignupPage,
     LoginPage,
     HomePage,
     ListPage,
@@ -43,6 +47,7 @@ import { IonicStorageModule } from '@ionic/storage';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
+    HttpServiceProvider,
   ]
 })
 export class AppModule {}
