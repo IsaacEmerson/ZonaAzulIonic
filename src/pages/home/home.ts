@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController} from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
+import { GeolocationPage } from '../geolocation/geolocation';
 
 @Component({
   selector: 'page-home',
@@ -24,6 +25,10 @@ export class HomePage {
       this.user = data;
       console.log(data);
     });
+  }
+
+  geo(){
+    this.navCtrl.push(GeolocationPage);
   }
 
   ionViewCanEnter(){

@@ -26,6 +26,9 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
 import { PaymentHttpProvider } from '../providers/payment-http/payment-http';
 import { CheckoutPage } from '../pages/checkout/checkout';
 
+import {BackgroundGeolocation} from '@ionic-native/background-geolocation';
+import { GeolocationPage } from '../pages/geolocation/geolocation';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import { CheckoutPage } from '../pages/checkout/checkout';
     PlaquesPage,
     ProfilePage,
     IrregularitiesPage,
-    CheckoutPage
+    CheckoutPage,
+    GeolocationPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,8 @@ import { CheckoutPage } from '../pages/checkout/checkout';
     PlaquesPage,
     ProfilePage,
     IrregularitiesPage,
-    CheckoutPage
+    CheckoutPage,
+    GeolocationPage
   ],
   providers: [
     StatusBar,
@@ -69,6 +74,7 @@ import { CheckoutPage } from '../pages/checkout/checkout';
     AuthProvider,
     HttpServiceProvider,
     PaymentHttpProvider,
+    BackgroundGeolocation
   ]
 })
 export class AppModule {}
