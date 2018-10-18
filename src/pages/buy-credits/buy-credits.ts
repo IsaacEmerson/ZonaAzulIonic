@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CheckoutPage } from '../checkout/checkout';
 
 /**
  * Generated class for the BuyCreditsPage page.
@@ -20,6 +21,10 @@ export class BuyCreditsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BuyCreditsPage');
+  }
+
+  checkout(){
+    this.navCtrl.push(CheckoutPage);
   }
 
 }

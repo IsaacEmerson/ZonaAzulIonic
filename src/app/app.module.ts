@@ -23,6 +23,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HttpServiceProvider } from '../providers/http-service/http-service';
 
 import { BrMaskerModule } from 'brmasker-ionic-3';
+import { PaymentHttpProvider } from '../providers/payment-http/payment-http';
+import { CheckoutPage } from '../pages/checkout/checkout';
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
     BuyCreditsPage,
     PlaquesPage,
     ProfilePage,
-    IrregularitiesPage
+    IrregularitiesPage,
+    CheckoutPage
   ],
   imports: [
     BrowserModule,
@@ -56,7 +59,8 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
     BuyCreditsPage,
     PlaquesPage,
     ProfilePage,
-    IrregularitiesPage
+    IrregularitiesPage,
+    CheckoutPage
   ],
   providers: [
     StatusBar,
@@ -64,6 +68,7 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     HttpServiceProvider,
+    PaymentHttpProvider,
   ]
 })
 export class AppModule {}

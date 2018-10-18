@@ -3,6 +3,7 @@ import { IonicPage, NavController, MenuController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { SignupPage } from '../signup/signup';
 import { HomePage } from '../home/home';
+import { FogotPassPage } from '../fogot-pass/fogot-pass';
 
 @IonicPage()
 @Component({
@@ -44,8 +45,8 @@ export class LoginPage {
     this.navCtrl.push(SignupPage);
   }
 
-  goToResetPassword() {
-    // this.navCtrl.push(ResetPasswordPage);
+  goToFogotPassword() {
+    this.navCtrl.push(FogotPassPage);
   }
 
 }

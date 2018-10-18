@@ -15,6 +15,14 @@
             <ion-input type="text" formControlName="user_name" placeholder="Nome de Usuário"></ion-input>
           </ion-item>
           <p *ngIf="!userData.controls.user_name.valid  && userData.controls.user_name.dirty" >Nome de usuário inválido</p>
+          
+          <ion-item>
+              <ion-input [type]="seePass ? 'text' : 'password'" formControlName="user_pass" placeholder="Sua senha"></ion-input>
+              <button style="padding-right:0px;" (click)="changeSeePass()" ion-button item-right >
+                <ion-icon [name]="seePass ? 'eye-off' : 'eye'"></ion-icon>
+              </button> 
+          </ion-item>
+            <p *ngIf="!userData.controls.user_pass.valid  && userData.controls.user_pass.dirty" >Senha muito curta</p>
 
           <ion-item>
             <ion-input type="email" formControlName="user_email" placeholder="Email"></ion-input>
