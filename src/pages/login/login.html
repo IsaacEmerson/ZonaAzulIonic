@@ -33,9 +33,19 @@
     </ion-row>
   </div>
 </ion-content>
+
 <ion-footer>
-      <div (click)="goToFogotPassword()">
-        <span style="color:white;" >Esqueceu a senha? <strong>Clique Aqui</strong>.</span>
-      </div>
-      <img width="100%" height="60" src="assets/imgs/rodapesalvador.png">
+    <ion-toolbar *ngIf="!imgFooter" class="footer">
+        <div (click)="goToFogotPassword()">
+            <span style="color:black;" >Esqueceu a senha? <strong>Clique Aqui</strong>.</span>
+        </div>
+    </ion-toolbar>
+
+    <div *ngIf="imgFooter">
+        <div (click)="goToFogotPassword()">
+            <span style="color:white;" >Esqueceu a senha? <strong>Clique Aqui</strong>.</span>
+        </div>
+        <img width="100%" height="60" src="assets/imgs/rodapesalvador.png">
+    </div>
+    
 </ion-footer>
