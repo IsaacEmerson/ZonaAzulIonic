@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CheckoutPage } from '../checkout/checkout';
-
+import {Storage} from '@ionic/storage';
 /**
  * Generated class for the BuyCreditsPage page.
  *
@@ -16,11 +16,19 @@ import { CheckoutPage } from '../checkout/checkout';
 })
 export class BuyCreditsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  imgFooter:any = false;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,public storage:Storage) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BuyCreditsPage');
+  }
+
+  ionViewDidEnter(){
+    this.storage.get('footer').then((val) => {
+      this.imgFooter = val;
+    });
   }
 
   checkout(){

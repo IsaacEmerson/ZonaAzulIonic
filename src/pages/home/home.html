@@ -43,17 +43,6 @@
 
       <b style="font-size: 2rem;">Meus Veículos</b>
 
-
 </ion-content>
 
-<ion-footer>
-
-    <ion-toolbar *ngIf="!getFooter()" class="footer">
-      <span style="color:black;text-align: center;" >Syszona.com.br</span>
-    </ion-toolbar>
-
-    <div *ngIf="getFooter()">
-      <img width="100%" height="60" src="{{imgFooter}}">
-    </div>
-    
-</ion-footer>
+<app-footer></app-footer>

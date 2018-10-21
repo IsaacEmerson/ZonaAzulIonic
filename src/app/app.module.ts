@@ -28,10 +28,12 @@ import { CheckoutPage } from '../pages/checkout/checkout';
 
 import {BackgroundGeolocation} from '@ionic-native/background-geolocation';
 import { GeolocationPage } from '../pages/geolocation/geolocation';
+import { AppFooterComponent } from '../components/app-footer/app-footer';
 
 
 @NgModule({
   declarations: [
+    AppFooterComponent,
     MyApp,
     SignupPage,
     FogotPassPage,
@@ -48,7 +50,10 @@ import { GeolocationPage } from '../pages/geolocation/geolocation';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot({name:'_mydb'}),
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+         driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }),
     HttpClientModule,
     BrMaskerModule
   ],

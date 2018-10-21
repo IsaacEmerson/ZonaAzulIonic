@@ -4,6 +4,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { SignupPage } from '../signup/signup';
 import { HomePage } from '../home/home';
 import { FogotPassPage } from '../fogot-pass/fogot-pass';
+import {Storage} from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ export class LoginPage {
 
   testRadioOpen = false;
   testRadioResult: any;
+
   imgFooter:any=false;
   
   public backgroundImage = 'assets/imgs/login/background-1.jpg';
@@ -26,6 +28,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController,
     public authService: AuthProvider,
     public alertCtrl: AlertController,
+    public storage: Storage,
     public menu:MenuController) {
   }
 
@@ -80,6 +83,9 @@ export class LoginPage {
   chooseCity(city){
     if(city==="Salvador"){
       this.imgFooter = 'assets/imgs/rodapesalvador.png';
+      this.storage.set('footer','assets/imgs/rodapesalvador.png');
+    }else{
+      this.storage.set('footer',false);
     }
   }
 
@@ -93,7 +99,7 @@ export class LoginPage {
 
   login() {
     //this.authService.login(this.credentials);
-    this.navCtrl.setRoot(HomePage,{city:this.imgFooter});
+    this.navCtrl.setRoot(HomePage);
   }
 
   goToSignup() {

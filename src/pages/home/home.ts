@@ -12,8 +12,6 @@ import { GeolocationPage } from '../geolocation/geolocation';
 export class HomePage {
 
   public user: any;
-  public imgFooter:any;
-
   public cities: Array<{}>;
   
   constructor(public navCtrl: NavController,
@@ -22,20 +20,14 @@ export class HomePage {
     public http:HttpServiceProvider) {}
 
   ionViewDidLoad(){
-
-    this.imgFooter = this.navParams.get('city');
-
-    console.log(this.imgFooter);
-
-    this.http.getAll('client/user').
-    subscribe(data=>{
-      this.user = data;
-      console.log(data);
-    });
+    // this.http.getAll('client/user').
+    // subscribe(data=>{
+    //   this.user = data;
+    //   console.log(data);
+    // });
   }
 
-  getFooter(){
-    return this.imgFooter;
+  ionViewDidEnter(){
   }
 
   geo(){

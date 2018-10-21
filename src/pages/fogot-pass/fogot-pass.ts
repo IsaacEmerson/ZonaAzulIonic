@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Storage} from '@ionic/storage';
 
 /**
  * Generated class for the FogotPassPage page.
@@ -15,8 +16,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FogotPassPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage:Storage) {
   }
+
+  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FogotPassPage');
