@@ -11,7 +11,7 @@ export class HttpServiceProvider {
 
   private token:string;
 
-  private url: string = "http://zona-azul-teste.herokuapp.com/api";
+  private url: string = "http://192.168.1.10/estacionamento-zona-azul/public/api";
   //private url: string = "http://localhost/WebService/";
   
   constructor(public http: HttpClient,
@@ -33,8 +33,12 @@ export class HttpServiceProvider {
     return this.http.get(`${this.url}/${endpoint}`,this.options);
   }
 
-  get(endpoint, id){
+  getById(endpoint, id){
     return this.http.get(`${this.url}/${endpoint}/${id}`);
+  }
+
+  getParam(endpoint,params){
+    return this.http.get(`${this.url}/${endpoint}`,params);
   }
 
   post(endpoint, data){

@@ -14,8 +14,6 @@ import { ProfilePage } from '../pages/profile/profile';
 import { IrregularitiesPage } from '../pages/irregularities/irregularities';
 import { FogotPassPage } from '../pages/fogot-pass/fogot-pass';
 
-
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
@@ -26,9 +24,11 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
 import { PaymentHttpProvider } from '../providers/payment-http/payment-http';
 import { CheckoutPage } from '../pages/checkout/checkout';
 
+import { Geolocation } from '@ionic-native/geolocation';
 import {BackgroundGeolocation} from '@ionic-native/background-geolocation';
 import { GeolocationPage } from '../pages/geolocation/geolocation';
 import { AppFooterComponent } from '../components/app-footer/app-footer';
+import { BackgroundGeolocationPage } from '../pages/background-geolocation/background-geolocation';
 
 
 @NgModule({
@@ -45,7 +45,8 @@ import { AppFooterComponent } from '../components/app-footer/app-footer';
     ProfilePage,
     IrregularitiesPage,
     CheckoutPage,
-    GeolocationPage
+    GeolocationPage,
+    BackgroundGeolocationPage
   ],
   imports: [
     BrowserModule,
@@ -70,7 +71,8 @@ import { AppFooterComponent } from '../components/app-footer/app-footer';
     ProfilePage,
     IrregularitiesPage,
     CheckoutPage,
-    GeolocationPage
+    GeolocationPage,
+    BackgroundGeolocationPage
   ],
   providers: [
     StatusBar,
@@ -79,7 +81,8 @@ import { AppFooterComponent } from '../components/app-footer/app-footer';
     AuthProvider,
     HttpServiceProvider,
     PaymentHttpProvider,
-    BackgroundGeolocation
+    BackgroundGeolocation,
+    Geolocation
   ]
 })
 export class AppModule {}

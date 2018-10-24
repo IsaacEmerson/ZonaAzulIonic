@@ -20,7 +20,7 @@ export class LoginPage {
   
   public backgroundImage = 'assets/imgs/login/background-1.jpg';
 
-  private credentials:object = {
+  private credentials:any = {
     email : '',
     password : ''
   };
@@ -98,8 +98,13 @@ export class LoginPage {
   }
 
   login() {
-    //this.authService.login(this.credentials);
-    this.navCtrl.setRoot(HomePage);
+    this.credentials.email = this.credentials.email.trim();
+    this.credentials.password = this.credentials.password.trim();
+    if(this.credentials.email!="" && this.credentials.password!="" && this.credentials.email.search('@')!=-1){
+      this.authService.login(this.credentials);
+    }
+    
+    //this.navCtrl.setRoot(HomePage);
   }
 
   goToSignup() {

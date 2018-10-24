@@ -23,8 +23,8 @@ export class AuthProvider {
       this.storage.set('token',userToken.token);
       return true;
     },error=>{
-      console.log(error.error);
-      this.showToast(error.error,3000);
+      console.log(error);
+      this.showToast(error.error.error,3000);
       return false;
     });
   }

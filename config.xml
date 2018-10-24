@@ -93,4 +93,7 @@
     </plugin>
     <plugin name="cordova-plugin-app-preferences" spec="0.99.3" />
     <engine name="ios" spec="~4.3.1" />
+    <plugin name="cordova-plugin-geolocation" spec="4.0.1">
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
+    </plugin>
 </widget>

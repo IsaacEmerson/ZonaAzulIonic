@@ -1,5 +1,5 @@
 import { Component, ViewChild} from '@angular/core';
-import { IonicPage, NavController,MenuController } from 'ionic-angular';
+import { IonicPage, NavController,MenuController, ToastController } from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LoginPage } from '../login/login';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
@@ -20,7 +20,8 @@ export class SignupPage {
   signFinal: FormGroup;
   
   constructor(public navCtrl: NavController, public menu:MenuController, public formBuilder: FormBuilder,
-    public http:HttpServiceProvider) {
+    public http:HttpServiceProvider,
+    public toastCtrl: ToastController) {
     this.signInitial = formBuilder.group({
       user_name: ['', [Validators.maxLength(100), Validators.required]],
       user_pass: ['', [Validators.minLength(5), Validators.required]],
@@ -43,16 +44,25 @@ export class SignupPage {
     this.http.post('register',{
       email: this.signInitial.controls['user_email'].value,
       password: this.signInitial.controls['user_pass'].value,
+      password_confirmation: this.signInitial.controls['user_pass'].value,
       name: this.signInitial.controls['user_name'].value
-  }).subscribe((result)=>{
-    console.log(result);
+  }).subscribe(
+    (result:any)=>{
+    console.log(result.message);
+    this.showToast(result.message,5000);
+  },error=>{
+    console.log(error);
+    this.showToast(error.error.error,3000);
   });
   }
 
   valAccount(){
     //valida a conta e entra no cadastro final
-    this.http.post('register/confirm/account',{token:this.tokenEmailConfirm}).subscribe((result)=>{
+    this.http.getParam('register/confirm/account',{token:this.tokenEmailConfirm}).
+    subscribe((result)=>{
       console.log(result);
+    },error=>{
+      this.showToast(error.error.message,5000);
     });
     if(true){
     this.signupSlider.lockSwipes(false);
@@ -88,6 +98,14 @@ export class SignupPage {
 
   ionViewWillLeave(){
     this.menu.enable(true);
+  }
+
+  showToast(message:string,duration:number){
+    let toast =  this.toastCtrl.create({
+      message: message,
+      duration: duration
+    });
+    toast.present();
   }
 
 }
