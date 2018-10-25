@@ -11,7 +11,9 @@ import { GeolocationPage } from '../geolocation/geolocation';
 
 export class HomePage {
 
-  public user: any;
+  private user = {
+    name:''
+  }
   public cities: Array<{}>;
   
   constructor(public navCtrl: NavController,
@@ -20,11 +22,11 @@ export class HomePage {
     public http:HttpServiceProvider) {}
 
   ionViewDidLoad(){
-    // this.http.getAll('client/user').
-    // subscribe(data=>{
-    //   this.user = data;
-    //   console.log(data);
-    // });
+    this.http.get('client/user').
+    subscribe((data:any)=>{
+      this.user.name = data.name;
+      console.log(data);
+    });
   }
 
   ionViewDidEnter(){
@@ -35,7 +37,7 @@ export class HomePage {
   }
 
   ionViewCanEnter(){
-    //return this.authService.userIsLogged();
+    return this.authService.userIsLogged();
   }
 
 }

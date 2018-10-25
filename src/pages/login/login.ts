@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, MenuController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, MenuController, AlertController, Events } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { SignupPage } from '../signup/signup';
 import { HomePage } from '../home/home';
@@ -29,7 +29,8 @@ export class LoginPage {
     public authService: AuthProvider,
     public alertCtrl: AlertController,
     public storage: Storage,
-    public menu:MenuController) {
+    public menu:MenuController,
+    public events:Events) {
   }
 
   ionViewDidLoad() {
@@ -40,7 +41,7 @@ export class LoginPage {
     const alert = this.alertCtrl.create({
       enableBackdropDismiss: false
     });
-    alert.setTitle('Lightsaber color');
+    alert.setTitle('Onde você está?');
 
     alert.addInput({
       checked: true,
@@ -101,10 +102,11 @@ export class LoginPage {
     this.credentials.email = this.credentials.email.trim();
     this.credentials.password = this.credentials.password.trim();
     if(this.credentials.email!="" && this.credentials.password!="" && this.credentials.email.search('@')!=-1){
-      this.authService.login(this.credentials);
+      if(this.authService.login(this.credentials)){
+        this.events.publish('user:salvador');
+        this.navCtrl.setRoot(HomePage);
+      }
     }
-    
-    //this.navCtrl.setRoot(HomePage);
   }
 
   goToSignup() {

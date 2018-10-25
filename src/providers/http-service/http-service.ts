@@ -37,8 +37,13 @@ export class HttpServiceProvider {
     return this.http.get(`${this.url}/${endpoint}/${id}`);
   }
 
+  get(endpoint){
+    this.options.headers = this.createAuthorizationHeader();
+    return this.http.get(`${this.url}/${endpoint}`,this.options);
+  }
+
   getParam(endpoint,params){
-    return this.http.get(`${this.url}/${endpoint}`,params);
+    return this.http.get(`${this.url}/${endpoint}?${params}`);
   }
 
   post(endpoint, data){

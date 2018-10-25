@@ -16,7 +16,7 @@ export class AuthProvider {
   }
 
   login(credentials){
-    this.http.post("login",credentials).
+   return this.http.post("login",credentials).
     subscribe(data => {
       let userToken:any = data;
       console.log(userToken);

@@ -14,6 +14,10 @@ export class SignupPage {
   @ViewChild('signupSlider') signupSlider: any;
 
   tokenEmailConfirm = '';
+  user = {
+    name:'',
+    token:''
+  }
 
   seePass: boolean;
   signInitial: FormGroup;
@@ -31,6 +35,7 @@ export class SignupPage {
   this.signFinal = formBuilder.group({
     user_cpf_cnpj: ['', [Validators.maxLength(21), Validators.required]],
     user_plaque: ['', [Validators.maxLength(100), Validators.required]],
+    user_birth: ['', [Validators.maxLength(10)]],
     user_contact: ['', [Validators.maxLength(100)]]
 });
 
@@ -57,22 +62,39 @@ export class SignupPage {
   }
 
   valAccount(){
+    console.log(this.tokenEmailConfirm);
     //valida a conta e entra no cadastro final
-    this.http.getParam('register/confirm/account',{token:this.tokenEmailConfirm}).
-    subscribe((result)=>{
+    this.http.getParam('register/confirm/account','token='+this.tokenEmailConfirm).
+    subscribe((result:any)=>{
       console.log(result);
+      this.signupSlider.lockSwipes(false);
+      this.signupSlider.slideNext();  
+      this.signupSlider.lockSwipes(true);
+      this.showToast('Código de validação aceito.',5000);
+      this.user.name = result.name;
+      this.user.token = this.tokenEmailConfirm;
     },error=>{
       this.showToast(error.error.message,5000);
     });
-    if(true){
-    this.signupSlider.lockSwipes(false);
-    //this.signupSlider.slideNext();  
-    this.signupSlider.lockSwipes(true);
-    }
   }
 
   registerFinal(){
-
+    this.http.post('register/confirm/account',{
+      token:this.user.token,
+      vehicle_id: 1,
+      cell_phone:this.signFinal.controls['user_contact'].value,
+      plaque:this.signFinal.controls['user_plaque'].value,
+      cpf: this.signFinal.controls['user_cpf_cnpj'].value,
+      birth_date: this.signFinal.controls['user_birth'].value,
+      
+  }).subscribe(
+    (result:any)=>{
+    console.log(result.message);
+    this.showToast(result.message,5000);
+  },error=>{
+    console.log(error);
+    this.showToast(error.error.error,3000);
+  });
   }
 
   goToLogin(){

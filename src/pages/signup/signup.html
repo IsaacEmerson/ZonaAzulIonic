@@ -8,7 +8,7 @@
     <ion-slides  #signupSlider>
       <ion-slide>
     <p style="color:white;text-align: center;" >Um código de ativação será enviado para seu email.</p>
-        <form [formGroup]="signInitial" (ngSubmit)="registerInitial()">
+        <form [formGroup]="signInitial">
           <ion-item>
             <ion-input type="text" formControlName="user_name" placeholder="Nome / Razão social"></ion-input>
           </ion-item>
@@ -25,9 +25,10 @@
                 <ion-icon [name]="seePass ? 'eye-off' : 'eye'"></ion-icon>
               </button> 
           </ion-item>
+
             <p *ngIf="!signInitial.controls.user_pass.valid  && signInitial.controls.user_pass.dirty" >Senha muito curta</p>
           
-          <button ion-button block outline type="submit" [disabled]="!signInitial.valid" color="light" class="login-button">Cadastrar</button>
+          <button ion-button block outline  (click)="registerInitial()" [disabled]="!signInitial.valid" color="light" class="login-button">Cadastrar</button>
        </form>
 
        <div class="strike">
@@ -51,6 +52,7 @@
       </ion-slide>
 
       <ion-slide>
+        <p>Bem vindo {{user.name}}, finalize seu cadastro</p>
           <form [formGroup]="signFinal" (ngSubmit)="registerFinal()">
               <ion-item>
                 <ion-input type="text" formControlName="user_cpf_cnpj" name="cpf" placeholder="CPF/CNPJ" [brmasker]="{person: true}"></ion-input>
@@ -59,11 +61,18 @@
     
               <ion-item>
                 <ion-input [brmasker]="{mask:'000-0000',len:8}" type="text" formControlName="user_plaque" placeholder="Placa ex: ABC-1234"></ion-input>
+                <button ion-button item-right >
+                  <ion-icon name="car"></ion-icon>
+                </button> 
               </ion-item>
               <p *ngIf="!signFinal.controls.user_plaque.valid  && signFinal.controls.user_plaque.dirty" >Placa inválido</p>
               
               <ion-item>
-                <ion-input type="text" formControlName="user_contact" [brmasker]="{phone: true}" placeholder="Contato"></ion-input>
+                <ion-input type="text" formControlName="user_contact" [brmasker]="{mask:'(00)0000-0000', len:14}" placeholder="Contato"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                  <ion-input type="text" formControlName="user_birth" [brmasker]="{mask:'00/00/0000', len:10}" placeholder="DD/MM/AAAA"></ion-input>
               </ion-item>
               
               <button ion-button block outline type="submit" [disabled]="!signFinal.valid" color="light" class="login-button">Cadastrar</button>

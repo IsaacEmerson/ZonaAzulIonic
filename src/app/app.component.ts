@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -11,6 +11,8 @@ import { ProfilePage } from '../pages/profile/profile';
 import { PlaquesPage } from '../pages/plaques/plaques';
 import { IrregularitiesPage } from '../pages/irregularities/irregularities';
 
+
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -21,11 +23,16 @@ export class MyApp {
 
   pages: Array<{icon: string, title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
+    events:Events) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pages = [
+
+    this.pages = [];
+
+    events.subscribe('user:normal',()=>{
+      this.pages = [
       { icon: 'home', title: 'Inicio', component: HomePage},
       { icon: 'person', title: 'Meus Dados', component: ProfilePage},
       { icon: 'car', title: 'Minhas Placas', component: PlaquesPage},
@@ -33,7 +40,21 @@ export class MyApp {
       { icon: 'cart', title: 'Comprar Créditos', component: BuyCreditsPage},
       { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
       { icon: 'logout', title: 'Sair', component: LoginPage}
-    ];
+      ]
+    });
+
+    events.subscribe('user:salvador',()=>{
+      this.pages = [
+      { icon: 'home', title: 'Salvador', component: HomePage},
+      { icon: 'home', title: 'Inicio', component: HomePage},
+      { icon: 'person', title: 'Meus Dados', component: ProfilePage},
+      { icon: 'car', title: 'Minhas Placas', component: PlaquesPage},
+      { icon: 'wifi', title: 'List', component: ListPage },
+      { icon: 'cart', title: 'Comprar Créditos', component: BuyCreditsPage},
+      { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
+      { icon: 'logout', title: 'Sair', component: LoginPage}
+      ]
+    });
 
   }
 
