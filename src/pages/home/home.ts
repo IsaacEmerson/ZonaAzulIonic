@@ -12,7 +12,7 @@ import { GeolocationPage } from '../geolocation/geolocation';
 export class HomePage {
 
   private user = {
-    name:''
+    name:'',
   }
   public cities: Array<{}>;
   
@@ -28,6 +28,14 @@ export class HomePage {
       console.log(data);
     });
   }
+
+  // getUserBalance(){
+  //   this.http.get('balance').subscribe((data)=>{
+  //     console.log(data);
+  //   },error=>{
+  //     console.log(error);
+  //   });
+  // }
 
   ionViewDidEnter(){
   }

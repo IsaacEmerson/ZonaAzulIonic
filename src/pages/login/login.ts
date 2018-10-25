@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, MenuController, AlertController, Events } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController , MenuController, AlertController, Events } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { SignupPage } from '../signup/signup';
 import { HomePage } from '../home/home';
 import { FogotPassPage } from '../fogot-pass/fogot-pass';
 import {Storage} from '@ionic/storage';
+import { HttpServiceProvider } from '../../providers/http-service/http-service';
 
 @IonicPage()
 @Component({
@@ -15,8 +16,9 @@ export class LoginPage {
 
   testRadioOpen = false;
   testRadioResult: any;
-
   imgFooter:any=false;
+  loader:any;
+  cities:any;
   
   public backgroundImage = 'assets/imgs/login/background-1.jpg';
 
@@ -30,42 +32,37 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public storage: Storage,
     public menu:MenuController,
+    public loadingCtrl: LoadingController,
+    public http:HttpServiceProvider,
     public events:Events) {
   }
 
   ionViewDidLoad() {
-    this.doRadio();
+    this.getCities();
   }
 
-  doRadio() {
+  getCities(){
+    this.http.get('cities').subscribe((cities:any)=>{
+      this.doRadio(cities.cities);
+      console.log(cities.cities);
+    },error=>{
+      console.log(error);
+    });
+  }
+
+  doRadio(cities) {
     const alert = this.alertCtrl.create({
       enableBackdropDismiss: false
     });
     alert.setTitle('Onde você está?');
 
-    alert.addInput({
-      checked: true,
-      type: 'radio',
-      label: 'Salvador',
-      value: 'Salvador'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Purple',
-      value: 'purple'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'White',
-      value: 'white'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Black',
-      value: 'black'
+    cities.forEach(element => {
+      alert.addInput({
+        checked: true,
+        type: 'radio',
+        label: element.name,
+        value: element.name
+      });
     });
 
     alert.addButton({
@@ -86,6 +83,7 @@ export class LoginPage {
       this.imgFooter = 'assets/imgs/rodapesalvador.png';
       this.storage.set('footer','assets/imgs/rodapesalvador.png');
     }else{
+      this.imgFooter = false;
       this.storage.set('footer',false);
     }
   }
@@ -102,10 +100,13 @@ export class LoginPage {
     this.credentials.email = this.credentials.email.trim();
     this.credentials.password = this.credentials.password.trim();
     if(this.credentials.email!="" && this.credentials.password!="" && this.credentials.email.search('@')!=-1){
-      if(this.authService.login(this.credentials)){
+      this.presentLoading();
+      let isAuth = this.authService.login(this.credentials);
+      if(isAuth){
         this.events.publish('user:salvador');
         this.navCtrl.setRoot(HomePage);
       }
+      this.loader.dismiss();
     }
   }
 
@@ -115,6 +116,13 @@ export class LoginPage {
 
   goToFogotPassword() {
     this.navCtrl.push(FogotPassPage);
+  }
+
+  presentLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Carregando..."
+    });
+    this.loader.present();
   }
 
 }

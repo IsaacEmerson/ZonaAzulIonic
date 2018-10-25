@@ -86,7 +86,7 @@ export class SignupPage {
       plaque:this.signFinal.controls['user_plaque'].value,
       cpf: this.signFinal.controls['user_cpf_cnpj'].value,
       birth_date: this.signFinal.controls['user_birth'].value,
-      
+      city_actual:1
   }).subscribe(
     (result:any)=>{
     console.log(result.message);

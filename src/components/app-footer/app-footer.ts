@@ -13,8 +13,8 @@ import {Storage} from '@ionic/storage';
 })
 export class AppFooterComponent {
 
-  @Input('myText') TextToUse;
-  @Output() fezAlgo = new EventEmitter();
+  //@Input('myText') TextToUse;
+ //@Output() fezAlgo = new EventEmitter();
 
   //text: string;
   imgFooter:any = false;
@@ -38,5 +38,6 @@ export class AppFooterComponent {
     //   this.fezAlgo.emit("its time");
     // },3000);
   }
+   
 
 }

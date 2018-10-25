@@ -10,6 +10,7 @@ import { BuyCreditsPage } from '../pages/buy-credits/buy-credits';
 import { ProfilePage } from '../pages/profile/profile';
 import { PlaquesPage } from '../pages/plaques/plaques';
 import { IrregularitiesPage } from '../pages/irregularities/irregularities';
+import { AuthProvider } from '../providers/auth/auth';
 
 
 
@@ -24,7 +25,7 @@ export class MyApp {
   pages: Array<{icon: string, title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-    events:Events) {
+    events:Events,public auth:AuthProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -52,7 +53,7 @@ export class MyApp {
       { icon: 'wifi', title: 'List', component: ListPage },
       { icon: 'cart', title: 'Comprar Créditos', component: BuyCreditsPage},
       { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
-      { icon: 'logout', title: 'Sair', component: LoginPage}
+      { icon: 'logout', title: 'Sair', component: null}
       ]
     });
 
@@ -68,8 +69,13 @@ export class MyApp {
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    if(page.component){
+      // Reset the content nav to have just this page
+      // we wouldn't want the back button to show in this scenario
+      this.nav.setRoot(page.component);
+    }else{
+      this.auth.logout();
+      this.nav.setRoot(LoginPage);
+    }
   }
 }
