@@ -7,7 +7,11 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content *ngIf="!isDataComplet" padding>
+  <button (click)="refresh()" ion-button color="secondary" round outline>Recarregar</button>
+</ion-content>
+
+<ion-content *ngIf="isDataComplet" padding>
   <p>{{user.name}}</p>
     <ion-list>
         <ion-item>

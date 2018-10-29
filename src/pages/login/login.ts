@@ -17,7 +17,6 @@ export class LoginPage {
   testRadioOpen = false;
   testRadioResult: any;
   imgFooter:any=false;
-  loader:any;
   cities:any;
   
   public backgroundImage = 'assets/imgs/login/background-1.jpg';
@@ -32,7 +31,6 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public storage: Storage,
     public menu:MenuController,
-    public loadingCtrl: LoadingController,
     public http:HttpServiceProvider,
     public events:Events) {
   }
@@ -58,7 +56,7 @@ export class LoginPage {
 
     cities.forEach(element => {
       alert.addInput({
-        checked: true,
+        checked: element.id==1?true:false,
         type: 'radio',
         label: element.name,
         value: element.name
@@ -100,13 +98,19 @@ export class LoginPage {
     this.credentials.email = this.credentials.email.trim();
     this.credentials.password = this.credentials.password.trim();
     if(this.credentials.email!="" && this.credentials.password!="" && this.credentials.email.search('@')!=-1){
-      this.presentLoading();
-      let isAuth = this.authService.login(this.credentials);
-      if(isAuth){
-        this.events.publish('user:salvador');
-        this.navCtrl.setRoot(HomePage);
-      }
-      this.loader.dismiss();
+      this.http.presentLoading();
+
+      this.authService.login(this.credentials).add(()=>{
+        console.log('coisou');
+        if(this.authService.isUserAuth()){
+          this.events.publish('user:normal');
+          this.navCtrl.setRoot(HomePage);
+          this.http.dismissLoading();
+        }else{
+          console.log('não auth');
+          this.http.dismissLoading();
+        }
+      });
     }
   }
 
@@ -116,13 +120,6 @@ export class LoginPage {
 
   goToFogotPassword() {
     this.navCtrl.push(FogotPassPage);
-  }
-
-  presentLoading() {
-    this.loader = this.loadingCtrl.create({
-      content: "Carregando..."
-    });
-    this.loader.present();
   }
 
 }

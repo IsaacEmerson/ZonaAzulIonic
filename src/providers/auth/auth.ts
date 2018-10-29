@@ -7,6 +7,8 @@ import { HttpServiceProvider } from '../http-service/http-service';
 @Injectable()
 export class AuthProvider {
 
+  private userAuth = false;
+
   constructor(
     public http: HttpServiceProvider,
     public storage: Storage,
@@ -16,28 +18,23 @@ export class AuthProvider {
   }
 
   login(credentials){
-   return this.http.post("login",credentials).
-    subscribe(data => {
-      let userToken:any = data;
-      console.log(userToken);
-      this.storage.set('token',userToken.token);
-      return true;
+    return this.http.post('login',credentials).subscribe((result:any)=>{
+      this.storage.set('token',result.token);
+      this.userAuth = true;
     },error=>{
-      console.log(error);
       this.showToast(error.error.error,3000);
-      return false;
+      this.userAuth = false;
     });
   }
 
+  isUserAuth(){
+    return this.userAuth;
+  }
+
   userIsLogged(){
-    return this.storage.get('token').then(val => {
-      if(val){
-        return val;
-      }else{
-        this.showToast('É preciso logar para ter acesso ao sistema.',3000);
-        return false;
-      }
-    });
+    // this.storage.get('token').then((token)=>{
+
+    // });
   }
 
   logout(){

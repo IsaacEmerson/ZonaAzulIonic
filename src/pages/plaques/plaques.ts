@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Item, ItemSliding } from 'ionic-angular';
+import { IonicPage, NavController, Item, ItemSliding, AlertController } from 'ionic-angular';
+import { HttpServiceProvider } from '../../providers/http-service/http-service';
 
 /**
  * Generated class for the PlaquesPage page.
@@ -18,43 +19,54 @@ export class PlaquesPage {
   
   activeItemSliding: ItemSliding = null;
 
-  items = [
+  plaques = [];
+  vehicles = [
     {
-      title: 'Item 1',
+      id: '1',
+      name: 'Carro'
     },
     {
-      title: 'Item 2',
+      id: '2',
+      name: 'Moto'
     },
     {
-      title: 'Item 3',
-    },
-  ];
+      id: '3',
+      name: 'Caminhão'
+    }
+  ]
 
-  things = [
-    {
-      title: 'Thing 1',
-    },
-    {
-      title: 'Thing 2',
-    },
-    {
-      title: 'Thing 3',
-    },
-  ];
+  constructor(public navCtrl: NavController,public alertCtrl:AlertController,public http:HttpServiceProvider) { }
 
-  constructor(public navCtrl: NavController) { }
-
-  addThing() {
-  	console.log('add thing');
-  	this.things.push({ title: 'Thing ' + (this.things.length + 1) });
+  ionViewDidLoad(){
+    this.getPlaques()
   }
 
-  addItem() {
-  	console.log('add item');
-  	this.items.push({ title: 'Item ' + (this.items.length + 1) });
+  addPlaque(type) {
+    this.presentPrompt(type);
+  	console.log('add Plaque');
+  	// this.things.push({ title: 'Thing ' + (this.things.length + 1) });
   }
 
-  deleteItem(list, index) {
+  getPlaques(){
+    this.http.get('client/plaques').subscribe((result:any)=>{
+      console.log(result);
+      this.plaques = result.plaques;
+    },error=>{
+      console.log(error);
+    });
+  }
+
+  postPlaque(plaque){
+    console.log(plaque);
+    this.http.post('client/plaques',{plaque:plaque.plaque,vehicle_id:plaque.id_vehicle}).subscribe((result:any)=>{
+      console.log(result);
+      this.plaques = result.plaques;
+    },error=>{
+      console.log(error);
+    });
+  }
+
+  deletePlaque(list, index) {
     list.splice(index,1);
   }
 
@@ -86,4 +98,40 @@ export class PlaquesPage {
       this.activeItemSliding = null;
     }
   }
+
+  presentPrompt(plaqueType) {
+    let alert = this.alertCtrl.create({
+      title: 'Cadastrar '+this.vehicles[plaqueType-1].name,
+      inputs: [
+        {
+          name: 'plaque',
+          placeholder: 'XXX-0000',
+          type: 'text',
+          max:8
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Cadastrar',
+          handler: data => {
+            this.postPlaque({
+              plaque:data.plaque,
+              id_vehicle:plaqueType
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+
+
 }

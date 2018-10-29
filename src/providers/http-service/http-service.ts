@@ -1,6 +1,7 @@
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Storage} from '@ionic/storage';
+import { LoadingController } from 'ionic-angular';
 
 @Injectable()
 export class HttpServiceProvider {
@@ -9,12 +10,16 @@ export class HttpServiceProvider {
     headers: this.createAuthorizationHeader()
   };
 
+  loader:any;
+
   private token:string;
 
-  private url: string = "http://192.168.1.10/estacionamento-zona-azul/public/api";
+  //private url: string = "http://zona-azul-teste.herokuapp.com/api";
+  private url: string = "http://192.168.3.2/estacionamento-zona-azul/public/api";
   //private url: string = "http://localhost/WebService/";
   
   constructor(public http: HttpClient,
+    public loadingCtrl: LoadingController,
     public storage:Storage) {
     console.log('Hello HttpServiceProvider Provider');
   }
@@ -47,17 +52,25 @@ export class HttpServiceProvider {
   }
 
   post(endpoint, data){
-    return this.http.post(`${this.url}/${endpoint}`, data);
+    return this.http.post(`${this.url}/${endpoint}`, data, this.options);
   }
 
-  delete(endpoint, id){
-
+  delete(endpoint, params){
+    return this.http.delete(`${this.url}/${endpoint}?${params}`,this.options);
   }
 
   update(endpoint, id, data){
 
   }
 
-  
+  presentLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Carregando..."
+    });
+    this.loader.present();
+  }
+  dismissLoading(){
+    this.loader.dismiss();
+  }
 
 }

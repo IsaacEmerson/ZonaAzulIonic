@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams, LoadingController} from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { GeolocationPage } from '../geolocation/geolocation';
@@ -10,6 +10,8 @@ import { GeolocationPage } from '../geolocation/geolocation';
 })
 
 export class HomePage {
+
+  isDataComplet = true;
 
   private user = {
     name:'',
@@ -22,22 +24,42 @@ export class HomePage {
     public http:HttpServiceProvider) {}
 
   ionViewDidLoad(){
-    this.http.get('client/user').
-    subscribe((data:any)=>{
-      this.user.name = data.name;
-      console.log(data);
+    this.getUserData();
+    //this.getBalance();
+  }
+
+  getUserData(){
+    this.http.presentLoading();
+    this.http.get('client/user').subscribe((result:any)=>{
+      console.log(result);
+      this.user.name = result.name;
+      this.isDataComplet = true;
+      this.http.dismissLoading();
+    },error=>{
+      console.log(error);
+      this.isDataComplet  = false;
+      this.http.dismissLoading();
     });
   }
 
-  // getUserBalance(){
-  //   this.http.get('balance').subscribe((data)=>{
-  //     console.log(data);
-  //   },error=>{
-  //     console.log(error);
-  //   });
-  // }
+  getBalance(){
+    this.http.presentLoading();
+    this.http.get('client/balance').subscribe((result:any)=>{
+      console.log(result);
+      this.isDataComplet = true;
+      this.http.dismissLoading();
+    },error=>{
+      console.log(error);
+      this.isDataComplet  = false;
+      this.http.dismissLoading();
+    });
+  }
 
   ionViewDidEnter(){
+  }
+
+  refresh(){
+
   }
 
   geo(){
@@ -45,7 +67,8 @@ export class HomePage {
   }
 
   ionViewCanEnter(){
-    return this.authService.userIsLogged();
+    console.log(this.authService.isUserAuth());
+    return this.authService.isUserAuth();
   }
 
 }
