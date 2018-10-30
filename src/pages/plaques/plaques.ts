@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Item, ItemSliding, AlertController } from 'ionic-angular';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the PlaquesPage page.
@@ -20,6 +21,7 @@ export class PlaquesPage {
   activeItemSliding: ItemSliding = null;
 
   plaques = [];
+  newPlaque ='';
   vehicles = [
     {
       id: '1',
@@ -35,7 +37,9 @@ export class PlaquesPage {
     }
   ]
 
-  constructor(public navCtrl: NavController,public alertCtrl:AlertController,public http:HttpServiceProvider) { }
+  constructor(public navCtrl: NavController,
+    public auth:AuthProvider,
+    public alertCtrl:AlertController,public http:HttpServiceProvider) { }
 
   ionViewDidLoad(){
     this.getPlaques()
@@ -44,30 +48,49 @@ export class PlaquesPage {
   addPlaque(type) {
     this.presentPrompt(type);
   	console.log('add Plaque');
-  	// this.things.push({ title: 'Thing ' + (this.things.length + 1) });
+  	//this.things.push({ title: 'Thing ' + (this.things.length + 1) });
   }
 
   getPlaques(){
+    this.http.presentLoading();
     this.http.get('client/plaques').subscribe((result:any)=>{
       console.log(result);
       this.plaques = result.plaques;
+      this.http.dismissLoading();
     },error=>{
+      this.http.dismissLoading();
       console.log(error);
     });
   }
 
   postPlaque(plaque){
+    this.http.presentLoading();
     console.log(plaque);
     this.http.post('client/plaques',{plaque:plaque.plaque,vehicle_id:plaque.id_vehicle}).subscribe((result:any)=>{
       console.log(result);
       this.plaques = result.plaques;
+      this.http.dismissLoading();
+      this.getPlaques();
+      this.auth.showToast(result.message,3000);
+      //this.plaques.push({plaque:plaque.plaque,vehicle_id:plaque.id_vehicle});
     },error=>{
+      this.http.dismissLoading();
       console.log(error);
     });
   }
 
   deletePlaque(list, index) {
-    list.splice(index,1);
+    this.http.presentLoading();
+    this.http.delete('client/plaques','id='+this.plaques[index].id).subscribe((result)=>{
+      console.log(result);
+      // list.splice(index,1);
+      this.http.dismissLoading();
+      this.getPlaques();
+    },error=>{
+      this.http.dismissLoading();
+      console.log(error);
+      this.auth.showToast(error.error.errors[0],3000);
+    });
   }
 
   openOption(itemSlide: ItemSliding, item: Item, event) {
@@ -107,7 +130,7 @@ export class PlaquesPage {
           name: 'plaque',
           placeholder: 'XXX-0000',
           type: 'text',
-          max:8
+          max:8,
         }
       ],
       buttons: [

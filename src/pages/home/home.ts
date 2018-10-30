@@ -3,6 +3,7 @@ import { NavController, NavParams, LoadingController} from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { GeolocationPage } from '../geolocation/geolocation';
+import {Storage} from '@ionic/storage';
 
 @Component({
   selector: 'page-home',
@@ -21,11 +22,11 @@ export class HomePage {
   constructor(public navCtrl: NavController,
     public authService:AuthProvider,
     public navParams: NavParams,
+    public storage:Storage,
     public http:HttpServiceProvider) {}
 
   ionViewDidLoad(){
     this.getUserData();
-    //this.getBalance();
   }
 
   getUserData(){
@@ -34,22 +35,13 @@ export class HomePage {
       console.log(result);
       this.user.name = result.name;
       this.isDataComplet = true;
+      this.storage.set('user',result);
       this.http.dismissLoading();
     },error=>{
       console.log(error);
-      this.isDataComplet  = false;
-      this.http.dismissLoading();
-    });
-  }
+      if(error.error==""){
 
-  getBalance(){
-    this.http.presentLoading();
-    this.http.get('client/balance').subscribe((result:any)=>{
-      console.log(result);
-      this.isDataComplet = true;
-      this.http.dismissLoading();
-    },error=>{
-      console.log(error);
+      }
       this.isDataComplet  = false;
       this.http.dismissLoading();
     });
@@ -59,7 +51,13 @@ export class HomePage {
   }
 
   refresh(){
+    this.getUserData();
+  }
 
+  refreshToken(){
+    this.authService.refreshToken().add(()=>{
+      this.getUserData();
+    });
   }
 
   geo(){

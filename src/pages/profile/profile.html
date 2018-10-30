@@ -7,57 +7,72 @@
     </ion-navbar>
   </ion-header>
   <ion-content>
+    
+  <ion-list>
+      <ion-list-header>
+        Settings
+      </ion-list-header>
+      <ion-item>
+        <ion-icon name="contact" item-start color="danger"></ion-icon>
+        <input type="text" value="{{user.name}}" disabled>
+        <ion-icon name="create" item-end></ion-icon>
+      </ion-item>
+      <button ion-item>
+        <ion-icon name="mail" item-start color="primary"></ion-icon>
+        <input type="text" value="{{user.email}}" disabled>
+        <ion-note item-end>The Interwebz</ion-note>
+      </button>
+      <button ion-item>
+        <ion-icon name="bluetooth" item-start color="primary"></ion-icon>
+        <input type="text" value="{{user.cpf}}" disabled>
+        <ion-note item-end>Off</ion-note>
+      </button>
+      <button ion-item>
+        <ion-icon name="call" item-start color="secondary"></ion-icon>
+        <input type="text" value="{{user.cell_phone}}" disabled>
+      </button>
+      <button ion-item>
+        <ion-icon name="link" item-start color="secondary"></ion-icon>
+        <ion-label>Personal Hotspot</ion-label>
+        <ion-note item-end>Off</ion-note>
+      </button>
+    </ion-list>
+    <ion-list radio-group>
+      <ion-list-header>
+        Silence Phone
+      </ion-list-header>
+      <ion-item>
+        <ion-label color="dark">Always</ion-label>
+        <ion-radio value="always" checked></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label color="dark">Only while phone is locked</ion-label>
+        <ion-radio value="locked"></ion-radio>
+      </ion-item>
+    </ion-list>
     <ion-list>
       <ion-list-header>
-        <p class="username">{{user.name}}</p>
-        <p>Owner</p>
-      </ion-list-header>
-    </ion-list>
-    <ion-list no-border>
-      <ion-list-header>
-        General
+        Apps Installed
       </ion-list-header>
       <ion-item>
-        <ion-icon name='settings' item-start></ion-icon>
-        <ion-label>App Language</ion-label>
-        <ion-select [(ngModel)]="language">
-          <ion-option *ngFor="let language of languages" [value]="language">{{language}}</ion-option>
-        </ion-select>
+        <ion-icon name="ionic" item-start color="primary"></ion-icon>
+        <ion-label>Ionic View</ion-label>
+        <button ion-button outline item-end>Uninstall</button>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="enableNotifications" (click)="toggleNotifications()"></ion-toggle>
-        <ion-label class="label"> Enable notifications </ion-label>
-        <ion-icon name='notifications' item-start></ion-icon>
-      </ion-item>
-    </ion-list>
-    <ion-list>
-      <ion-list-header>
-        Currency
-      </ion-list-header>
-      <ion-item>
-        <ion-icon name='card' item-start></ion-icon>
-        <ion-label>Payment Method</ion-label>
-        <ion-select [(ngModel)]="paymentMethod">
-          <ion-option *ngFor="let method of paymentMethods" [value]="method">{{method}}</ion-option>
-        </ion-select>
+        <ion-icon name="brush" item-start color="primary"></ion-icon>
+        <ion-label>Ionic Creator</ion-label>
+        <button ion-button outline item-end>Uninstall</button>
       </ion-item>
       <ion-item>
-        <ion-icon name='logo-usd' item-start></ion-icon>
-        <ion-label>Currency</ion-label>
-        <ion-select [(ngModel)]="currency">
-          <ion-option *ngFor="let currency of currencies" [value]="currency">{{currency}}</ion-option>
-        </ion-select>
+        <ion-icon name="logo-octocat" item-start color="dark"></ion-icon>
+        <ion-label>Hubstruck</ion-label>
+        <button ion-button outline item-end>Uninstall</button>
       </ion-item>
-    </ion-list>
-    <ion-list>
-      <ion-list-header>
-        Other
-      </ion-list-header>
       <ion-item>
-        <ion-icon name='power' item-start></ion-icon>
-        <button ion-button (click)="logOut()" item-end>
-        Logout
-        </button>
+        <ion-icon name="paw" item-start color="danger"></ion-icon>
+        <ion-label>Barkpark</ion-label>
+        <button ion-button outline item-end>Uninstall</button>
       </ion-item>
     </ion-list>
   </ion-content>

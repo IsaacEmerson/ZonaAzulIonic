@@ -3,6 +3,7 @@ import { IonicPage, NavController,MenuController, ToastController, AlertControll
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LoginPage } from '../login/login';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
+import {Storage} from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ export class SignupPage {
   @ViewChild('signupSlider') signupSlider: any;
 
   tokenEmailConfirm = '';
+  plaque = '';
   user = {
     name:'',
     token:''
@@ -40,6 +42,7 @@ export class SignupPage {
   
   constructor(public navCtrl: NavController, public menu:MenuController, public formBuilder: FormBuilder,
     public http:HttpServiceProvider,
+    public storage:Storage,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController) {
     this.signInitial = formBuilder.group({
@@ -52,7 +55,8 @@ export class SignupPage {
     user_cpf_cnpj: ['', [Validators.maxLength(21), Validators.required]],
     user_plaque: ['', [Validators.maxLength(100), Validators.required]],
     user_birth: ['', [Validators.maxLength(100)]],
-    user_contact: ['', [Validators.maxLength(100)]]
+    user_contact: ['', [Validators.maxLength(100)]],
+    vehicle_id : ['', [Validators.maxLength(10)]]
 });
 
   }
@@ -78,7 +82,7 @@ export class SignupPage {
     this.http.dismissLoading();
   },error=>{
     console.log(error);
-    this.showToast(error.error.error,4000);
+    this.showToast(error.error.errors[0],3000);
     this.http.dismissLoading();
   });
   }
@@ -87,7 +91,7 @@ export class SignupPage {
     this.http.presentLoading();
     console.log(this.tokenEmailConfirm);
     //valida a conta e entra no cadastro final
-    this.http.getParam('register/confirm/account','token='+this.tokenEmailConfirm).
+    this.http.getParam('register/confirm/account','token='+this.tokenEmailConfirm.trim()).
     subscribe((result:any)=>{
       console.log(result);
       this.signupSlider.lockSwipes(false);
@@ -98,21 +102,26 @@ export class SignupPage {
       this.user.token = this.tokenEmailConfirm;
       this.http.dismissLoading();
     },error=>{
-      this.showToast(error.error.message,5000);
+      console.log(error);
+      this.showToast(error.error.message,3000);      
       this.http.dismissLoading();
     });
   }
 
   registerFinal(){
+    let city_actual;
+    this.storage.get('city_actual').then((city)=>{
+      city_actual = city;
+    });
     this.http.presentLoading();
     this.http.post('register/confirm/account',{
       token:this.user.token,
-      vehicle_id: 1,
+      vehicle_id:this.signFinal.controls['vehicle_id'].value,
       cell_phone:this.signFinal.controls['user_contact'].value,
       plaque:this.signFinal.controls['user_plaque'].value,
       cpf: this.signFinal.controls['user_cpf_cnpj'].value,
       birth_date: this.signFinal.controls['user_birth'].value,
-      city_actual:1
+      city_actual: city_actual,
   }).subscribe(
     (result:any)=>{
     console.log(result.message);
@@ -122,7 +131,7 @@ export class SignupPage {
   },error=>{
     console.log(error);
     console.log(error.error.error);
-
+    this.showToast(error.error.errors[0],3000);
     this.http.dismissLoading();
   });
   }

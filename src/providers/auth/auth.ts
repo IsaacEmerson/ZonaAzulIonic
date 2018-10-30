@@ -31,6 +31,14 @@ export class AuthProvider {
     return this.userAuth;
   }
 
+  refreshToken(){
+    return this.http.post('refresh',{}).subscribe((result:any)=>{
+      this.storage.set('token',result.token);
+    },(error)=>{
+      this.showToast(error.error,4000);
+    });
+  }
+
   userIsLogged(){
     // this.storage.get('token').then((token)=>{
 

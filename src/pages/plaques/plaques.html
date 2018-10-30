@@ -26,10 +26,10 @@
     </ion-list-header>
     <ion-item-sliding #slidingItem *ngFor="let plaque of plaques; let i = index; ">
       <ion-item #item>
-        <ion-icon item-start color="danger" name="remove-circle" (click)="openOption(slidingItem, item, $event)"></ion-icon> {{plaque.plaque}}
+        <ion-icon item-start color="danger" name="remove-circle" (click)="openOption(slidingItem, item, $event)"></ion-icon> {{plaque.plaque}} ----- {{vehicles[plaque.vehicle_id-1].name}}
       </ion-item>
-      <ion-item-options icon-start (ionSwipe)="deleteItem(plaques, i)">
-        <button color="danger" ion-button expandable (click)="deleteItem(plaques, i)">
+      <ion-item-options icon-start (ionSwipe)="deletePlaque(plaques, i)">
+        <button color="danger" ion-button expandable (click)="deletePlaque(plaques, i)">
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item-options>

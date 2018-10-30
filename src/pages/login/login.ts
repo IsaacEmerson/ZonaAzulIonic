@@ -14,10 +14,7 @@ import { HttpServiceProvider } from '../../providers/http-service/http-service';
 })
 export class LoginPage {
 
-  testRadioOpen = false;
-  testRadioResult: any;
   imgFooter:any=false;
-  cities:any;
   
   public backgroundImage = 'assets/imgs/login/background-1.jpg';
 
@@ -41,14 +38,14 @@ export class LoginPage {
 
   getCities(){
     this.http.get('cities').subscribe((cities:any)=>{
-      this.doRadio(cities.cities);
+      this.doRadioCities(cities.cities);
       console.log(cities.cities);
     },error=>{
       console.log(error);
     });
   }
 
-  doRadio(cities) {
+  doRadioCities(cities) {
     const alert = this.alertCtrl.create({
       enableBackdropDismiss: false
     });
@@ -59,7 +56,7 @@ export class LoginPage {
         checked: element.id==1?true:false,
         type: 'radio',
         label: element.name,
-        value: element.name
+        value: element
       });
     });
 
@@ -67,9 +64,8 @@ export class LoginPage {
       text: 'Ok',
       handler: (data: any) => {
         console.log('Radio data:', data);
-        this.testRadioOpen = false;
-        this.testRadioResult = data;
-        this.chooseCity(this.testRadioResult);
+        this.storage.set('city_actual',data);
+        this.chooseCity(data);
       }
     });
 
@@ -77,7 +73,7 @@ export class LoginPage {
   }
 
   chooseCity(city){
-    if(city==="Salvador"){
+    if(city.name==="Salvador"){
       this.imgFooter = 'assets/imgs/rodapesalvador.png';
       this.storage.set('footer','assets/imgs/rodapesalvador.png');
     }else{
