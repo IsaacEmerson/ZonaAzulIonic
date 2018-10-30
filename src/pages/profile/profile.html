@@ -11,25 +11,25 @@
   <ion-list>
       <ion-list-header>
         Settings
+        <ion-icon name="create" item-end></ion-icon>
       </ion-list-header>
       <ion-item>
         <ion-icon name="contact" item-start color="danger"></ion-icon>
-        <input type="text" value="{{user.name}}" disabled>
-        <ion-icon name="create" item-end></ion-icon>
+        <input type="text" value="{{user.name}}" [disabled]="isEditable">
       </ion-item>
       <button ion-item>
         <ion-icon name="mail" item-start color="primary"></ion-icon>
-        <input type="text" value="{{user.email}}" disabled>
+        <input type="text" value="{{user.email}}" [disabled]="isEditable">
         <ion-note item-end>The Interwebz</ion-note>
       </button>
       <button ion-item>
         <ion-icon name="bluetooth" item-start color="primary"></ion-icon>
-        <input type="text" value="{{user.cpf}}" disabled>
+        <input type="text" value="{{user.cpf}}" [disabled]="isEditable">
         <ion-note item-end>Off</ion-note>
       </button>
       <button ion-item>
         <ion-icon name="call" item-start color="secondary"></ion-icon>
-        <input type="text" value="{{user.cell_phone}}" disabled>
+        <input type="text" value="{{user.cell_phone}}" [disabled]="isEditable">
       </button>
       <button ion-item>
         <ion-icon name="link" item-start color="secondary"></ion-icon>

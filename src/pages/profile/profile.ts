@@ -16,6 +16,8 @@ import {Storage} from '@ionic/storage';
 })
 export class ProfilePage {
 
+  isEditable = false;
+
   public user={
     name:'',
     email:'',
@@ -24,6 +26,10 @@ export class ProfilePage {
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage:Storage) {
+  }
+
+  userEdit(){
+    this.isEditable?this.isEditable=false:this.isEditable=true;
   }
 
   ionViewDidLoad() {
