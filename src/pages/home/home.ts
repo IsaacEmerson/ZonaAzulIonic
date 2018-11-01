@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController} from 'ionic-angular';
+import { NavController, NavParams} from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { GeolocationPage } from '../geolocation/geolocation';
@@ -13,11 +13,13 @@ import {Storage} from '@ionic/storage';
 export class HomePage {
 
   isDataComplet = true;
+  plaques = [];
 
   private user = {
     name:'',
   }
   public cities: Array<{}>;
+  actualCity='';
   
   constructor(public navCtrl: NavController,
     public authService:AuthProvider,
@@ -27,6 +29,13 @@ export class HomePage {
 
   ionViewDidLoad(){
     this.getUserData();
+    this.getPlaques();
+    this.storage.get('city_actual').then((city)=>{
+      this.actualCity = city;
+      console.log(city);
+    }).catch((error)=>{
+      console.log(error);
+    }); 
   }
 
   getUserData(){
@@ -47,6 +56,18 @@ export class HomePage {
     });
   }
 
+  getPlaques(){
+    //this.http.presentLoading();
+    this.http.get('client/plaques').subscribe((result:any)=>{
+      console.log(result);
+      this.plaques = result.plaques;
+      //this.http.dismissLoading();
+    },error=>{
+      //this.http.dismissLoading();
+      console.log(error);
+    });
+  }
+
   ionViewDidEnter(){
   }
 
@@ -58,6 +79,10 @@ export class HomePage {
     this.authService.refreshToken().add(()=>{
       this.getUserData();
     });
+  }
+
+  parkCar(){
+    this.navCtrl.push(GeolocationPage);
   }
 
   geo(){

@@ -16,6 +16,7 @@
 </ion-header>
 
 <div class="switch">
+  <!-- <button ion-button color="secondary" round outline>Estacionar</button> -->
   <button ion-button color="light" (click)="(switch = 'map'); resizeMap()" [class.active]="(switch == 'map')" icon-only><ion-icon name="map"></ion-icon></button>
   <button ion-button color="light" (click)="(switch = 'list'); " [class.active]="(switch == 'list')" icon-only><ion-icon name="list"></ion-icon></button>
 </div>
@@ -43,7 +44,7 @@
   </div>
 
   <div class="map" [class.hidemap]="!((switch == 'map') || error)">
-    <ion-searchbar #searchbar placeholder="Suchen" [hidden]="!search"></ion-searchbar>
+    <ion-searchbar #searchbar placeholder="Pesquisar" [hidden]="!search"></ion-searchbar>
     <div id="map" #map></div>
   </div>
 </ion-content>

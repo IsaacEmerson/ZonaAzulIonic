@@ -1,4 +1,4 @@
-import { identifierModuleUrl } from '@angular/compiler/compiler';
+//import { identifierModuleUrl } from '@angular/compiler/compiler';
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { ActionSheetController, AlertController, App, LoadingController, NavController, Platform, ToastController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -44,17 +44,9 @@ export class GeolocationPage {
   ) {
     this.platform.ready().then(() => this.loadMaps());
     this.regionals = [{
-      "title": "Marker 1",
-      "latitude": 52.50094,
-      "longitude": 13.29922,
-    }, {
-      "title": "Marker 3",
-      "latitude": 52.50010,
-      "longitude": 13.29922,
-    }, {
-      "title": "Marker 2",
-      "latitude": 49.1028606,
-      "longitude": 9.8426116
+      "title": "Mombaça",
+      "latitude": -5.7468816,
+      "longitude": -39.6300171,
     }];
   }
 

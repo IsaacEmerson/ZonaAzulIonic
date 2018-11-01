@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController , MenuController, AlertController, Events } from 'ionic-angular';
+import { IonicPage, NavController, MenuController, AlertController, Events } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { SignupPage } from '../signup/signup';
 import { HomePage } from '../home/home';
@@ -15,6 +15,7 @@ import { HttpServiceProvider } from '../../providers/http-service/http-service';
 export class LoginPage {
 
   imgFooter:any=false;
+  working_mode=0;
   
   public backgroundImage = 'assets/imgs/login/background-1.jpg';
 
@@ -65,6 +66,7 @@ export class LoginPage {
       handler: (data: any) => {
         console.log('Radio data:', data);
         this.storage.set('city_actual',data);
+        this.working_mode = data.working_mode;
         this.chooseCity(data);
       }
     });
@@ -99,7 +101,7 @@ export class LoginPage {
       this.authService.login(this.credentials).add(()=>{
         console.log('coisou');
         if(this.authService.isUserAuth()){
-          this.events.publish('user:normal');
+          this.events.publish('working_mode:'+this.working_mode);
           this.navCtrl.setRoot(HomePage);
           this.http.dismissLoading();
         }else{

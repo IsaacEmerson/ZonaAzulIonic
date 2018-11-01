@@ -13,6 +13,7 @@
 
 <ion-content *ngIf="isDataComplet" padding>
   <p>{{user.name}}</p>
+  <p>{{actualCity.name}}</p>
     <ion-list>
         <ion-item>
           <ion-icon name="locate" item-start ></ion-icon>
@@ -47,6 +48,14 @@
       </ion-grid>
 
       <b style="font-size: 2rem;">Meus Veículos</b>
+
+      <ion-list>
+        <button ion-item *ngFor="let plaque of plaques">
+          {{plaque.plaque}}
+        </button>
+      </ion-list>
+
+      <button (click)="parkCar()" style="margin-top:50px;" ion-button color="secondary" block outline>Estacionar</button>
 
 </ion-content>
 <app-footer></app-footer>

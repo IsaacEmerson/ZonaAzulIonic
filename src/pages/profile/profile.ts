@@ -32,6 +32,10 @@ export class ProfilePage {
     this.isEditable?this.isEditable=false:this.isEditable=true;
   }
 
+  updateUser(){
+    
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
     this.storage.get('user').then((user=>{

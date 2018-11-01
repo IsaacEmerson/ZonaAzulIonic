@@ -32,19 +32,21 @@ export class MyApp {
 
     this.pages = [];
 
-    events.subscribe('user:normal',()=>{
+    events.subscribe('working_mode:0',()=>{
       this.pages = [
       { icon: 'home', title: 'Inicio', component: HomePage},
       { icon: 'person', title: 'Meus Dados', component: ProfilePage},
       { icon: 'car', title: 'Minhas Placas', component: PlaquesPage},
       { icon: 'wifi', title: 'List', component: ListPage },
       { icon: 'cart', title: 'Comprar Créditos', component: BuyCreditsPage},
+      { icon: 'wifi', title: 'Meu Histórico', component: ListPage },
+      { icon: 'wifi', title: 'List', component: ListPage },
       { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
       { icon: 'logout', title: 'Sair', component: LoginPage}
       ]
     });
 
-    events.subscribe('user:salvador',()=>{
+    events.subscribe('working_mode:1',()=>{
       this.pages = [
       { icon: 'home', title: 'Salvador', component: HomePage},
       { icon: 'home', title: 'Inicio', component: HomePage},
