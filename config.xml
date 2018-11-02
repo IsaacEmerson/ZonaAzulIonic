@@ -99,5 +99,5 @@
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
     <plugin name="cordova-plugin-app-preferences" spec="https://github.com/vash15/me.apla.cordova.app-preferences" />
-    <engine name="ios" spec="^4.5.5" />
+    <engine name="ios" spec="~4.5.5" />
 </widget>
