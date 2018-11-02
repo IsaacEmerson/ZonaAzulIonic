@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>checkout</ion-title>
+    <ion-title>Pagamento</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -34,19 +34,19 @@
     <div *ngSwitchCase="'CREDIT_CARD'" >
         <ion-item>
             <ion-label>Numero do cartao</ion-label>
-            <ion-input type="text" [(ngModel)]="creditCard.num"></ion-input>
+            <ion-input type="number" [(ngModel)]="creditCard.num"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label>Código de segurança</ion-label>
-            <ion-input type="text" [(ngModel)]="creditCard.cvv"></ion-input>
+            <ion-input type="number" [(ngModel)]="creditCard.cvv"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label>Mês - Expiração</ion-label>
-            <ion-input type="text" [(ngModel)]="creditCard.monthExp"></ion-input>
+            <ion-input type="number" [(ngModel)]="creditCard.monthExp"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label>Ano - Expiração</ion-label>
-            <ion-input type="text" [(ngModel)]="creditCard.yearExp"></ion-input>
+            <ion-input type="number" [(ngModel)]="creditCard.yearExp"></ion-input>
           </ion-item>
     </div>
 
@@ -56,7 +56,7 @@
 
     <ion-card>
       <ion-card-header text-center>
-        Total a pagar: <strong>100</strong>
+        Total a pagar: <strong>{{price}}</strong>
       </ion-card-header>
       <ion-card-content>
         <button ion-button full (click)="makePayment()">Concluir pagamento</button>

@@ -15,16 +15,22 @@ import {Storage} from '@ionic/storage';
   templateUrl: 'buy-credits.html',
 })
 export class BuyCreditsPage {
-
+  isEditable: boolean=false;
   imgFooter:any = false;
-
+  price: number;
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage:Storage) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BuyCreditsPage');
   }
-
+  setPrice(price: number){
+    this.price = price;
+    this.isEditable=true;
+  }
+  getPrice(){
+    return this.price;
+  }
   ionViewDidEnter(){
     this.storage.get('footer').then((val) => {
       this.imgFooter = val;
@@ -32,7 +38,7 @@ export class BuyCreditsPage {
   }
 
   checkout(){
-    this.navCtrl.push(CheckoutPage);
+    this.navCtrl.push(CheckoutPage,{price:this.price});
   }
 
 }

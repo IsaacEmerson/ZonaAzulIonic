@@ -29,7 +29,7 @@ export class ProfilePage {
   }
 
   userEdit(){
-    this.isEditable?this.isEditable=false:this.isEditable=true;
+    this.isEditable=true;
   }
 
   updateUser(){

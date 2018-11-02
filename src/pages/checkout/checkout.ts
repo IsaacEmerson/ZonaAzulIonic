@@ -13,7 +13,7 @@ declare let PagSeguroDirectPayment;
 export class CheckoutPage {
 
   @ViewChild(Segment)segment:Segment;
-
+  price :number = this.navParams.get('price');
   creditCard = {
     num: '',
     cvv: '',

@@ -9,36 +9,22 @@
   <ion-content>
     
   <ion-list>
-      <ion-list-header>
-        Settings
-        <ion-icon (click)="userEdit()" name="create" item-end></ion-icon>
-      </ion-list-header>
       <ion-item>
-        <ion-icon name="contact" item-start color="danger"></ion-icon>
-        <input type="text" value="{{user.name}}" [disabled]="!isEditable">
+        <ion-icon  name="contact" item-start color="danger"></ion-icon>
+        <input (click)="userEdit()" type="text" value="{{user.name}}" enabled>
       </ion-item>
       <ion-item>
         <ion-icon name="mail" item-start color="primary"></ion-icon>
-        <input type="text" value="{{user.email}}" [disabled]="!isEditable">
+        <input (click)="userEdit()" type="text" value="{{user.email}}" disabled>
         <!-- <ion-note item-end>The Interwebz</ion-note> -->
       </ion-item>
       <ion-item>
-        <ion-icon name="bluetooth" item-start color="primary"></ion-icon>
-        <input [brmasker]="{person: true}" type="text" value="{{user.cpf}}" [disabled]="!isEditable">
-        <!-- <ion-note item-end>Off</ion-note> -->
-      </ion-item>
-      <ion-item>
         <ion-icon name="call" item-start color="secondary"></ion-icon>
-        <input [brmasker]="{mask:'(00)00000-0000', len:14}" type="text" value="{{user.cell_phone}}" [disabled]="!isEditable">
-      </ion-item>
-      <ion-item>
-        <ion-icon name="link" item-start color="secondary"></ion-icon>
-        <ion-label>Personal Hotspot</ion-label>
-        <!-- <ion-note item-end>Off</ion-note> -->
+        <input (click)="userEdit()" [brmasker]="{mask:'(00)00000-0000', len:14}" type="text" value="{{user.cell_phone}}" enabled>
       </ion-item>
     </ion-list>
 
-    <button (click)="updateUser()" ion-button color="secondary" round outline>Atualizar dados</button>
+    <button (click)="updateUser()" ion-button color="secondary" round outline [disabled]="!isEditable">Atualizar dados</button>
     
     <!-- <ion-list radio-group>
       <ion-list-header>
