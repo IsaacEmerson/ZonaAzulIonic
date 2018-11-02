@@ -59,8 +59,8 @@ export class HttpServiceProvider {
     return this.http.delete(`${this.url}/${endpoint}?${params}`,this.options);
   }
 
-  update(endpoint, id, data){
-
+  update(endpoint, data){
+    return this.http.put(`${this.url}/${endpoint}`,data,this.options);
   }
 
   presentLoading() {

@@ -29,6 +29,7 @@ import {BackgroundGeolocation} from '@ionic-native/background-geolocation';
 import { GeolocationPage } from '../pages/geolocation/geolocation';
 import { AppFooterComponent } from '../components/app-footer/app-footer';
 import { BackgroundGeolocationPage } from '../pages/background-geolocation/background-geolocation';
+import { ChangePasswordPage } from '../pages/change-password/change-password';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { BackgroundGeolocationPage } from '../pages/background-geolocation/backg
     AppFooterComponent,
     MyApp,
     SignupPage,
+    ChangePasswordPage,
     FogotPassPage,
     LoginPage,
     HomePage,
@@ -62,6 +64,7 @@ import { BackgroundGeolocationPage } from '../pages/background-geolocation/backg
   entryComponents: [
     MyApp,
     SignupPage,
+    ChangePasswordPage,
     FogotPassPage,
     LoginPage,
     HomePage,

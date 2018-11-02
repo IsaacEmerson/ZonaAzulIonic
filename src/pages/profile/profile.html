@@ -11,20 +11,21 @@
   <ion-list>
       <ion-item>
         <ion-icon  name="contact" item-start color="danger"></ion-icon>
-        <input (click)="userEdit()" type="text" value="{{user.name}}" enabled>
+        <input (click)="userEdit()" type="text" [(ngModel)]="user.name" value="{{user.name}}" enabled>
       </ion-item>
       <ion-item>
         <ion-icon name="mail" item-start color="primary"></ion-icon>
-        <input (click)="userEdit()" type="text" value="{{user.email}}" disabled>
+        <input (click)="userEdit()" type="text"  [(ngModel)]="user.email" value="{{user.email}}" disabled>
         <!-- <ion-note item-end>The Interwebz</ion-note> -->
       </ion-item>
       <ion-item>
         <ion-icon name="call" item-start color="secondary"></ion-icon>
-        <input (click)="userEdit()" [brmasker]="{mask:'(00)00000-0000', len:14}" type="text" value="{{user.cell_phone}}" enabled>
+        <input (click)="userEdit()" [(ngModel)]="user.cell_phone" [brmasker]="{mask:'(00)00000-0000', len:14}" type="text" value="{{user.cell_phone}}" enabled>
       </ion-item>
     </ion-list>
 
     <button (click)="updateUser()" ion-button color="secondary" round outline [disabled]="!isEditable">Atualizar dados</button>
+    <button (click)="updatePassword()" ion-button color="secondary" round outline enabled>Alterar Senha</button>
     
     <!-- <ion-list radio-group>
       <ion-list-header>
