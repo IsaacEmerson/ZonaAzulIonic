@@ -1,0 +1,40 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Cadastrar {{vehicle}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name='add'></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="align-center" padding>
+  <ion-row>
+    <ion-col>
+      <ion-list inset>
+        <ion-item>
+          <ion-input [ngModel]="plaque" type="text"
+          (ngModelChange)="plaque = $event.toLocaleUpperCase()" [brmasker]="{mask:'AAA-0000',len:8}" placeholder="XXX-0000" #pla="ngModel"></ion-input>
+        </ion-item>
+        <p>{{error}}</p>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<ion-footer>
+    <ion-row class="align-center">
+        <ion-col col-6>
+          <button ion-button round full color="primary"  (click)="addPlaque(pla.value)" type="submit">
+                Cadastrar
+          </button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-button full color="danger" round (click)="dismiss()">
+                Cancelar
+          </button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

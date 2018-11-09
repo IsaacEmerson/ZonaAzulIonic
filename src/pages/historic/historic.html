@@ -1,0 +1,62 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Histórico</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+      <ion-item>
+          <ion-label>Filtrar Resultados</ion-label>
+          <ion-select (ionChange)="filterHistoric($event)" [(ngModel)]="type" multiple="false">
+              <ion-option selected value="ALL" >Todos</ion-option>
+            <ion-option value="T" >Troca de Card</ion-option>
+            <ion-option value="CP" >Compra de Cards PDV</ion-option>
+            <ion-option value="C" >Compra de Crédito</ion-option>
+            <ion-option value="U" >Estacionou</ion-option>
+          </ion-select>
+      </ion-item>
+    <timeline endIcon="call">
+      <h2 style="text-align: center;">{{none}}</h2>
+      <timeline-item *ngFor="let item of items">
+          <timeline-time style="margin-bottom:-20px;" [time]="item.time"></timeline-time>
+      
+        <ion-icon style="margin-bottom:-20px;" [name]="item.icon"></ion-icon>
+        <ion-card>
+          <ion-card-header>
+            {{item.title}}
+          </ion-card-header>
+          <ion-card-content>
+            <span style="color: #606060">
+                {{item.content[0].msg}}
+            </span>
+            <div *ngFor="let items of item.content[1].items">
+              <ion-item>
+                {{items[0]}}
+                <ion-badge item-end>R$ {{items[1]}}</ion-badge>
+              </ion-item>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </timeline-item>
+    </timeline>
+  
+    &emsp;
+  </ion-content>
+
+  <ion-footer style="margin-bottom:60px;">
+      <div text-center>
+        <p style="margin-bottom:-5px;" >Pagina {{historic_info.current_page}} de {{historic_info.total_pages}} </p>
+        <button (click)="previousPage()" ion-button color="light" icon-left [disabled]="historic_info.current_page==1">
+        <ion-icon name='arrow-back'></ion-icon>
+          Voltar
+        </button>
+        <button (click)="nextPage()" ion-button color="light" icon-right [disabled]="!(historic_info.total_pages > 1) || (historic_info.total_pages==historic_info.current_page)">
+          Próximo
+          <ion-icon name='arrow-forward'></ion-icon>
+        </button>
+      </div>
+  </ion-footer>
+  <app-footer></app-footer>

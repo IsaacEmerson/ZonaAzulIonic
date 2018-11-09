@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Minhas Placas</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      Cadastrar
+      <button item-end ion-button icon-only clear (click)="addPlaque(1)">
+        <ion-icon color="primary" name="add-circle"></ion-icon>
+        Carro
+      </button>
+      <button item-end ion-button icon-only clear (click)="addPlaque(2)">
+        <ion-icon color="primary" name="add-circle"></ion-icon>
+        Moto
+      </button>
+      <!-- <button item-end ion-button icon-only clear (click)="addPlaque(3)">
+        <ion-icon color="primary" name="add-circle"></ion-icon>
+        Caminhão
+      </button> -->
+    </ion-list-header>
+    <ion-item-sliding #slidingItem *ngFor="let plaque of plaques; let i = index; ">
+      <ion-item #item>
+        <ion-icon item-start color="danger" name="remove-circle" (click)="openOption(slidingItem, item, $event)"></ion-icon> {{plaque.plaque}} ----- {{vehicles[plaque.vehicle_id-1].name}}
+      </ion-item>
+      <ion-item-options icon-start (ionSwipe)="alertConfirm(i)">
+        <button color="danger" ion-button expandable (click)="alertConfirm(i)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
+
+<app-footer></app-footer>

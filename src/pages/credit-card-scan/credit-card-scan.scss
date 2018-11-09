@@ -1,0 +1,29 @@
+page-credit-card-scan {
+    .event-photo {
+        img {
+          min-height: 40vh;
+          max-height: 40vh;
+          size: cover;
+        }
+      }
+      .switch {
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        width: 80%;
+        border-radius: 10px;
+        text-align: center;
+        z-index: 100;
+        opacity: .9;
+        .active {
+            background: #3366CC!important;
+            color: #fff;
+        }
+        .button {
+            width: 100px;
+            margin: 0;
+            padding: 0;
+        }
+    }
+}

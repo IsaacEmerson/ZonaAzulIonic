@@ -1,0 +1,106 @@
+<ion-content padding class="transparent-header">
+
+  <ion-header>
+    <ion-navbar color="primary">
+      <ion-title>Cadastre-se</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <div class="container" padding>
+    <ion-slides #signupSlider>
+      <ion-slide class="passo1">
+        <p class="welcome">LEMBRE-SE: Um código de ativação será enviado para seu email</p>
+        <form [formGroup]="signInitial">
+          <ion-item>
+            <ion-label>Nome</ion-label>
+            <ion-input type="text" formControlName="user_name"></ion-input>
+          </ion-item>
+          <p class="alert" *ngIf="!signInitial.controls.user_name.valid  && signInitial.controls.user_name.dirty">Nome de usuário inválido</p>
+
+          <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-input type="email" formControlName="user_email"></ion-input>
+          </ion-item>
+          <p class="alert" *ngIf="!signInitial.controls.user_email.valid  && signInitial.controls.user_email.dirty">Email inválido</p>
+
+          <ion-item>
+            <ion-label>Senha</ion-label>
+            <ion-input [type]="seePass ? 'text' : 'password'" formControlName="user_pass"></ion-input>
+            <button (click)="changeSeePass()" ion-button item-right>
+              <ion-icon [name]="seePass ? 'eye-off' : 'eye'"></ion-icon>
+            </button>
+          </ion-item>
+          <p class="alert" *ngIf="!signInitial.controls.user_pass.valid  && signInitial.controls.user_pass.dirty">Senha muito curta</p>
+
+          <button ion-button block outline (click)="registerInitial()" [disabled]="!signInitial.valid" class="signup">Cadastrar</button>
+        </form>
+        <div class="strike">
+          <span>OU</span>
+        </div>
+        <button ion-button block clear (click)="goActivation()" class="codigo-ativ">
+          <ion-icon class="cadeado" name="unlock"></ion-icon>
+          <span>Já possui uma código de ativação?</span>
+        </button>
+      </ion-slide>
+
+      <ion-slide class="passo2">
+        <ion-item>
+          <ion-input [ngModel]="tokenEmailConfirm" (ngModelChange)="tokenEmailConfirm = $event.toLocaleUpperCase()" placeholder="Digite seu código de verificação"></ion-input>
+        </ion-item>
+
+        <button ion-button block outline (click)="valAccount()" class="signup">Ativar Conta</button>
+
+        <div class="strike">
+          <span>OU</span>
+        </div>
+        <button ion-button block clear (click)="goSignup()" color="light" class="login-button">Ainda não se cadastrou?</button>
+      </ion-slide>
+
+      <ion-slide class="passo3">
+        <p class="welcome">Bem vindo,
+          <b>{{user.name}}</b>!</p>
+        <p class="welcome">Agora falta pouco para você finalizar seu cadastro</p>
+        <form [formGroup]="signFinal">
+          <ion-item>
+            <ion-label>CPF</ion-label>
+            <ion-input type="tel" formControlName="user_cpf" name="cpf" [brmasker]="{mask:'000.000.000-00', len:14}" placeholder="Digite seu CPF..."></ion-input>
+          </ion-item>
+          <p class="alert" *ngIf="!signFinal.controls.user_cpf.valid  && signFinal.controls.user_cpf.dirty">CPF inválido</p>
+
+          <ion-item>
+            <ion-label>Placa</ion-label>
+            <ion-input [ngModel]="plaque" (ngModelChange)="plaque = $event.toLocaleUpperCase()" [brmasker]="{mask:'000-0000',len:8}"
+              type="text" formControlName="user_plaque" placeholder="Digite uma placa, ex:ABC-1234"></ion-input>
+          </ion-item>
+          <p class="alert" *ngIf="!signFinal.controls.user_plaque.valid  && signFinal.controls.user_plaque.dirty">Placa inválido</p>
+
+          <ion-list formControlName="vehicle_id" radio-group [(ngModel)]="vehicle_id">
+            <p class="label-veiculo">Qual o seu veículo?</p>
+            <ion-item class="veiculo">
+              <ion-label>Carro</ion-label>
+              <ion-radio value="1"></ion-radio>
+            </ion-item>
+            <ion-item class="veiculo">
+              <ion-label>Moto</ion-label>
+              <ion-radio value="2"></ion-radio>
+            </ion-item>
+          </ion-list>
+
+          <ion-item>
+            <ion-label>Telefone</ion-label>
+            <ion-input type="tel" formControlName="user_contact" [brmasker]="{mask:'(00)00000-0000', len:14}" placeholder="Digite seu telefone..."></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Data Nascimento</ion-label>
+            <ion-input type="tel" formControlName="user_birth" [brmasker]="{mask:'00/00/0000', len:10}" placeholder="DD/MM/AAAA"></ion-input>
+          </ion-item>
+
+          <button ion-button block outline (click)="registerFinal()" [disabled]="!signFinal.valid" class="signup">Cadastrar</button>
+        </form>
+      </ion-slide>
+
+    </ion-slides>
+  </div>
+</ion-content>
+<app-footer></app-footer>

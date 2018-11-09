@@ -1,0 +1,137 @@
+page-geolocation {
+    
+  #map {
+    width: 100%;
+    height: 50%;
+  }
+  .centerMarker{
+  	position:absolute;
+    /*url of the marker*/
+    background:url(../assets/icon/marker.png) no-repeat;
+    /*center the marker*/
+    top:26%;
+    left:50%;
+    z-index:1;
+    /*fix offset when needed*/
+    margin-left:-17px;
+    margin-top:-20px;
+    /*size of the image*/
+    height:35px;
+    width:32px;
+    cursor:pointer;
+  }
+  .current-location {
+    position: absolute;
+    // background-color: #fff !important;
+    right: 3%;
+    width: 30px;
+    bottom: 55% !important;
+    button {
+      background-color: #fff;
+      height: 2.9rem;
+      width: 2.9rem;
+      img {
+        width: 20px;
+      }
+    }
+    .button-ios.activated {
+      background-color: transparent;
+    }
+  }
+  .address-view {
+    height: 35%;
+  }
+  ion-content {
+    background-color: transparent !important;
+  }
+  .go-back-button, .search-button {
+    background-color: transparent !important;
+    box-shadow: none;
+    .activated {
+      background-color: transparent !important;
+    }
+  }
+  .search-button {
+    ion-icon {
+      font-size: 2.7rem !important;
+    }
+  }
+  .back-btn, .search-btn {
+    position: absolute;
+    ion-icon {
+      color: #000;
+    }
+  }
+  .search-btn {
+    left: 85%;
+  }
+  .search-box {
+    position: absolute;
+    top: 2%;
+    z-index: 999;
+  }
+  ion-textarea {
+    font-size: 14px;
+  }
+  .ios, .md {
+    home-page {
+      .scroll {
+        height: 100%
+      }
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  $detail-background: rgba(236,236,236,.8);
+  .listing-details ion-col {
+    padding: 0.5rem;
+    margin: 0.45rem;
+    background: $detail-background;
+    ion-icon {
+        margin-right: .5rem;
+    }
+}
+
+  .switch {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: 80%;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 100;
+    opacity: .9;
+    .active {
+        background: #3366CC!important;
+        color: #fff;
+    }
+    .button {
+        width: 100px;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+$transparent-white: rgba(255, 255, 255, .6);
+  // This is just to make the header transparent and button/icon with white color
+  .toolbar-content,
+  span {
+    color: white;
+  }
+  .toolbar-background,
+  ion-navbar,
+  ion-header {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  .header-md::after,
+  .toolbar-background-ios {
+    background-image: none;
+    border-bottom: 0;
+  }
+
+}

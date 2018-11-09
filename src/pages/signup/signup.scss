@@ -1,0 +1,194 @@
+page-signup {
+  $transparent-white: rgba(255, 255, 255, .6);
+  // This is just to make the header transparent and button/icon with white color
+  .toolbar-content,
+  span {
+    color: white;
+  }
+  .toolbar-background,
+  ion-navbar,
+  ion-header {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  .header-md::after,
+  .toolbar-background-ios {
+    background-image: none;
+    border-bottom: 0;
+  }
+  
+  .footer {
+    text-align: center;
+    background: rgba(255, 255, 255, .06);
+  }
+
+  .footer-md::before {
+    border-top: 1px solid $transparent-white;
+    background-image: none;
+  }
+
+  // Fullscreen animated rainbow gradient
+  ion-content {
+    background-color:#32acff !important;
+    //background: linear-gradient(316deg,  #2b5de8, #161692, #406ad8, #406ad8);
+    background-size: 1800% 1800%;
+    //animation: rainbow 50s linear infinite;
+  }
+
+  // @keyframes rainbow {
+  //   0% {
+  //     background-position: 0% 0%
+  //   }
+  //   50% {
+  //     background-position: 100% 100%
+  //   }
+  //   100% {
+  //     background-position: 0% 0%
+  //   }
+  // }
+
+  // Content
+  .scroll-content {
+    display: flex;
+    flex-direction: column;
+    overflow: none;
+  }
+  // Input items
+  ion-item {
+    border-radius: 8px !important;
+    margin: auto !important;
+    padding: 0 10px !important;
+    padding-right: 0 !important;
+    margin-top: 12px !important;
+    width: 275px !important;
+    color: #eeeeee !important;
+    background-color: rgba(255, 255, 255, .2) !important;
+    font-size: 16px;
+  }
+
+  ion-label{
+    color: #eeeeee !important;
+  }
+
+  form{
+    margin-bottom: 10px;
+  }
+
+  ::-webkit-input-placeholder {
+    color: #eeeeee !important;
+    font-size: 15.5px;
+  }
+
+  .item-inner {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
+  // --
+  .signup{
+    width: 250px;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #007effff;
+    margin: auto;
+    margin-top: 20px !important;
+    margin-bottom: 20px;
+  }
+  // Facebook icon
+  ion-icon {
+    float: right;
+    font-size: 2.2rem;
+    background-color: none !important;
+  }
+
+  .codigo-ativ{
+    color: #eeeeee;
+    margin-top: 10px !important;
+    padding: 0 5px;
+  }
+
+  .cadeado{
+    margin-right: 8px;
+  }
+
+  // HR with text in the middle effect
+  .strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .strike>span {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+  }
+  .strike>span:before,
+  .strike>span:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 1px;
+    background: $transparent-white;
+  }
+  .strike>span:before {
+    right: 100%;
+    margin-right: 15px;
+  }
+  .strike>span:after {
+    left: 100%;
+    margin-left: 15px;
+  }
+
+  .alert{
+    color: crimson;
+    font-weight: bolder;
+    margin: 0 !important;
+    padding: 5px !important;
+    font-size: 15px;
+  }
+
+  .label-veiculo{
+    color: #eeeeee;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    text-align: left;
+  }
+
+  .veiculo{
+    width: 135px !important;
+    display: inline-block;
+    margin: 0 !important;
+    margin-top: 0 !important;
+    padding: 0 10px !important;
+    padding: 0 10px !important;
+    font-size: 16px;
+  }
+
+  .welcome{
+    color: #eeeeee;
+    width: 275px !important;
+    font-size: 16px; 
+    margin: auto !important;
+    margin-bottom: 6px !important;
+    text-align: left;
+  }
+
+  .container{
+    margin-top: 10%;
+  }
+
+  .passo1{
+    margin-top: 25% !important;
+  }
+
+  .passo2{
+    margin-top: 45% !important;
+  }
+
+  .passo3{
+    margin-top: 25px !important;
+  }
+
+}

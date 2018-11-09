@@ -1,0 +1,48 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Cartões de Estacionamento</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <p style="text-align:center;">Você esta trocando seu saldo no sistema por CADS na cidade: <b> {{actualCity.name}} </b></p>
+
+  <ion-list radio-group [(ngModel)]="rate_id">
+
+    <ion-list-header>
+      <p style="font-size: 2rem; text-align: center;">Taxas</p>
+    </ion-list-header>
+
+    <ion-item ion-item *ngFor="let rate of rates; let i = index">
+      <ion-label>{{rate.vehicle}} {{rate.minutes}} minutos por R$ {{rate.rate}}</ion-label>
+      <ion-radio value="{{rate.id}}"></ion-radio>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-item>
+    <ion-label>Quantidade de CADS</ion-label>
+    <ion-select (ionChange)="cadPrice($event)" [(ngModel)]="quant" multiple="false">
+      <ion-option *ngFor="let i of [2,4,6,8,10]" [selected]="i==2" value="{{i}}">{{i}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- <ion-item>
+    <ion-input type="number" [(ngModel)]="quant" placeholder="Quantidade de Cards"></ion-input>
+  </ion-item> -->
+
+  <p>Valor a ser descontado: </p>
+
+  <ion-card-content>
+      <button ion-button full (click)="creditToCards()">Adquirir</button>
+  </ion-card-content>
+
+
+</ion-content>

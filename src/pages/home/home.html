@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Início</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content overflow-scroll='false' direction="y" has-bouncing="false" style="box-sizing: border-box;"
+  *ngIf="!isDataComplet" padding>
+  <button style="margin-top:100px;" (click)="refresh()" ion-button color="#387ef5" ion-button round>Recarregar</button>
+</ion-content>
+
+<ion-content overflow-scroll='false' direction="y" has-bouncing="false" *ngIf="isDataComplet" padding>
+  <div>
+    <div class="welcome-container">
+      <p class="welcome">Bem vindo,
+        <b>{{user.name}}</b>
+      </p>
+      <p class="welcome">Você está em
+        <b>{{actualCity.name}}</b>
+      </p>
+    </div>
+
+    <!-- <ion-list>
+        <ion-item>
+          <ion-icon name="locate" item-start ></ion-icon>
+          <ion-label>Cidade Atual</ion-label>
+          <ion-select [(ngModel)]="CidadeAtual">
+            <ion-option selected value="nes">Quixáda</ion-option>
+            <ion-option value="n64">Juazeiro do Norte</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list> -->
+
+    <ion-grid style="margin-bottom:10px;">
+      <ion-row>
+        <ion-col col-33>
+          <ion-card class="card card-1">
+            <ion-icon name="cash"></ion-icon>
+            <br>
+            <b style="font-size: 1.3rem;">Saldo</b>
+            <p>R$ {{user.balance.amount}}</p>
+          </ion-card>
+          <ion-card *ngIf="actualCity.working_mode==0" class="card card-1">
+            <ion-icon name="card"></ion-icon>
+            <br>
+            <b style="font-size: 1.3rem;">Cads</b>
+            <p>{{cards.total_cards}}</p>
+          </ion-card>
+          <ion-card class="card card-1">
+            <ion-icon name="car"></ion-icon>
+            <br>
+            <b style="font-size: 1.3rem;">Placas Ativas</b>
+            <p>0</p>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div *ngIf="actualCity.working_mode==0">
+      <ion-list radio-group [(ngModel)]="rate_id">
+
+        <ion-list-header>
+          <b style="font-size: 2rem;">Selecione uma taxa:</b>
+        </ion-list-header>
+
+        <ion-item ion-item *ngFor="let rate of rates">
+          <ion-label>{{rate.vehicle}} {{rate.minutes}} minutos por R$ {{rate.rate}} </ion-label>
+          <ion-radio value="{{rate.id}}"></ion-radio>
+        </ion-item>
+
+      </ion-list>
+
+      <ion-list radio-group [(ngModel)]="plaque_id">
+
+        <ion-list-header>
+          <b style="font-size: 2rem;">Selecione um veículo:</b>
+        </ion-list-header>
+        <ion-item ion-item *ngFor="let plaque of plaques">
+          <ion-label>{{plaque.plaque}} {{vehicles[plaque.vehicle_id-1].name}}</ion-label>
+          <ion-radio value="{{plaque.id}}"></ion-radio>
+        </ion-item>
+
+      </ion-list>
+    </div>
+
+    <button class="button" (click)="activeParking()" style="margin-bottom:60px;" ion-button color="#387ef5" block>Estacionar</button>
+
+  </div>
+</ion-content>
+
+<app-footer></app-footer>

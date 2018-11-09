@@ -1,0 +1,15 @@
+page-bug-report {
+    .myInput {
+        width: calc(100% - 10px);
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+    }
+    .button{
+        margin:auto;
+        width: 250px;
+        border-radius: 20px;
+        font-size: 16px;
+        background-color: #007effff;
+    }
+}

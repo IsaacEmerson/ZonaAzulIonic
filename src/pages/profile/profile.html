@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Meus Dados</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <!--TODO arrumar inputs-->
+<ion-list style="align-content: center;" >
+    <ion-item>
+      <ion-icon  name="contact" item-start color="blue"></ion-icon>
+      <ion-input (input)="userEdit()" type="text" [(ngModel)]="user.name" value="{{user.name}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="mail" item-start color="dark"></ion-icon>
+      <ion-input (input)="userEdit()" type="text"  [(ngModel)]="user.email" value="{{user.email}}" disabled></ion-input>
+      <!-- <ion-note item-end>The Interwebz</ion-note> -->
+    </ion-item>
+    <ion-item>
+      <ion-icon name="md-calendar" item-start color="danger"></ion-icon>
+      <ion-input (input)="userEdit()" [(ngModel)]="user.data_user.birth_date" [brmasker]="{mask:'00/00/0000', len:10}" type="tel"  value="{{user.data_user.birth_date}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="md-finger-print" item-start color="touchId"></ion-icon>
+      <ion-input (input)="userEdit()" [(ngModel)]="user.cpf" [brmasker]="{person: true}" type="text"value="{{user.cpf}}" disabled></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="call" item-start color="secondary"></ion-icon>
+      <ion-input (input)="userEdit()" [(ngModel)]="user.cell_phone" [brmasker]="{mask:'(00)00000-0000', len:14}" type="tel" value="{{user.cell_phone}}"></ion-input>
+    </ion-item>
+    
+  </ion-list>
+  <div style="text-align: center;">
+      <button (click)="updateUser()" ion-button color="danger" ion-button round [disabled]="!isEditable">Atualizar dados</button>
+      <button (click)="updatePassword()" ion-button color="#387ef5" ion-button round>Alterar Senha</button>
+  </div>
+  
+  
+  <!-- <ion-list radio-group>
+    <ion-list-header>
+      Silence Phone
+    </ion-list-header>
+    <ion-item>
+      <ion-label color="dark">Always</ion-label>
+      <ion-radio value="always" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label color="dark">Only while phone is locked</ion-label>
+      <ion-radio value="locked"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      Apps Installed
+    </ion-list-header>
+    <ion-item>
+      <ion-icon name="ionic" item-start color="primary"></ion-icon>
+      <ion-label>Ionic View</ion-label>
+      <button ion-button outline item-end>Uninstall</button>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="brush" item-start color="primary"></ion-icon>
+      <ion-label>Ionic Creator</ion-label>
+      <button ion-button outline item-end>Uninstall</button>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="logo-octocat" item-start color="dark"></ion-icon>
+      <ion-label>Hubstruck</ion-label>
+      <button ion-button outline item-end>Uninstall</button>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="paw" item-start color="danger"></ion-icon>
+      <ion-label>Barkpark</ion-label>
+      <button ion-button outline item-end>Uninstall</button>
+    </ion-item>
+  </ion-list> -->
+</ion-content>
+
+<app-footer></app-footer>

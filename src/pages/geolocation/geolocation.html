@@ -1,0 +1,81 @@
+<ion-content class="transparent-header">
+
+  <ion-header>
+    <ion-navbar color="primary">
+      <ion-title>Estacionar</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)='toggleSearch()'>
+          <ion-icon name="search"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+
+  <div style="margin-top:100px;font-size:1.5em" [hidden]="!(switch == 'list')">
+    <p text-center>Meus Últimos Locais</p>
+    <ion-list>
+
+      <ion-item>
+        <h2>Teste</h2>
+      </ion-item>
+
+    </ion-list>
+  </div>
+
+  <ion-buttons [hidden]="!(switch == 'map')" float-end class="current-location">
+    <button ion-button icon-only (click)="currentLocation()">
+      <img src="./assets/icon/current-location.png" alt="">
+    </button>
+  </ion-buttons>
+
+  <ion-searchbar style="margin-top:30px;" [hidden]="!(switch == 'map') || !search" autocorrect="off" autocapitalize="off"
+    spellcheck="off" #searchbar placeholder="Buscar..." class="search-box"></ion-searchbar>
+
+  <div [hidden]="!(switch == 'map')" #map id="map" class="map"></div>
+  <div [hidden]="!(switch == 'map')" class="centerMarker"></div>
+
+  <ion-grid *ngIf="logradouros.length" class="listing-details">
+    <p text-center>Ruas Próximas com Zona Azul</p>
+    <ion-scroll style="width:100%;height:30vh" scrollY="true">
+      <ion-list scroll="true">
+        <ion-item *ngFor="let logra of logradouros" (click)="viewMessages(chat)">
+          <ion-avatar item-start>
+            <ion-icon style="font-size:40px" name="pin"></ion-icon>
+          </ion-avatar>
+          <div *ngIf="logra.logradouro">
+            <h3>{{logra.logradouro.log_nome}}</h3>
+            <p>{{logra.logradouro.log_descricao_estacionamento}}</p>
+          </div>
+          <ion-note item-end>
+            <ion-icon style="font-size:25px" name="arrow-forward"></ion-icon>
+          </ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-scroll>
+  </ion-grid>
+
+
+  <div style="margin-top:0px;" text-center *ngIf="!logradouros.length">
+    <p>{{address}}</p>
+    <h4>Nenhuma área de ZONA AZUL encontrada próximo o endereço atual</h4>
+    <ion-icon style="font-size:45px" name="compass"></ion-icon>
+  </div>
+
+</ion-content>
+
+
+<!-- <div style="margin-bottom:40px;" class="switch">
+  <button ion-button color="light" (click)="(switch = 'map');" [class.active]="(switch == 'map')" icon-only>
+    <ion-icon name="map"></ion-icon>
+  </button>
+  <button ion-button color="light" (click)="(switch = 'list');" [class.active]="(switch == 'list')" icon-only>
+    <ion-icon name="list"></ion-icon>
+  </button>
+</div> -->
+<!-- 
+<ion-footer [hidden]="!(switch == 'map')">
+  <button ion-button large full no-margin color="primary">
+    Estacionar
+  </button>
+</ion-footer> -->
+<app-footer></app-footer>
