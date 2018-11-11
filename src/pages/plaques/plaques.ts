@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Item, ItemSliding, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, Item, ItemSliding, AlertController, ModalController } from 'ionic-angular';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { AuthProvider } from '../../providers/auth/auth';
+import { PlaquesModalPage } from '../plaques-modal/plaques-modal';
 
 /**
  * Generated class for the PlaquesPage page.
@@ -30,15 +31,12 @@ export class PlaquesPage {
     {
       id: '2',
       name: 'Moto'
-    },
-    {
-      id: '3',
-      name: 'Caminhão'
     }
   ]
 
   constructor(public navCtrl: NavController,
     public auth:AuthProvider,
+    public modalCtrl:ModalController,
     public alertCtrl:AlertController,public http:HttpServiceProvider) { }
 
   ionViewDidLoad(){
@@ -46,8 +44,8 @@ export class PlaquesPage {
   }
 
   addPlaque(type) {
-    this.presentPrompt(type);
-  	console.log('add Plaque');
+    //this.presentPrompt(type);
+    this.showPlaquesModal(type);
   	//this.things.push({ title: 'Thing ' + (this.things.length + 1) });
   }
 
@@ -75,11 +73,12 @@ export class PlaquesPage {
       //this.plaques.push({plaque:plaque.plaque,vehicle_id:plaque.id_vehicle});
     },error=>{
       this.http.dismissLoading();
+      this.auth.showToast(error.error.errors[0],3000);
       console.log(error);
     });
   }
 
-  deletePlaque(list, index) {
+  deletePlaque(index) {
     this.http.presentLoading();
     this.http.delete('client/plaques','id='+this.plaques[index].id).subscribe((result)=>{
       console.log(result);
@@ -122,32 +121,22 @@ export class PlaquesPage {
     }
   }
 
-  presentPrompt(plaqueType) {
+  alertConfirm(index){
     let alert = this.alertCtrl.create({
-      title: 'Cadastrar '+this.vehicles[plaqueType-1].name,
-      inputs: [
-        {
-          name: 'plaque',
-          placeholder: 'XXX-0000',
-          type: 'text',
-          max:8,
-        }
-      ],
+      title: 'Excluir',
+      message: 'Deseja realmente excluir?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
-          handler: data => {
+          handler: () => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Cadastrar',
-          handler: data => {
-            this.postPlaque({
-              plaque:data.plaque,
-              id_vehicle:plaqueType
-            });
+          text: 'Deletar',
+          handler: () => {
+            this.deletePlaque(index);
           }
         }
       ]
@@ -155,6 +144,19 @@ export class PlaquesPage {
     alert.present();
   }
 
-
+  showPlaquesModal(type){
+    let plaquesModal = this.modalCtrl.create(PlaquesModalPage,{type:type}, { cssClass: 'inset-modal' });
+    plaquesModal.present();
+    plaquesModal.onDidDismiss(data => {
+      if(data.plaque!=null){
+        this.postPlaque({
+          plaque: data.plaque.toUpperCase(),
+          id_vehicle:type
+        });
+      }  
+      console.log(data);
+    });
+  }
 
 }
+

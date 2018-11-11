@@ -1,52 +1,52 @@
+
 <!--
   Generated template for the BuyCreditsPage page.
-
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Comprar Créditos</ion-title>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Comprar Créditos</ion-title>
+  </ion-navbar>
+</ion-header>
 
 
 <ion-content padding>
-    <ion-grid style="margin-bottom:10px;">
-        <ion-row>
-          <ion-col col-20>
-            <ion-card (click)="setPrice(10)" class="card card-1">
-                <ion-icon name="cash"></ion-icon><br>
-                <b style="font-size: 1.3rem;">R$ 10</b>
-            </ion-card>
-            <ion-card (click)="setPrice(15)" class="card card-1">
-                <ion-icon name="cash"></ion-icon><br>
-                <b style="font-size: 1.3rem;">R$ 15</b>
-            </ion-card>
-            <ion-card (click)="setPrice(20)" class="card card-1">
-                <ion-icon name="cash"></ion-icon><br>
-                <b style="font-size: 1.3rem;">R$ 20</b>
-            </ion-card>
-            <ion-card (click)="setPrice(30)" class="card card-1">
-                <ion-icon name="cash"></ion-icon><br>
-                <b style="font-size: 1.3rem;">R$ 30</b>
-            </ion-card>
-            <ion-card (click)="setPrice(50)" class="card card-1">
-                <ion-icon name="cash"></ion-icon><br>
-                <b style="font-size: 1.3rem;">R$ 50</b>
-            </ion-card>
-            <ion-card (click)="setPrice(100)" class="card card-1">
-                <ion-icon name="cash"></ion-icon><br>
-                <b style="font-size: 1.3rem;">R$ 100</b>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-    </ion-grid>
-    <p>Valor selecionado: {{price}}</p>
-    <button ion-button full (click)="checkout()" [disabled]="!isEditable">Concluir pagamento</button>
+  <ion-grid style="margin-bottom:10px;">
+      <ion-row>
+        <ion-col col-20>
+          <ion-card (click)="setPrice(10)" class="card card-1">
+              <ion-icon name="cash" color="primary"></ion-icon><br>
+              <b style="font-size: 1.3rem;">R$ 10</b>
+          </ion-card>
+          <ion-card (click)="setPrice(15)" class="card card-1">
+              <ion-icon name="cash" color="primary"></ion-icon><br>
+              <b style="font-size: 1.3rem;">R$ 15</b>
+          </ion-card>
+          <ion-card (click)="setPrice(20)" class="card card-1">
+              <ion-icon name="cash" color="primary"></ion-icon><br>
+              <b style="font-size: 1.3rem;">R$ 20</b>
+          </ion-card>
+          <ion-card (click)="setPrice(30)" class="card card-1">
+              <ion-icon name="cash" color="primary"></ion-icon><br>
+              <b style="font-size: 1.3rem;">R$ 30</b>
+          </ion-card>
+          <ion-card (click)="setPrice(50)" class="card card-1">
+              <ion-icon name="cash" color="primary"></ion-icon><br>
+              <b style="font-size: 1.3rem;">R$ 50</b>
+          </ion-card>
+          <ion-card (click)="setPrice(100)" class="card card-1">
+              <ion-icon name="cash" color="primary"></ion-icon><br>
+              <b style="font-size: 1.3rem;">R$ 100</b>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+  <p>Valor selecionado: R$ {{price}}.00</p>
+  <button ion-button full (click)="checkout()" [disabled]="!isEditable">Concluir pagamento</button>
 
 </ion-content>
 

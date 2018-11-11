@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Salvar Cartão</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <div  [hidden]="!(switch == 'card')">
+    <div >
+      <img [src]="cardImage" />
+      <ion-fab right class="pop-in" [ngClass]="{'pop-out': fabGone}" style="top: 23rem;">
+        <button hideWhen="ios" ion-fab mini (click)="scanCard()" color="dark">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </ion-fab>
+    </div>
+    <div>
+      <ion-item>
+        <ion-input type="text" placeholder="Nome do Titular" [(ngModel)]="card.senderName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="CPF do Titular" [brmasker]="{mask:'000.000.000-00', len:14}" [(ngModel)]="card.senderCPF"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="Número" [brmasker]="{len:16}" [(ngModel)]="card.cardNumber"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="Vencimento Mês" [brmasker]="{mask:'00', len:2}" [(ngModel)]="card.expiryMonth"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="Vencimento Ano" [brmasker]="{mask:'00', len:2}" [(ngModel)]="card.expiryYear"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="CVV" [brmasker]="{mask:'000', len:3}" [(ngModel)]="card.cvv"></ion-input>
+      </ion-item>
+
+      <ion-item style="margin-bottom:35px;">
+        <button (click)="saveCard()" ion-button large full no-margin color="primary">
+          Salvar Cartão
+        </button>
+      </ion-item>
+    </div>
+  </div>
+
+
+  <div [hidden]="!(switch == 'list')">
+    <p style="font-size:20px;" text-center>Meus Cartões</p>
+    <ion-list>
+      <ion-item>
+        <p style="font-size:20px;">{{card.senderName}}</p>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>
+
+<div class="switch">
+  <button ion-button color="light" (click)="(switch = 'card');" [class.active]="(switch == 'card')" icon-only>
+    <ion-icon name="card"></ion-icon>
+  </button>
+  <button ion-button color="light" (click)="(switch = 'list'); getCardsList();" [class.active]="(switch == 'list')"
+    icon-only>
+    <ion-icon name="list"></ion-icon>
+  </button>
+</div>
+
+<app-footer>
+  
+</app-footer>

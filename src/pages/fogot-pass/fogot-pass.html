@@ -4,18 +4,40 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
 
-  <ion-navbar>
-    <ion-title>fogotPass</ion-title>
-  </ion-navbar>
+<ion-content overflow-scroll='false' direction="y" has-bouncing="false" padding [ngStyle]="{'background-image': 'url(' + backgroundImage +')'}">
+  <ion-header>
 
-</ion-header>
+    <ion-navbar>
+      <ion-title>Esqueci Minha Senha</ion-title>
+    </ion-navbar>
 
+  </ion-header>
+  <!--
+<ion-item>
+  <ion-icon name="md-lock" item-start color="black"></ion-icon>
+  <ion-input placeholder="Digite seu email" [(ngModel)]="email" type="text"></ion-input>
+</ion-item>
+<div style="text-align: center;">
+  <button (click)="passwordReset()" ion-button color="#387ef5" ion-button round>Atualizar Senha</button>
+</div>
 
-<ion-content padding>
+-->
 
-</ion-content>
-
-
-<app-footer></app-footer>
+  <ion-content padding>
+    <div style="text-align:center;">
+      <img class="logo" src="assets/imgs/logo_400.png" />
+      <ion-list inset class="no-border">
+        <p style="text-align:center;">Digite seu email para recuperar sua senha</p>
+        <ion-item>
+          <ion-label>Email</ion-label>
+          <ion-input clearInput type="email" [(ngModel)]="email"></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+    <ion-row>
+      <ion-col>
+        <button ion-button class="login-button" (click)="passwordReset()">Recuperar Senha</button>
+      </ion-col>
+    </ion-row>
+   

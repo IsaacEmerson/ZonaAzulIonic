@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { HttpServiceProvider } from '../http-service/http-service';
 
 /*
   Generated class for the PaymentHttpProvider provider.
@@ -10,18 +10,18 @@ import { Observable } from 'rxjs/Observable';
 */
 @Injectable()
 export class PaymentHttpProvider {
-
-  constructor(public http: HttpClient) {
+  
+  constructor(public http: HttpServiceProvider) {
     console.log('Hello PaymentHttpProvider Provider');
   }
 
   getSession(){
-    return this.http.get('http://localhost/syszonaIonic/session.php');
+    return this.http.get('client/session');
   }
 
 
   doPayment(data): Observable<Object>{
-    return this.http.post('http://localhost/syszonaIonic/payment.php',data);
+    return this.http.post('client/payment',data);
   }
 
 

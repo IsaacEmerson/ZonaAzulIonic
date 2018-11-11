@@ -1,11 +1,11 @@
-<ion-content padding [ngStyle]="{'background-image': 'url(' + backgroundImage +')'}">
+<ion-content overflow-scroll='false' direction="y" has-bouncing="false" padding [ngStyle]="{'background-image': 'url(' + backgroundImage +')'}">
   <div padding>
-    <ion-row>
+    <!-- <ion-row>
       <ion-col>
         <img class="logo" src="assets/imgs/logo/logo_400.png" />
       </ion-col>
-    </ion-row>
-    <ion-row>
+    </ion-row> -->
+    <!-- <ion-row>
       <ion-col>
         <ion-list inset class="no-border">
           <ion-item>
@@ -18,7 +18,20 @@
           </ion-item>
         </ion-list>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
+    <div style="text-align:center;">
+      <img class="logo" src="assets/imgs/logo_400.png" />
+      <ion-list inset class="no-border">
+        <ion-item>
+          <ion-label>Email</ion-label>
+          <ion-input clearInput type="email" [(ngModel)]="credentials.email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Senha</ion-label>
+          <ion-input clearInput type="password" [(ngModel)]="credentials.password"></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
     <ion-row>
       <ion-col>
         <button ion-button class="login-button" (click)="login()">Login</button>
@@ -26,8 +39,8 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <div (click)="goToSignup()">
-          <span>Ou crie uma conta</span>
+        <div class="link" (click)="goToSignup()">
+          <span>Cadastre-se</span>
         </div>
       </ion-col>
     </ion-row>
@@ -35,16 +48,17 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar *ngIf="!imgFooter" class="footer">
-      <div (click)="goToFogotPassword()">
-          <span style="color:black;" >Esqueceu a senha? <strong>Clique Aqui</strong>.</span>
-      </div>
+    <div (click)="goToFogotPassword()">
+      <span style="color:black;">Esqueceu a senha?
+        <strong>Clique Aqui</strong>.</span>
+    </div>
   </ion-toolbar>
 
   <div *ngIf="imgFooter">
-      <div (click)="goToFogotPassword()">
-          <span style="color:white;" >Esqueceu a senha? <strong>Clique Aqui</strong>.</span>
-      </div>
-      <img width="100%" height="60" src="assets/imgs/rodapesalvador.png">
+    <div >
+      <span style="color:white;">Esqueceu a senha? <strong>Clique Aqui</strong>.</span>
+    </div >
+    <img width="100%" height="60" src="assets/imgs/rodapesalvador.png">
   </div>
-  
+
 </ion-footer>

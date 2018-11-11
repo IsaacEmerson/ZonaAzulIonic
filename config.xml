@@ -99,5 +99,14 @@
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
     <plugin name="cordova-plugin-app-preferences" spec="https://github.com/vash15/me.apla.cordova.app-preferences" />
-    <engine name="ios" spec="~4.5.5" />
+    <plugin name="cordova-plugin-app-version" spec="0.1.9" />
+    <access origin="*" />
+    <allow-navigation href="*" />
+    <plugin name="card.io.cordova.mobilesdk" spec="2.1.0" />
+    <feature name="Camera">
+        <param name="ios-package" value="CDVCamera" />
+    </feature>
+    <plugin name="cordova-plugin-camera" spec="4.0.3" />
+    <plugin name="cordova-plugin-email-composer" spec="0.8.15" />
+    <engine name="ios" spec="4.5.5" />
 </widget>

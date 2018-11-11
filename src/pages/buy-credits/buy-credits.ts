@@ -15,9 +15,10 @@ import {Storage} from '@ionic/storage';
   templateUrl: 'buy-credits.html',
 })
 export class BuyCreditsPage {
+
   isEditable: boolean=false;
   imgFooter:any = false;
-  price: number;
+  price =0;
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage:Storage) {
   }
 

@@ -5,14 +5,17 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { BuyCreditsPage } from '../pages/buy-credits/buy-credits';
 import { ProfilePage } from '../pages/profile/profile';
 import { PlaquesPage } from '../pages/plaques/plaques';
-import { IrregularitiesPage } from '../pages/irregularities/irregularities';
 import { AuthProvider } from '../providers/auth/auth';
-
-
+import { HistoricPage } from '../pages/historic/historic';
+import { CreditCardScanPage } from '../pages/credit-card-scan/credit-card-scan';
+import { AboutPage } from '../pages/about/about';
+import { BugReportPage } from '../pages/bug-report/bug-report';
+import { CadsPage } from '../pages/cads/cads';
+import { ActivePlaquesPage } from '../pages/active-plaques/active-plaques';
+//import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,40 +25,48 @@ export class MyApp {
 
   rootPage: any = LoginPage;
 
-  pages: Array<{icon: string, title: string, component: any}>;
-
+  pages: Array<{ icon: string, title: string, component: any }>;
+  tutorial;
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-    events:Events,public auth:AuthProvider) {
+    events: Events, public auth: AuthProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
 
     this.pages = [];
-
-    events.subscribe('working_mode:0',()=>{
+    
+    events.subscribe('working_mode:0', () => {
       this.pages = [
       { icon: 'home', title: 'Inicio', component: HomePage},
       { icon: 'person', title: 'Meus Dados', component: ProfilePage},
       { icon: 'car', title: 'Minhas Placas', component: PlaquesPage},
-      { icon: 'wifi', title: 'List', component: ListPage },
+      { icon: 'ios-checkbox', title: 'Placas Ativas', component: ActivePlaquesPage},      
       { icon: 'cart', title: 'Comprar Créditos', component: BuyCreditsPage},
-      { icon: 'wifi', title: 'Meu Histórico', component: ListPage },
-      { icon: 'wifi', title: 'List', component: ListPage },
-      { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
-      { icon: 'logout', title: 'Sair', component: LoginPage}
+      { icon: 'paper', title: 'Cartões Estacionamento', component: CadsPage},
+      { icon: 'card', title: 'Meus Cartões', component: CreditCardScanPage },
+      { icon: 'md-calendar', title: 'Meu Histórico', component: HistoricPage },
+      //{ icon: 'ios-cash', title: 'Transações', component: TransactionsPage},
+      //{ icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
+      { icon: 'ios-help-circle', title: 'Fale Conosco', component: BugReportPage},
+      { icon: 'ios-information-circle', title: 'Sobre', component: AboutPage},
+      { icon: 'log-out', title: 'Sair', component: null}
       ]
     });
 
-    events.subscribe('working_mode:1',()=>{
+    events.subscribe('working_mode:1', () => {
       this.pages = [
-      { icon: 'home', title: 'Salvador', component: HomePage},
       { icon: 'home', title: 'Inicio', component: HomePage},
       { icon: 'person', title: 'Meus Dados', component: ProfilePage},
       { icon: 'car', title: 'Minhas Placas', component: PlaquesPage},
-      { icon: 'wifi', title: 'List', component: ListPage },
+      { icon: 'ios-checkbox', title: 'Placas Ativas', component: ActivePlaquesPage},      
       { icon: 'cart', title: 'Comprar Créditos', component: BuyCreditsPage},
-      { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
-      { icon: 'logout', title: 'Sair', component: null}
+      { icon: 'card', title: 'Meus Cartões', component: CreditCardScanPage },
+      { icon: 'md-calendar', title: 'Meu Histórico', component: HistoricPage },
+     // { icon: 'ios-cash', title: 'Transações', component: TransactionsPage},
+     // { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
+      { icon: 'ios-help-circle', title: 'Fale Conosco', component: BugReportPage},
+      { icon: 'ios-information-circle', title: 'Sobre', component: AboutPage},
+      { icon: 'log-out', title: 'Sair', component: null}
       ]
     });
 
@@ -71,13 +82,18 @@ export class MyApp {
   }
 
   openPage(page) {
-    if(page.component){
+    if (page.component) {
       // Reset the content nav to have just this page
       // we wouldn't want the back button to show in this scenario
       this.nav.setRoot(page.component);
-    }else{
-      this.auth.logout();
-      this.nav.setRoot(LoginPage);
+    } else {
+
+      this.auth.logout().then((res) => {
+        console.log(res);
+        this.nav.setRoot(LoginPage);
+      });
+
     }
   }
+ 
 }

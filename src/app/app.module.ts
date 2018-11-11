@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { BuyCreditsPage } from '../pages/buy-credits/buy-credits';
 import { SignupPage } from '../pages/signup/signup';
 import { LoginPage } from '../pages/login/login';
@@ -29,26 +28,60 @@ import {BackgroundGeolocation} from '@ionic-native/background-geolocation';
 import { GeolocationPage } from '../pages/geolocation/geolocation';
 import { AppFooterComponent } from '../components/app-footer/app-footer';
 import { BackgroundGeolocationPage } from '../pages/background-geolocation/background-geolocation';
+import { HistoricPage } from '../pages/historic/historic';
+import { AppVersion } from '@ionic-native/app-version';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
+import { PlaquesModalPage } from '../pages/plaques-modal/plaques-modal';
+import { TransactionsPage } from '../pages/transactions/transactions';
+import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
+
+import { TimelineComponent } from '../components/timeline/timeline';
+import { TimelineTimeComponent } from '../components/timeline/timeline';
+import { TimelineItemComponent } from '../components/timeline/timeline';
+
+import { Camera } from '@ionic-native/camera';
+import { CardIO } from '@ionic-native/card-io';
+import { CreditCardScanPage } from '../pages/credit-card-scan/credit-card-scan';
+import { AboutPage } from '../pages/about/about';
+import { BugReportPage } from '../pages/bug-report/bug-report';
+import { EmailComposer } from '@ionic-native/email-composer';
+import { CadsPage } from '../pages/cads/cads';
+import { ActivePlaquesPage } from '../pages/active-plaques/active-plaques';
+import { UserProvider } from '../providers/user/user';
+import { SpinnerProvider } from '../providers/spinner/spinner';
 
 
 @NgModule({
   declarations: [
     AppFooterComponent,
+    TimelineComponent,
+    TimelineItemComponent,
+    TimelineTimeComponent,
     MyApp,
     SignupPage,
-    ChangePasswordPage,
     FogotPassPage,
     LoginPage,
     HomePage,
-    ListPage,
     BuyCreditsPage,
+    ChangePasswordPage,
+    SlideTutorialPage,
+    PlaquesModalPage,
+    HistoricPage,
     PlaquesPage,
     ProfilePage,
+    TransactionsPage,
+    ActivePlaquesPage,
     IrregularitiesPage,
     CheckoutPage,
+    BugReportPage,
     GeolocationPage,
-    BackgroundGeolocationPage
+    CadsPage,
+    CreditCardScanPage,
+    AboutPage,
+    BackgroundGeolocationPage,
+    TimelineComponent,
+    TimelineItemComponent,
+    TimelineTimeComponent
   ],
   imports: [
     BrowserModule,
@@ -64,12 +97,20 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
   entryComponents: [
     MyApp,
     SignupPage,
-    ChangePasswordPage,
     FogotPassPage,
     LoginPage,
     HomePage,
-    ListPage,
+    HistoricPage,
+    PlaquesModalPage,
+    SlideTutorialPage,
+    TransactionsPage,
+    CreditCardScanPage,
+    ChangePasswordPage,
     BuyCreditsPage,
+    AboutPage,
+    CadsPage,
+    ActivePlaquesPage,
+    BugReportPage,
     PlaquesPage,
     ProfilePage,
     IrregularitiesPage,
@@ -85,7 +126,13 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
     HttpServiceProvider,
     PaymentHttpProvider,
     BackgroundGeolocation,
-    Geolocation
+    Geolocation,
+    Camera,
+    EmailComposer,
+    CardIO,
+    AppVersion,
+    UserProvider,
+    SpinnerProvider
   ]
 })
 export class AppModule {}

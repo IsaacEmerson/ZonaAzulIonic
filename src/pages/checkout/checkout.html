@@ -1,6 +1,5 @@
 <!--
   Generated template for the CheckoutPage page.
-
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
@@ -14,11 +13,15 @@
 
 
 <ion-content padding>
+
+  <div  style="text-align: center;">
+    <button *ngIf="hasCardStored" (click)="useCardStored()" ion-button color="primary" ion-button round >Usar Cartão Salvo</button>
+</div>
   <div padding>
     <ion-segment [(ngModel)]="paymentMethod" >
       <ng-container *ngFor="let payment of paymentMethods">
-        <ion-segment-button   *ngIf="payment.name=='CREDIT_CARD'" [value]="payment.name" >
-          {{payment.name}}
+        <ion-segment-button [hidden]="true" style="text-align:center;"   *ngIf="payment.name=='CREDIT_CARD'" [value]="payment.name" >
+          Cartão de Crédito
         </ion-segment-button>  
       </ng-container>
     </ion-segment>
@@ -29,25 +32,34 @@
 
     <div *ngSwitchCase="'BOLETO'" >
       area do boleto
-    </div>  
+    </div>
 
-    <div *ngSwitchCase="'CREDIT_CARD'" >
-        <ion-item>
-            <ion-label>Numero do cartao</ion-label>
-            <ion-input type="number" [(ngModel)]="creditCard.num"></ion-input>
+    <div  *ngSwitchCase="'CREDIT_CARD'" >
+        <form [formGroup]="creditCardForm">
+            <ion-item>
+                <ion-icon name="ios-contact" item-start color="primary"></ion-icon>
+                <ion-input clearInput=true type="text" formControlName="senderName" placeholder="Nome do Titular" [(ngModel)]="creditCard.senderName"></ion-input>
+              </ion-item>
+              <ion-item>
+                  <ion-icon name="ios-finger-print" item-start color="touchId"></ion-icon>
+                  <ion-input clearInput=true type="tel"  decimal="true" formControlName="senderCPF" placeholder="CPF do Titular" [brmasker]="{mask:'000.000.000-00', len:14}" [(ngModel)]="creditCard.senderCPF"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <!--TODO input validas para ativa concluir pagamento-->
+                    <ion-icon name="ios-card" item-start color="black"></ion-icon>
+                    <ion-input clearInput=true type="tel" [brmasker]="{len:16}" formControlName="cardNumber" placeholder="Número do cartão"  [(ngModel)]="creditCard.cardNumber"></ion-input>
+                </ion-item>
+            
+          <ion-item>
+            <ion-icon name="ios-card" item-start color="black"></ion-icon>
+            <ion-input type="tel" clearInput=true formControlName="cvv" placeholder="Código de Segurança" [brmasker]="{mask:'000', len:3}" [(ngModel)]="creditCard.cvv"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>Código de segurança</ion-label>
-            <ion-input type="number" [(ngModel)]="creditCard.cvv"></ion-input>
+            <ion-icon name="ios-calendar" item-start color="black"></ion-icon>
+            <ion-input  required="true" clearInput=true min="1" max="12" type="tel" formControlName="expiryMonth" placeholder="Mês" [brmasker]="{mask:'00', len:2}" [(ngModel)]="creditCard.expiryMonth"></ion-input>
+            <ion-input  required="true" clearInput=true min="0" max="99" type="tel" formControlName="expiryYear" placeholder="Ano" [brmasker]="{mask:'00', len:2}" [(ngModel)]="creditCard.expiryYear"></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-label>Mês - Expiração</ion-label>
-            <ion-input type="number" [(ngModel)]="creditCard.monthExp"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Ano - Expiração</ion-label>
-            <ion-input type="number" [(ngModel)]="creditCard.yearExp"></ion-input>
-          </ion-item>
+        </form>
     </div>
 
     <div *ngSwitchCase="'BALANCE'" >
@@ -56,12 +68,12 @@
 
     <ion-card>
       <ion-card-header text-center>
-        Total a pagar: <strong>{{price}}</strong>
+        Total a pagar: <strong> R$ {{price}}.00</strong>
       </ion-card-header>
       <ion-card-content>
-        <button ion-button full (click)="makePayment()">Concluir pagamento</button>
+        <button ion-button full [disabled]="!creditCardForm.valid" (click)="makePayment()">Concluir pagamento</button>
       </ion-card-content>
     </ion-card>
   </div>
 </ion-content>
-
+<app-footer></app-footer>

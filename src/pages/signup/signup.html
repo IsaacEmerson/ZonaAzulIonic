@@ -1,95 +1,117 @@
 <ion-content padding class="transparent-header">
-    <ion-header >
-      <ion-navbar color="primary" >
-        <ion-title>Cadastre-se</ion-title>
-      </ion-navbar>
-    </ion-header>
-   <div style="margin-top:50px;" padding>
-    <ion-slides  #signupSlider>
-      <ion-slide>
-    <p style="color:white;text-align: center;" >Um código de ativação será enviado para seu email.</p>
+
+  <ion-header>
+    <ion-navbar color="primary">
+      <ion-title>Cadastre-se</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <div class="container" padding>
+    <ion-slides #signupSlider>
+      <ion-slide class="passo1">
+        <p class="welcome">LEMBRE-SE: Um código de ativação será enviado para seu email</p>
         <form [formGroup]="signInitial">
           <ion-item>
-            <ion-input type="text" formControlName="user_name" placeholder="Nome / Razão social"></ion-input>
+            <ion-label>Nome</ion-label>
+            <ion-input type="text" formControlName="user_name"></ion-input>
           </ion-item>
-          <p *ngIf="!signInitial.controls.user_name.valid  && signInitial.controls.user_name.dirty" >Nome de usuário inválido</p>
+          <p class="alert" *ngIf="!signInitial.controls.user_name.valid  && signInitial.controls.user_name.dirty">Nome
+            de usuário inválido</p>
 
           <ion-item>
-              <ion-input type="email" formControlName="user_email" placeholder="Email"></ion-input>
-            </ion-item>
-            <p *ngIf="!signInitial.controls.user_email.valid  && signInitial.controls.user_email.dirty">Email inválido</p>
-          
-          <ion-item>
-              <ion-input [type]="seePass ? 'text' : 'password'" formControlName="user_pass" placeholder="Sua senha"></ion-input>
-              <button style="padding-right:0px;" (click)="changeSeePass()" ion-button item-right >
-                <ion-icon [name]="seePass ? 'eye-off' : 'eye'"></ion-icon>
-              </button> 
+            <ion-label>Email</ion-label>
+            <ion-input type="email" formControlName="user_email"></ion-input>
           </ion-item>
+          <p class="alert" *ngIf="!signInitial.controls.user_email.valid  && signInitial.controls.user_email.dirty">Email
+            inválido</p>
 
-            <p *ngIf="!signInitial.controls.user_pass.valid  && signInitial.controls.user_pass.dirty" >Senha muito curta</p>
-          
-          <button ion-button block outline  (click)="registerInitial()" [disabled]="!signInitial.valid" color="light" class="login-button">Cadastrar</button>
-       </form>
+          <ion-item>
+            <ion-label>Senha</ion-label>
+            <ion-input [type]="seePass ? 'text' : 'password'" formControlName="user_pass"></ion-input>
+            <button (click)="changeSeePass()" ion-button item-right>
+              <ion-icon [name]="seePass ? 'eye-off' : 'eye'"></ion-icon>
+            </button>
+          </ion-item>
+          <p class="alert" *ngIf="!signInitial.controls.user_pass.valid  && signInitial.controls.user_pass.dirty">Senha
+            muito curta</p>
 
-       <div class="strike">
+          <p style="display:inline" class="welcome">Ao realizar seu cadastro, você estará concordando com nossos</p>
+          <p class="danger" (click)="terms()">termos de uso</p>
+
+          <button ion-button block outline (click)="registerInitial()" [disabled]="!signInitial.valid" class="signup">Cadastrar</button>
+        </form>
+        <div class="strike">
           <span>OU</span>
         </div>
-        <button ion-button block clear (click)="goActivation()" color="light" class="login-button"><ion-icon name="unlock"></ion-icon> Já possui uma código de ativação?</button>    
+        <button ion-button block clear (click)="goActivation()" class="codigo-ativ">
+          <ion-icon class="cadeado" name="unlock"></ion-icon>
+          <span>Já possui uma código de ativação?</span>
+        </button>
       </ion-slide>
 
-      <ion-slide>
+      <ion-slide class="passo2">
+        <ion-item>
+          <ion-input [ngModel]="tokenEmailConfirm" (ngModelChange)="tokenEmailConfirm = $event.toLocaleUpperCase()"
+            placeholder="Digite seu código de verificação"></ion-input>
+        </ion-item>
+
+        <button ion-button block outline (click)="valAccount()" class="signup">Ativar Conta</button>
+
+        <div class="strike">
+          <span>OU</span>
+        </div>
+        <button ion-button block clear (click)="goSignup()" color="light" class="login-button">Ainda não se cadastrou?</button>
+      </ion-slide>
+
+      <ion-slide class="passo3">
+        <p class="welcome">Bem vindo,
+          <b>{{user.name}}</b>!</p>
+        <p class="welcome">Agora falta pouco para você finalizar seu cadastro</p>
+        <form [formGroup]="signFinal">
+          <ion-item>
+            <ion-label>CPF</ion-label>
+            <ion-input type="tel" formControlName="user_cpf" name="cpf" [brmasker]="{mask:'000.000.000-00', len:14}"
+              placeholder="Digite seu CPF..."></ion-input>
+          </ion-item>
+          <p class="alert" *ngIf="!signFinal.controls.user_cpf.valid  && signFinal.controls.user_cpf.dirty">CPF
+            inválido</p>
 
           <ion-item>
-              <ion-input [ngModel]="tokenEmailConfirm" (ngModelChange)="tokenEmailConfirm = $event.toLocaleUpperCase()"></ion-input>
+            <ion-label>Placa</ion-label>
+            <ion-input [ngModel]="plaque" (ngModelChange)="plaque = $event.toLocaleUpperCase()" [brmasker]="{mask:'000-0000',len:8}"
+              type="text" formControlName="user_plaque" placeholder="Digite uma placa, ex:ABC-1234"></ion-input>
+          </ion-item>
+          <p class="alert" *ngIf="!signFinal.controls.user_plaque.valid  && signFinal.controls.user_plaque.dirty">Placa
+            inválido</p>
+
+          <ion-list formControlName="vehicle_id" radio-group [(ngModel)]="vehicle_id">
+            <p class="label-veiculo">Qual o seu veículo?</p>
+            <ion-item class="veiculo">
+              <ion-label>Carro</ion-label>
+              <ion-radio value="1"></ion-radio>
+            </ion-item>
+            <ion-item class="veiculo">
+              <ion-label>Moto</ion-label>
+              <ion-radio value="2"></ion-radio>
+            </ion-item>
+          </ion-list>
+
+          <ion-item>
+            <ion-label>Telefone</ion-label>
+            <ion-input type="tel" formControlName="user_contact" [brmasker]="{mask:'(00)00000-0000', len:14}"
+              placeholder="Digite seu telefone..."></ion-input>
           </ion-item>
 
-          <button ion-button block outline (click)="valAccount()" color="light" class="login-button">Ativar Conta</button>
+          <ion-item>
+            <ion-label>Data Nascimento</ion-label>
+            <ion-input type="tel" formControlName="user_birth" [brmasker]="{mask:'00/00/0000', len:10}" placeholder="DD/MM/AAAA"></ion-input>
+          </ion-item>
 
-          <div class="strike">
-              <span>OU</span>
-            </div>
-            <button ion-button block clear (click)="goSignup()" color="light" class="login-button">Ainda não se cadastrou?</button>    
+          <button ion-button block outline (click)="registerFinal()" [disabled]="!signFinal.valid" class="signup">Cadastrar</button>
+        </form>
       </ion-slide>
 
-      <ion-slide>
-        <p>Bem vindo {{user.name}}, finalize seu cadastro</p>
-          <form [formGroup]="signFinal">
-              <ion-item>
-                <ion-input type="text" formControlName="user_cpf_cnpj" name="cpf" placeholder="CPF/CNPJ" [brmasker]="{person: true}"></ion-input>
-              </ion-item>
-              <p *ngIf="!signFinal.controls.user_cpf_cnpj.valid  && signFinal.controls.user_cpf_cnpj.dirty" >CPF ou CNPJ inválido</p>
-    
-              <ion-item>
-                <ion-input  [ngModel]="plaque" (ngModelChange)="plaque = $event.toLocaleUpperCase()" [brmasker]="{mask:'000-0000',len:8}" type="text" formControlName="user_plaque" placeholder="Placa ex: ABC-1234"></ion-input>
-              </ion-item>
-              <p *ngIf="!signFinal.controls.user_plaque.valid  && signFinal.controls.user_plaque.dirty" >Placa inválido</p>
-              
-              <ion-list style="color:white;margin-bottom: 0px;margin-top: -25px;" formControlName="vehicle_id" radio-group [(ngModel)]="vehicle_id">
-                  <div class = "row">
-                      <div class = "col col-50">
-                          <p style="font-size:15px;" >Carro</p>
-                          <ion-radio value="1"></ion-radio>
-                      </div>
-                      <div class = "col col-50">
-                          <p style="font-size:15px;">Moto</p>
-                          <ion-radio value="2"></ion-radio>
-                      </div>
-                   </div>
-              </ion-list>
-
-              <ion-item>
-                <ion-input type="text" formControlName="user_contact" [brmasker]="{mask:'(00)00000-0000', len:14}" placeholder="Contato"></ion-input>
-              </ion-item>
-
-              <ion-item>
-                  <ion-input type="text" formControlName="user_birth" [brmasker]="{mask:'00/00/0000', len:10}" placeholder="DD/MM/AAAA"></ion-input>
-              </ion-item>
-              
-              <button ion-button block outline (click)="registerFinal()" [disabled]="!signFinal.valid" color="light" class="login-button">Cadastrar</button>
-           </form>
-      </ion-slide>
-
-      </ion-slides>
-    </div>
-  </ion-content>
-  <app-footer></app-footer>
+    </ion-slides>
+  </div>
+</ion-content>
+<app-footer></app-footer>

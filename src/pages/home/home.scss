@@ -3,9 +3,35 @@ page-home {
         text-align: center;
     }
 
+    .welcome-container{
+        margin: 10px;
+    }
+
+    .welcome{
+        color: #4d4d4dff;
+        width: 275px !important;
+        font-size: 16px; 
+        margin: auto !important;
+        margin-bottom: 6px !important;
+        text-align: left;
+    }
+
+    .button{
+        margin:auto;
+        width: 250px;
+        border-radius: 20px;
+        font-size: 16px;
+        background-color: #007effff;
+    }
+
+    ion-card{
+        border-radius: 6px !important;
+    }
+
     .card p{
         margin: 1px;
         font-size: 1.2rem;
+        color: #4d4d4dff;
     }
 
     .card ion-icon {
@@ -26,5 +52,11 @@ page-home {
          }
     .card-1:hover {
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    }
+
+    ion-list-header{
+        text-align: left;
+        color: #4d4d4dff;
+        margin: 0 !important;
     }
 }

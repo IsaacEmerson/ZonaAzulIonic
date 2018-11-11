@@ -1,6 +1,7 @@
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Storage} from '@ionic/storage';
+import { Observable } from 'rxjs/Observable';
 import { LoadingController } from 'ionic-angular';
 
 @Injectable()
@@ -14,8 +15,8 @@ export class HttpServiceProvider {
 
   private token:string;
 
-  //private url: string = "http://zona-azul-teste.herokuapp.com/api";
-  private url: string = "http://192.168.1.14/estacionamento-zona-azul/public/api";
+  private url: string = "http://zona-azul-teste.herokuapp.com/api";
+  //private url: string = "http://192.168.1.14/estacionamento-zona-azul/public/api";
   //private url: string = "http://localhost/WebService/";
   
   constructor(public http: HttpClient,
@@ -27,39 +28,47 @@ export class HttpServiceProvider {
   createAuthorizationHeader() {
     this.storage.get('token').then(
       (data)=>{this.token=data;}
-      );
+      ),error=>{
+        console.log('deu ruim');
+      };
 
     const headers = new HttpHeaders()
-            .set("Authorization", "Bearer "+this.token);
+            .set("Authorization", "Bearer "+this.token).set("Accept","application/json");
     return headers
   }
 
-  getAll(endpoint){
+  getAll(endpoint): Observable<Object>{
+     this.options.headers = this.createAuthorizationHeader();
     return this.http.get(`${this.url}/${endpoint}`,this.options);
   }
 
-  getById(endpoint, id){
+  getById(endpoint, id): Observable<Object>{
+     this.options.headers = this.createAuthorizationHeader();
     return this.http.get(`${this.url}/${endpoint}/${id}`);
   }
 
-  get(endpoint){
-    this.options.headers = this.createAuthorizationHeader();
+  get(endpoint): Observable<Object>{
+     this.options.headers = this.createAuthorizationHeader();
     return this.http.get(`${this.url}/${endpoint}`,this.options);
   }
 
-  getParam(endpoint,params){
-    return this.http.get(`${this.url}/${endpoint}?${params}`);
+  getParam(endpoint,params): Observable<Object>{
+     this.options.headers = this.createAuthorizationHeader();
+    return this.http.get(`${this.url}/${endpoint}?${params}`,this.options);
   }
 
-  post(endpoint, data){
+  post(endpoint, data): Observable<Object>{
+     this.options.headers = this.createAuthorizationHeader();
     return this.http.post(`${this.url}/${endpoint}`, data, this.options);
   }
 
-  delete(endpoint, params){
+  delete(endpoint, params): Observable<Object>{
+     this.options.headers = this.createAuthorizationHeader();
     return this.http.delete(`${this.url}/${endpoint}?${params}`,this.options);
   }
 
-  update(endpoint, data){
+  update(endpoint, data): Observable<Object>{
+     this.options.headers = this.createAuthorizationHeader();
     return this.http.put(`${this.url}/${endpoint}`,data,this.options);
   }
 

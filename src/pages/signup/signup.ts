@@ -4,6 +4,7 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LoginPage } from '../login/login';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import {Storage} from '@ionic/storage';
+import { AboutPage } from '../about/about';
 
 @IonicPage()
 @Component({
@@ -52,19 +53,20 @@ export class SignupPage {
   });
 
   this.signFinal = formBuilder.group({
-    user_cpf_cnpj: ['', [Validators.maxLength(21), Validators.required]],
+    user_cpf: ['', [Validators.maxLength(100), Validators.required]],
     user_plaque: ['', [Validators.maxLength(100), Validators.required]],
-    user_birth: ['', [Validators.maxLength(100)]],
-    user_contact: ['', [Validators.maxLength(100)]],
-    vehicle_id : ['', [Validators.maxLength(10)]]
+    user_birth: ['', [Validators.maxLength(100), Validators.required]],
+    user_contact: ['', [Validators.maxLength(100), Validators.required]],
+    vehicle_id : ['', [Validators.maxLength(10), Validators.required]]
 });
-
   }
 
   changeSeePass(){
     this.seePass = !this.seePass;
   }
-
+  terms(){
+    this.navCtrl.push(AboutPage);
+  }
   registerInitial(){
     this.http.presentLoading();
     this.http.post('register',{
@@ -74,8 +76,8 @@ export class SignupPage {
       name: this.signInitial.controls['user_name'].value
   }).subscribe(
     (result:any)=>{
-    console.log(result.message);
-    this.showToast(result.message,6000);
+    console.log(result.success);
+    this.showToast(result.success,6000);
     this.signupSlider.lockSwipes(false);
     this.signupSlider.slideNext();  
     this.signupSlider.lockSwipes(true);
@@ -119,7 +121,7 @@ export class SignupPage {
       vehicle_id:this.signFinal.controls['vehicle_id'].value,
       cell_phone:this.signFinal.controls['user_contact'].value,
       plaque:this.signFinal.controls['user_plaque'].value,
-      cpf: this.signFinal.controls['user_cpf_cnpj'].value,
+      cpf: this.signFinal.controls['user_cpf'].value,
       birth_date: this.signFinal.controls['user_birth'].value,
       city_actual: city_actual,
   }).subscribe(

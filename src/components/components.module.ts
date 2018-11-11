@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { AppFooterComponent } from './app-footer/app-footer';
+import { TimelineComponent } from './timeline/timeline';
 @NgModule({
-	declarations: [AppFooterComponent],
+	declarations: [AppFooterComponent,
+    TimelineComponent],
 	imports: [],
-	exports: [AppFooterComponent]
+	exports: [AppFooterComponent,
+    TimelineComponent]
 })
 export class ComponentsModule {}

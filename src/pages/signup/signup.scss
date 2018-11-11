@@ -1,5 +1,5 @@
 page-signup {
-    $transparent-white: rgba(255, 255, 255, .6);
+  $transparent-white: rgba(255, 255, 255, .6);
   // This is just to make the header transparent and button/icon with white color
   .toolbar-content,
   span {
@@ -21,66 +21,95 @@ page-signup {
     text-align: center;
     background: rgba(255, 255, 255, .06);
   }
+
   .footer-md::before {
     border-top: 1px solid $transparent-white;
     background-image: none;
   }
+
   // Fullscreen animated rainbow gradient
   ion-content {
-    background: linear-gradient(316deg,  #2b5de8, #161692, #406ad8, #406ad8);
+    background-color:#32acff !important;
+    //background: linear-gradient(316deg,  #2b5de8, #161692, #406ad8, #406ad8);
     background-size: 1800% 1800%;
-    animation: rainbow 50s linear infinite;
+    //animation: rainbow 50s linear infinite;
   }
-  @keyframes rainbow {
-    0% {
-      background-position: 0% 0%
-    }
-    50% {
-      background-position: 100% 100%
-    }
-    100% {
-      background-position: 0% 0%
-    }
-  }
+
+  // @keyframes rainbow {
+  //   0% {
+  //     background-position: 0% 0%
+  //   }
+  //   50% {
+  //     background-position: 100% 100%
+  //   }
+  //   100% {
+  //     background-position: 0% 0%
+  //   }
+  // }
+
   // Content
   .scroll-content {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-  }
-  .logo {
-    width: 50%;
-    height: auto;
-    margin: 0 auto;
-    padding-top: 50px;
+    overflow: none;
   }
   // Input items
   ion-item {
-    border-radius: 3px !important;
-    padding-left: 10px !important;
-    margin-bottom: 15px !important;
-    margin-bottom: 10px;
-    color: #fff !important;
+    border-radius: 8px !important;
+    margin: auto !important;
+    padding: 0 10px !important;
+    padding-right: 0 !important;
+    margin-top: 12px !important;
+    width: 275px !important;
+    color: #eeeeee !important;
     background-color: rgba(255, 255, 255, .2) !important;
-    font-size: 0.9em;
+    font-size: 16px;
   }
-   ::-webkit-input-placeholder {
-    color: white !important;
+
+  ion-label{
+    color: #eeeeee !important;
   }
+
+  form{
+    margin-bottom: 10px;
+  }
+
+  ::-webkit-input-placeholder {
+    color: #eeeeee !important;
+    font-size: 15.5px;
+  }
+
   .item-inner {
     border-bottom: 0 !important;
     box-shadow: none !important;
   }
   // --
-  .login-button {
-    text-transform: none;
-    border-radius: 3px !important;
+  .signup{
+    width: 250px;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #007effff;
+    margin: auto;
+    margin-top: 20px !important;
+    margin-bottom: 20px;
   }
   // Facebook icon
   ion-icon {
-    padding-right: 10px;
+    float: right;
     font-size: 2.2rem;
+    background-color: none !important;
   }
+
+  .codigo-ativ{
+    color: #eeeeee;
+    margin-top: 10px !important;
+    padding: 0 5px;
+  }
+
+  .cadeado{
+    margin-right: 8px;
+  }
+
   // HR with text in the middle effect
   .strike {
     display: block;
@@ -110,7 +139,61 @@ page-signup {
     left: 100%;
     margin-left: 15px;
   }
-  p{
-    color:white;
+
+  .alert{
+    color: crimson;
+    font-weight: bolder;
+    margin: 0 !important;
+    padding: 5px !important;
+    font-size: 15px;
   }
+
+  .label-veiculo{
+    color: #eeeeee;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    text-align: left;
+  }
+
+  .veiculo{
+    width: 135px !important;
+    display: inline-block;
+    margin: 0 !important;
+    margin-top: 0 !important;
+    padding: 0 10px !important;
+    padding: 0 10px !important;
+    font-size: 16px;
+  }
+
+  .welcome{
+    color: #eeeeee;
+    width: 275px !important;
+    font-size: 16px; 
+    margin: auto !important;
+    margin-bottom: 6px !important;
+    text-align: left;
+  }
+  .danger{
+    font-size: 16px; 
+    display:inline;
+    color:#ff3333;
+  }
+
+  .container{
+    margin-top: 10%;
+  }
+
+  .passo1{
+    margin-top: 25% !important;
+  }
+
+  .passo2{
+    margin-top: 45% !important;
+  }
+
+  .passo3{
+    margin-top: 25px !important;
+  }
+
 }
