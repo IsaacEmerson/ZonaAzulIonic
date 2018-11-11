@@ -26,6 +26,7 @@ import { CheckoutPage } from '../pages/checkout/checkout';
 import { Geolocation } from '@ionic-native/geolocation';
 import {BackgroundGeolocation} from '@ionic-native/background-geolocation';
 import { GeolocationPage } from '../pages/geolocation/geolocation';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AppFooterComponent } from '../components/app-footer/app-footer';
 import { BackgroundGeolocationPage } from '../pages/background-geolocation/background-geolocation';
 import { HistoricPage } from '../pages/historic/historic';
@@ -134,7 +135,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
     AppVersion,
     UserProvider,
     SpinnerProvider,
-    LocalNotifications
+    LocalNotifications,
+    UniqueDeviceID
   ]
 })
 export class AppModule {}

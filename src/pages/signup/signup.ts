@@ -4,6 +4,7 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LoginPage } from '../login/login';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import {Storage} from '@ionic/storage';
+import { AboutPage } from '../about/about';
 
 @IonicPage()
 @Component({
@@ -63,7 +64,9 @@ export class SignupPage {
   changeSeePass(){
     this.seePass = !this.seePass;
   }
-
+  terms(){
+    this.navCtrl.push(AboutPage);
+  }
   registerInitial(){
     this.http.presentLoading();
     this.http.post('register',{

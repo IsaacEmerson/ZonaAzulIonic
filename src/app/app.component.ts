@@ -8,16 +8,13 @@ import { HomePage } from '../pages/home/home';
 import { BuyCreditsPage } from '../pages/buy-credits/buy-credits';
 import { ProfilePage } from '../pages/profile/profile';
 import { PlaquesPage } from '../pages/plaques/plaques';
-import { IrregularitiesPage } from '../pages/irregularities/irregularities';
 import { AuthProvider } from '../providers/auth/auth';
-import { TransactionsPage } from '../pages/transactions/transactions';
 import { HistoricPage } from '../pages/historic/historic';
 import { CreditCardScanPage } from '../pages/credit-card-scan/credit-card-scan';
 import { AboutPage } from '../pages/about/about';
 import { BugReportPage } from '../pages/bug-report/bug-report';
 import { CadsPage } from '../pages/cads/cads';
 import { ActivePlaquesPage } from '../pages/active-plaques/active-plaques';
-import { GeolocationPage } from '../pages/geolocation/geolocation';
 import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
 
 @Component({

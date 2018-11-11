@@ -15,13 +15,15 @@
             <ion-label>Nome</ion-label>
             <ion-input type="text" formControlName="user_name"></ion-input>
           </ion-item>
-          <p class="alert" *ngIf="!signInitial.controls.user_name.valid  && signInitial.controls.user_name.dirty">Nome de usuário inválido</p>
+          <p class="alert" *ngIf="!signInitial.controls.user_name.valid  && signInitial.controls.user_name.dirty">Nome
+            de usuário inválido</p>
 
           <ion-item>
             <ion-label>Email</ion-label>
             <ion-input type="email" formControlName="user_email"></ion-input>
           </ion-item>
-          <p class="alert" *ngIf="!signInitial.controls.user_email.valid  && signInitial.controls.user_email.dirty">Email inválido</p>
+          <p class="alert" *ngIf="!signInitial.controls.user_email.valid  && signInitial.controls.user_email.dirty">Email
+            inválido</p>
 
           <ion-item>
             <ion-label>Senha</ion-label>
@@ -30,7 +32,11 @@
               <ion-icon [name]="seePass ? 'eye-off' : 'eye'"></ion-icon>
             </button>
           </ion-item>
-          <p class="alert" *ngIf="!signInitial.controls.user_pass.valid  && signInitial.controls.user_pass.dirty">Senha muito curta</p>
+          <p class="alert" *ngIf="!signInitial.controls.user_pass.valid  && signInitial.controls.user_pass.dirty">Senha
+            muito curta</p>
+
+          <p style="display:inline" class="welcome">Ao realizar seu cadastro, você estará concordando com nossos</p>
+          <p class="danger" (click)="terms()">termos de uso</p>
 
           <button ion-button block outline (click)="registerInitial()" [disabled]="!signInitial.valid" class="signup">Cadastrar</button>
         </form>
@@ -45,7 +51,8 @@
 
       <ion-slide class="passo2">
         <ion-item>
-          <ion-input [ngModel]="tokenEmailConfirm" (ngModelChange)="tokenEmailConfirm = $event.toLocaleUpperCase()" placeholder="Digite seu código de verificação"></ion-input>
+          <ion-input [ngModel]="tokenEmailConfirm" (ngModelChange)="tokenEmailConfirm = $event.toLocaleUpperCase()"
+            placeholder="Digite seu código de verificação"></ion-input>
         </ion-item>
 
         <button ion-button block outline (click)="valAccount()" class="signup">Ativar Conta</button>
@@ -63,16 +70,19 @@
         <form [formGroup]="signFinal">
           <ion-item>
             <ion-label>CPF</ion-label>
-            <ion-input type="tel" formControlName="user_cpf" name="cpf" [brmasker]="{mask:'000.000.000-00', len:14}" placeholder="Digite seu CPF..."></ion-input>
+            <ion-input type="tel" formControlName="user_cpf" name="cpf" [brmasker]="{mask:'000.000.000-00', len:14}"
+              placeholder="Digite seu CPF..."></ion-input>
           </ion-item>
-          <p class="alert" *ngIf="!signFinal.controls.user_cpf.valid  && signFinal.controls.user_cpf.dirty">CPF inválido</p>
+          <p class="alert" *ngIf="!signFinal.controls.user_cpf.valid  && signFinal.controls.user_cpf.dirty">CPF
+            inválido</p>
 
           <ion-item>
             <ion-label>Placa</ion-label>
             <ion-input [ngModel]="plaque" (ngModelChange)="plaque = $event.toLocaleUpperCase()" [brmasker]="{mask:'000-0000',len:8}"
               type="text" formControlName="user_plaque" placeholder="Digite uma placa, ex:ABC-1234"></ion-input>
           </ion-item>
-          <p class="alert" *ngIf="!signFinal.controls.user_plaque.valid  && signFinal.controls.user_plaque.dirty">Placa inválido</p>
+          <p class="alert" *ngIf="!signFinal.controls.user_plaque.valid  && signFinal.controls.user_plaque.dirty">Placa
+            inválido</p>
 
           <ion-list formControlName="vehicle_id" radio-group [(ngModel)]="vehicle_id">
             <p class="label-veiculo">Qual o seu veículo?</p>
@@ -88,7 +98,8 @@
 
           <ion-item>
             <ion-label>Telefone</ion-label>
-            <ion-input type="tel" formControlName="user_contact" [brmasker]="{mask:'(00)00000-0000', len:14}" placeholder="Digite seu telefone..."></ion-input>
+            <ion-input type="tel" formControlName="user_contact" [brmasker]="{mask:'(00)00000-0000', len:14}"
+              placeholder="Digite seu telefone..."></ion-input>
           </ion-item>
 
           <ion-item>

@@ -6,6 +6,7 @@ import { GeolocationPage } from '../geolocation/geolocation';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
 import { MenuController } from 'ionic-angular';
+import { UserProvider } from '../../providers/user/user';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -46,11 +47,12 @@ export class HomePage {
     public authService: AuthProvider,
     public navParams: NavParams,
     public storage: Storage,
+    public userPro:UserProvider,
     public http: HttpServiceProvider,
     public menuCtrl: MenuController) { }
 
   ionViewDidLoad() {
-
+    this.userPro.notification();
   }
 
   ionViewDidEnter() {

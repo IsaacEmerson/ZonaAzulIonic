@@ -61,8 +61,9 @@
               {{rate.tar_nome}} {{rate.tar_tempo_permanencia}} R$ {{rate.valor.toFixed(2)}}
             </ion-option>
           </ion-select>
+          <p text-center>{{info_rate}}</p>
         </ion-item>
-        <p text-center >{{info_rate}}</p>
+        
         <button (click)="activeParking()" *ngIf="logradouros.length==1 && logradouros[0].periodo_valido" class="button"
           ion-button color="#387ef5" block>Estacionar</button>
         <ion-item style="margin-top:-10px;" text-center *ngIf="logradouros.length==1 && !logradouros[0].periodo_valido">
@@ -77,7 +78,7 @@
   <div style="margin-top:0px;" text-center *ngIf="!logradouros.length">
     <p>{{address}}</p>
     <img class="logo" src="assets/marc.png" />
-    <h4>Nenhuma área de <span style="color:rgb(36, 11, 179)" >ZONA AZUL</span> encontrada próximo o endereço atual</h4>
+    <h4>Nenhuma área de <span style="color:rgb(36, 11, 179)">ZONA AZUL</span> encontrada próximo o endereço atual</h4>
   </div>
 
 </ion-content>

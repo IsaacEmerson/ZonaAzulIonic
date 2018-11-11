@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { SpinnerProvider } from '../../providers/spinner/spinner';
 import { AuthProvider } from '../../providers/auth/auth';
 import { BuyCreditsPage } from '../buy-credits/buy-credits';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 
 declare var google: any;
@@ -203,6 +204,7 @@ export class GeolocationPage {
     public auth: AuthProvider,
     public nav: NavController,
     public zone: NgZone,
+    private uniqueDeviceID: UniqueDeviceID,
     public viewCtrl: ViewController,
     public platform: Platform,
     public spinner: SpinnerProvider,
@@ -222,10 +224,20 @@ export class GeolocationPage {
   };
 
   info_rate = '';
+  uuid = '';
 
   id_logradouro = 0;
   user_balance = 0;
   ionViewDidLoad() {
+    this.uniqueDeviceID.get()
+      .then((uuid: any) => {
+        console.log(uuid);
+        this.uuid = uuid;
+        //this.auth.showToast(uuid,2000);
+      }).catch((error: any) => {
+        this.auth.showToast(error,2000);
+        console.log(error)
+      });
     this.plaque_id = this.navParams.get('plaque_id');
     this.user_balance = this.navParams.get('balance');
   }
@@ -246,6 +258,7 @@ export class GeolocationPage {
       this.logradouros = result;
       this.id_logradouro = result[0].logradouro.id_logradouro;
       this.ratesLogra = result[0].tarifas;
+      this.info_rate = '';
       console.log(result);
       this.http.dismissLoading();
     }, error => {
@@ -262,20 +275,20 @@ export class GeolocationPage {
     console.log('logra' + this.id_logradouro);
     console.log('taxa' + this.rate_park.id_tarifa);
     if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= this.rate_park.valor) {
-      this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id })
+      this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id, uuid:this.uuid })
         .subscribe((res) => {
           console.log(res);
         });
     } else if (this.user_balance < this.rate_park.valor) {
       this.buyConfirm();
-    }else{
-      this.auth.showToast('Selecione a tarifa',4000);
+    } else {
+      this.auth.showToast('Selecione a tarifa', 4000);
     }
   }
 
-  showRate(data){
+  showRate(data) {
     console.log(data);
-    this.info_rate = data.tar_nome+" "+data.tar_tempo_permanencia+"Hrs Preço: R$ "+data.valor.toFixed(2);
+    this.info_rate = data.tar_nome + " " + data.tar_tempo_permanencia + "Hrs Preço: R$ " + data.valor.toFixed(2);
   }
 
   buyConfirm() {
