@@ -6,6 +6,7 @@ import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { Observable } from 'rxjs/Observable';
 import { SpinnerProvider } from '../../providers/spinner/spinner';
 import { AuthProvider } from '../../providers/auth/auth';
+import { BuyCreditsPage } from '../buy-credits/buy-credits';
 
 
 declare var google: any;
@@ -215,11 +216,18 @@ export class GeolocationPage {
   }
 
   plaque_id = 0;
-  rate_id = 0;
-  id_logradouro = 0;
+  rate_park = {
+    valor: 0,
+    id_tarifa: 0
+  };
 
+  info_rate = '';
+
+  id_logradouro = 0;
+  user_balance = 0;
   ionViewDidLoad() {
     this.plaque_id = this.navParams.get('plaque_id');
+    this.user_balance = this.navParams.get('balance');
   }
 
   getLogradouros(type_area, id_area_logradouro) {
@@ -247,15 +255,50 @@ export class GeolocationPage {
   }
 
   activeParking() {
-    console.log('placaaa'+this.plaque_id);
-    console.log('logra'+this.id_logradouro);
-    console.log('taxa'+this.rate_id);
-    if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_id != 0) {
-      this.http.post('client/estacionar', { id_tarifa: this.rate_id, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id })
-      .subscribe((res)=>{
-        console.log(res);
-      });
+    console.log(this.rate_park.valor);
+    console.log(this.user_balance);
+    console.log(this.rate_park);
+    console.log('placaaa' + this.plaque_id);
+    console.log('logra' + this.id_logradouro);
+    console.log('taxa' + this.rate_park.id_tarifa);
+    if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= this.rate_park.valor) {
+      this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id })
+        .subscribe((res) => {
+          console.log(res);
+        });
+    } else if (this.user_balance < this.rate_park.valor) {
+      this.buyConfirm();
+    }else{
+      this.auth.showToast('Selecione a tarifa',4000);
     }
+  }
+
+  showRate(data){
+    console.log(data);
+    this.info_rate = data.tar_nome+" "+data.tar_tempo_permanencia+"Hrs Preço: R$ "+data.valor.toFixed(2);
+  }
+
+  buyConfirm() {
+    let alert = this.alertCtrl.create({
+      title: 'Estacionamento',
+      message: 'Você não Possui saldo suficiente, deseja comprar?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Buy',
+          handler: () => {
+            this.nav.setRoot(BuyCreditsPage);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   getAreas() {

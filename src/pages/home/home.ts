@@ -176,7 +176,7 @@ export class HomePage {
     if (this.plaque_id == 0) {
       this.authService.showToast('Selecione a Placa para estacionar', 3000);
     } else {
-      this.navCtrl.push(GeolocationPage,{plaque_id:this.plaque_id});
+      this.navCtrl.push(GeolocationPage,{plaque_id:this.plaque_id, balance: this.user.balance.amount});
     }
   }
 

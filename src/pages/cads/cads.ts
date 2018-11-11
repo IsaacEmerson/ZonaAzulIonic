@@ -28,6 +28,8 @@ export class CadsPage {
     working_mode: 0
   };
 
+  price=0;
+
   constructor(public navCtrl: NavController, public auth: AuthProvider, public storage: Storage, public navParams: NavParams, public http: HttpServiceProvider) {
   }
 
@@ -73,8 +75,9 @@ export class CadsPage {
   }
 
   cadPrice(cad:any){
-    //console.log(this.rates[this.rate_index].rate);
+    console.log(+(this.rates[this.rate_index].rate));
     if(this.rate_id!=0){
+    this.price = cad*this.rates[this.rate_index].rate; 
     console.log(cad*this.rates[this.rate_index].rate);
     }
   }

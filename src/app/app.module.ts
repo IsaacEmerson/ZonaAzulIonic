@@ -50,6 +50,7 @@ import { ActivePlaquesPage } from '../pages/active-plaques/active-plaques';
 import { UserProvider } from '../providers/user/user';
 import { SpinnerProvider } from '../providers/spinner/spinner';
 
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @NgModule({
   declarations: [
@@ -132,7 +133,8 @@ import { SpinnerProvider } from '../providers/spinner/spinner';
     CardIO,
     AppVersion,
     UserProvider,
-    SpinnerProvider
+    SpinnerProvider,
+    LocalNotifications
   ]
 })
 export class AppModule {}
