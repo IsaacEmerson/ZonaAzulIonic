@@ -6,8 +6,8 @@
     <ion-title>Início</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content overflow-scroll='false' direction="y" has-bouncing="false" style="box-sizing: border-box;"
-  *ngIf="!isDataComplet" padding>
+<ion-content overflow-scroll='false' direction="y" has-bouncing="false" style="box-sizing: border-box;" *ngIf="!isDataComplet"
+  padding>
   <button style="margin-top:100px;" (click)="refresh()" ion-button color="#387ef5" ion-button round>Recarregar</button>
 </ion-content>
 
@@ -72,18 +72,19 @@
 
       </ion-list>
 
-      <ion-list radio-group [(ngModel)]="plaque_id">
-
-        <ion-list-header>
-          <b style="font-size: 2rem;">Selecione um veículo:</b>
-        </ion-list-header>
-        <ion-item ion-item *ngFor="let plaque of plaques">
-          <ion-label>{{plaque.plaque}} {{vehicles[plaque.vehicle_id-1].name}}</ion-label>
-          <ion-radio value="{{plaque.id}}"></ion-radio>
-        </ion-item>
-
-      </ion-list>
     </div>
+
+    <ion-list radio-group [(ngModel)]="plaque_id">
+
+      <ion-list-header>
+        <b style="font-size: 2rem;">Selecione um veículo:</b>
+      </ion-list-header>
+      <ion-item ion-item *ngFor="let plaque of plaques">
+        <ion-label>{{plaque.plaque}} {{vehicles[plaque.vehicle_id-1].name}}</ion-label>
+        <ion-radio value="{{plaque.id}}"></ion-radio>
+      </ion-item>
+
+    </ion-list>
 
     <button class="button" (click)="activeParking()" style="margin-bottom:60px;" ion-button color="#387ef5" block>Estacionar</button>
 

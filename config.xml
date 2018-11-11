@@ -104,11 +104,11 @@
     <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
         <string>need photo library access to get pictures from there</string>
     </edit-config>
-    <plugin name="cordova-plugin-decimal-keyboard" spec="https://github.com/mrchandoo/cordova-plugin-decimal-keyboard.git" />
     <plugin name="cordova-plugin-email-composer" spec="0.8.15" />
     <plugin name="cordova-plugin-camera" spec="4.0.3">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Autorize o Syszona a obter a imagem do seu cartão" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Autorize o Syszona a acessar sua foto" />
     </plugin>
     <engine name="ios" spec="4.5.5" />
+    <engine name="android" spec="7.1.1" />
 </widget>

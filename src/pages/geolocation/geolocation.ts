@@ -1,10 +1,11 @@
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
-import { ActionSheetController, AlertController, App, LoadingController, NavController, Platform, ToastController, ViewController } from 'ionic-angular';
+import { ActionSheetController, AlertController, App, LoadingController, NavController, Platform, ToastController, ViewController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from '@ionic/storage';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { Observable } from 'rxjs/Observable';
-import { SpinnerProvider } from '../../providers/spinner/spinner'
+import { SpinnerProvider } from '../../providers/spinner/spinner';
+import { AuthProvider } from '../../providers/auth/auth';
 
 
 declare var google: any;
@@ -190,13 +191,15 @@ export class GeolocationPage {
   quant_poly = 0;
 
   logradouros = [];
-
+  ratesLogra = []
   actual_city: any = {};
 
   constructor(
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public app: App,
+    public navParams: NavParams,
+    public auth: AuthProvider,
     public nav: NavController,
     public zone: NgZone,
     public viewCtrl: ViewController,
@@ -211,19 +214,48 @@ export class GeolocationPage {
     this.platform.ready().then(() => this.loadMaps());
   }
 
+  plaque_id = 0;
+  rate_id = 0;
+  id_logradouro = 0;
+
   ionViewDidLoad() {
-    this.storage.get('city_actual').then((city) => {
-      this.actual_city = city;
-    });
+    this.plaque_id = this.navParams.get('plaque_id');
   }
 
   getLogradouros(type_area, id_area_logradouro) {
     this.http.getParam('client/buscarLogradouros', 'type_area=' + type_area + '&id_area_logradouro=' + id_area_logradouro).subscribe((result: any) => {
       this.logradouros = result;
+      this.ratesLogra = result[0].tarifas;
       console.log(result);
     }, error => {
       console.log(error);
     });
+  }
+
+  selecLogradouro(id_logradouro) {
+    this.http.presentLoading();
+    this.http.getParam('client/buscarLogradouros', 'type_area=1&id_area_logradouro=' + id_logradouro).subscribe((result: any) => {
+      this.logradouros = result;
+      this.id_logradouro = result[0].logradouro.id_logradouro;
+      this.ratesLogra = result[0].tarifas;
+      console.log(result);
+      this.http.dismissLoading();
+    }, error => {
+      console.log(error);
+      this.http.dismissLoading();
+    });
+  }
+
+  activeParking() {
+    console.log('placaaa'+this.plaque_id);
+    console.log('logra'+this.id_logradouro);
+    console.log('taxa'+this.rate_id);
+    if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_id != 0) {
+      this.http.post('client/estacionar', { id_tarifa: this.rate_id, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id })
+      .subscribe((res)=>{
+        console.log(res);
+      });
+    }
   }
 
   getAreas() {
@@ -273,9 +305,12 @@ export class GeolocationPage {
 
   loadMaps() {
     if (!!google) {
-      this.initializeMap();
-      this.initAutocomplete();
-      this.getAreas();
+      this.storage.get('city_actual').then((city) => {
+        this.actual_city = city;
+        this.initializeMap();
+        this.initAutocomplete();
+        this.getAreas();
+      });
     } else {
       this.errorAlert('Error', 'Algo deu errado com a conexão com a Internet. Por favor, verifique sua Internet.')
     }
@@ -292,6 +327,7 @@ export class GeolocationPage {
   }
 
   initializeMap() {
+    console.log(this.actual_city.lng);
     let that = this;
     that.currentLocation();
     this.zone.run(() => {
@@ -300,8 +336,8 @@ export class GeolocationPage {
       this.map = new google.maps.Map(mapEle, {
         //draggable: true,
         zoom: 16,
-        center: this.actual_city ?
-          { lat: +this.actual_city.lat, lng: +this.actual_city.lng } :
+        center: this.actual_city.lat ?
+          { lat: this.actual_city.lat, lng: this.actual_city.lng } :
           { lat: 51.165691, lng: 10.451526 },
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         styles: this.styleMap,
@@ -340,28 +376,28 @@ export class GeolocationPage {
     });
   }
 
-  setLogradourosAndRates(that){
+  setLogradourosAndRates(that) {
     let map_center = that.getMapCenter();
-        let latLngObj = new google.maps.LatLng(map_center.lat(), map_center.lng());
+    let latLngObj = new google.maps.LatLng(map_center.lat(), map_center.lng());
 
-        let logradouro;
-        let area;
-        if (logradouro = this.findInPoly(this.polygons[1], latLngObj)) {
-          console.log(logradouro);
-          console.log('achou na logradouro');
-          this.getLogradouros(logradouro.type_area, logradouro.id_area_logradouro);
-        } else if(area = this.findInPoly(this.polygons[0], latLngObj)) {
-          if (area) {
-            console.log(area);
-            console.log('achou na Area');
-            this.getLogradouros(area.type_area, area.id_area_logradouro);
-          }
-        }else{
-          this.logradouros = [];
-        }
+    let logradouro;
+    let area;
+    if (logradouro = this.findInPoly(this.polygons[1], latLngObj)) {
+      console.log(logradouro);
+      console.log('achou na logradouro');
+      this.getLogradouros(logradouro.type_area, logradouro.id_area_logradouro);
+    } else if (area = this.findInPoly(this.polygons[0], latLngObj)) {
+      if (area) {
+        console.log(area);
+        console.log('achou na Area');
+        this.getLogradouros(area.type_area, area.id_area_logradouro);
+      }
+    } else {
+      this.logradouros = [];
+    }
 
-        console.log(latLngObj);
-        that.getAddress(latLngObj);
+    console.log(latLngObj);
+    that.getAddress(latLngObj);
   }
 
   initAutocomplete(): void {

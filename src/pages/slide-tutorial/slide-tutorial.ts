@@ -57,7 +57,7 @@ export class SlideTutorialPage {
     this.navCtrl.setRoot(LoginPage);
   }
   skip() {
-    this.navCtrl.setRoot(LoginPage);
+    this.goToApp();
   }
   ionViewDidEnter() {
     this.storage.get('token').then((token) => {

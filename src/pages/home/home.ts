@@ -5,7 +5,6 @@ import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { GeolocationPage } from '../geolocation/geolocation';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
-import { ActivePlaquesPage } from '../active-plaques/active-plaques';
 import { MenuController } from 'ionic-angular';
 @Component({
   selector: 'page-home',
@@ -167,15 +166,18 @@ export class HomePage {
           console.log(error);
         });
       }
-    } else if(this.actualCity.working_mode == 1) {
-      this.authService.showToast('Salvador', 3000);
+    } else if (this.actualCity.working_mode == 1) {
       this.parkCarLocation();
     }
   }
 
 
   parkCarLocation() {
-    this.navCtrl.push(GeolocationPage);
+    if (this.plaque_id == 0) {
+      this.authService.showToast('Selecione a Placa para estacionar', 3000);
+    } else {
+      this.navCtrl.push(GeolocationPage,{plaque_id:this.plaque_id});
+    }
   }
 
   ionViewCanEnter() {
