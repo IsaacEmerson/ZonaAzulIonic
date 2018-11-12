@@ -8,6 +8,8 @@ import { SpinnerProvider } from '../../providers/spinner/spinner';
 import { AuthProvider } from '../../providers/auth/auth';
 import { BuyCreditsPage } from '../buy-credits/buy-credits';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { UserProvider } from '../../providers/user/user';
+import { ActivePlaquesPage } from '../active-plaques/active-plaques';
 
 
 declare var google: any;
@@ -200,6 +202,7 @@ export class GeolocationPage {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public app: App,
+    public userPro:UserProvider,
     public navParams: NavParams,
     public auth: AuthProvider,
     public nav: NavController,
@@ -220,7 +223,8 @@ export class GeolocationPage {
   plaque_id = 0;
   rate_park = {
     valor: 0,
-    id_tarifa: 0
+    id_tarifa: 0,
+    tar_tempo_permanencia: ''
   };
 
   info_rate = '';
@@ -275,9 +279,12 @@ export class GeolocationPage {
     console.log('logra' + this.id_logradouro);
     console.log('taxa' + this.rate_park.id_tarifa);
     if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= this.rate_park.valor) {
-      this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id, uuid:this.uuid })
-        .subscribe((res) => {
+      this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id, uuid:'123e4567-e89b-12d3-a456-426655440000' })
+        .subscribe((res:any) => {
           console.log(res);
+          this.auth.showToast(res.success,5000);
+          this.userPro.notification(this.rate_park.tar_tempo_permanencia);
+          this.nav.setRoot(ActivePlaquesPage);
         });
     } else if (this.user_balance < this.rate_park.valor) {
       this.buyConfirm();
@@ -304,7 +311,7 @@ export class GeolocationPage {
           }
         },
         {
-          text: 'Buy',
+          text: 'Comprar',
           handler: () => {
             this.nav.setRoot(BuyCreditsPage);
           }
@@ -539,6 +546,7 @@ export class GeolocationPage {
       return latLng;
     }, (err) => {
       console.log(err);
+      this.spinner.dismiss();
     });
   }
 
