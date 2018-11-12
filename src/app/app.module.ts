@@ -50,7 +50,7 @@ import { CadsPage } from '../pages/cads/cads';
 import { ActivePlaquesPage } from '../pages/active-plaques/active-plaques';
 import { UserProvider } from '../providers/user/user';
 import { SpinnerProvider } from '../providers/spinner/spinner';
-
+import { Market } from '@ionic-native/market';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @NgModule({
@@ -136,7 +136,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
     UserProvider,
     SpinnerProvider,
     LocalNotifications,
-    UniqueDeviceID
+    UniqueDeviceID,
+    Market
   ]
 })
 export class AppModule {}
