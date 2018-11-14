@@ -125,10 +125,12 @@ export class LoginPage {
         this.storage.set('token', token.token).then(() => {
           //console.log(token.token);
           this.authService.setUserAuth();
+          this.http.setToken(token.token);
           this.events.publish('working_mode:' + this.working_mode);
-          this.userProvider.getUserData().then(()=>{
-            this.navCtrl.setRoot(HomePage);
-          });
+          this.navCtrl.setRoot(HomePage);
+          // this.userProvider.getUserData().then(()=>{
+          //   this.navCtrl.setRoot(HomePage);
+          // });
           this.http.dismissLoading();
         }).catch(error => {
           console.error(error);

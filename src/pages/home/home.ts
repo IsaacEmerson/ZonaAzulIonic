@@ -83,9 +83,23 @@ export class HomePage {
       console.log(result);
       this.cards = result;
     }, error => {
+      this.verError(error);
       console.log(error);
       this.isDataComplet = false;
     });
+  }
+
+  verError(error){
+    if (error.error.error == "token_expired") {
+      this.refreshToken();
+    } else
+      if (error.error.error == "token_invalid" || error.error.error == "token_not_provided") {
+        console.log('invalid token');
+      } else
+        if (error.error.error == "user_not_found") {
+          this.navCtrl.setRoot(LoginPage);
+          this.storage.clear();
+        }
   }
 
   getRates() {
@@ -93,9 +107,7 @@ export class HomePage {
       this.rates = result.rates;
       console.log(this.rates);
     }, error => {
-      if (error.error.error == "token_invalid" || error.error.error == "token_expired" || error.error.error == "token_not_provided") {
-        this.refreshToken();
-      }
+      this.verError(error);
       this.isDataComplet = false;
       console.log(error);
     });
@@ -115,16 +127,7 @@ export class HomePage {
       this.http.dismissLoading();
     }, error => {
       console.log(error);
-      if (error.error.error == "token_expired") {
-        this.refreshToken();
-      } else
-        if (error.error.error == "token_invalid" || error.error.error == "token_not_provided") {
-          console.log('invalid token');
-        } else
-          if (error.error.error == "user_not_found") {
-            this.navCtrl.setRoot(LoginPage);
-            this.storage.clear();
-          }
+      this.verError(error);
       this.isDataComplet = false;
       this.http.dismissLoading();
     });

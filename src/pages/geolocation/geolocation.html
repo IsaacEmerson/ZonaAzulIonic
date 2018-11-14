@@ -35,7 +35,7 @@
   <div [hidden]="!(switch == 'map')" class="centerMarker"></div>
 
   <ion-grid *ngIf="logradouros.length" class="listing-details">
-    <p text-center>Ruas Próximas com Zona Azul</p>
+    <p text-center>Ruas Próximas com estacionamento</p>
     <p style="color:rgb(121, 117, 117);margin-top: 0px;" text-center>(Para melhor uso ative a localização do seu
       celular)</p>
     <ion-scroll style="width:100%;height:30vh" scrollY="true">
@@ -78,7 +78,7 @@
   <div style="margin-top:0px;" text-center *ngIf="!logradouros.length">
     <p>{{address}}</p>
     <img class="logo" src="assets/marc.png" />
-    <h4>Nenhuma área de <span style="color:rgb(36, 11, 179)">ZONA AZUL</span> encontrada próximo o endereço atual</h4>
+    <h4>Nenhuma área de <span style="color:rgb(36, 11, 179)">estacionamento</span> encontrada próximo o endereço atual</h4>
   </div>
 
 </ion-content>

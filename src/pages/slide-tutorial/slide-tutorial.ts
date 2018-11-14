@@ -23,7 +23,7 @@ export class SlideTutorialPage {
         id:1,
         title: 'Bem Vindo ao Syszona',
         imageUrl: 'assets/imgs/tutorial/welcome.png',
-        description: 'A melhor forma de estacionar seu veículo em zona azul',
+        description: 'A melhor forma de estacionar seu veículo',
       },
       {
         id:2,
