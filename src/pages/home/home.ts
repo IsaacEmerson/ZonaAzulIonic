@@ -57,23 +57,24 @@ export class HomePage {
   }
 
   setAllData() {
-    this.storage.get('token').then(() => {
+    this.storage.get('token').then((token) => {
+      this.http.setToken(token);
       this.getUserData();
+      this.storage.get('city_actual').then((city) => {
+        this.actualCity = city;
+        console.log(city);
+        if (this.actualCity.working_mode == 0) {
+          this.getCards();
+          this.getRates();
+        }
+
+        this.isDataComplet = true;
+      }).catch((error) => {
+        this.isDataComplet = false;
+        console.log(error);
+      });
     }).catch(() => {
       console.log('error get user');
-    });
-    this.storage.get('city_actual').then((city) => {
-      this.actualCity = city;
-      console.log(city);
-      if (this.actualCity.working_mode == 0) {
-        this.getCards();
-        this.getRates();
-      }
-
-      this.isDataComplet = true;
-    }).catch((error) => {
-      this.isDataComplet = false;
-      console.log(error);
     });
   }
 
@@ -114,13 +115,16 @@ export class HomePage {
       this.http.dismissLoading();
     }, error => {
       console.log(error);
-      if (error.error.error == "token_invalid" || error.error.error == "token_expired" || error.error.error == "token_not_provided") {
+      if (error.error.error == "token_expired") {
         this.refreshToken();
-      }
-      if (error.error.error == "user_not_found") {
-        this.navCtrl.setRoot(LoginPage);
-        this.storage.clear();
-      }
+      } else
+        if (error.error.error == "token_invalid" || error.error.error == "token_not_provided") {
+          console.log('invalid token');
+        } else
+          if (error.error.error == "user_not_found") {
+            this.navCtrl.setRoot(LoginPage);
+            this.storage.clear();
+          }
       this.isDataComplet = false;
       this.http.dismissLoading();
     });
@@ -131,6 +135,7 @@ export class HomePage {
       console.log(result.token);
       this.storage.set('token', result.token).then(() => {
         this.setAllData();
+        console.log('token added');
       });
     }, error => {
       console.log(error);
@@ -175,7 +180,7 @@ export class HomePage {
     if (this.plaque_id == 0) {
       this.authService.showToast('Selecione a Placa para estacionar', 3000);
     } else {
-      this.navCtrl.push(GeolocationPage,{plaque_id:this.plaque_id, balance: this.user.balance.amount});
+      this.navCtrl.push(GeolocationPage, { plaque_id: this.plaque_id, balance: this.user.balance.amount });
     }
   }
 
