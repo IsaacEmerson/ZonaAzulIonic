@@ -66,8 +66,8 @@ export class CadsPage {
           this.auth.showToast(result.message, 3000);
         }, error => {
           this.http.dismissLoading();
-          console.log(error.message);
-          this.auth.showToast(error.message, 3000);
+          console.log(error.error.message);
+          this.auth.showToast(error.error.message, 3000);
         });
     } else {
       console.log('nops');

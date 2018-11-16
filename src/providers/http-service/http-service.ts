@@ -18,7 +18,7 @@ export class HttpServiceProvider {
   //private url: string = "http://zona-azul-teste.herokuapp.com/api";
   //private url: string = "http://192.168.100.12/estacionamento-zona-azul/public/api";
   //private url: string = "http://localhost/estacionamento-zona-azul/public/api";
-  private url: string = "https://syszona.com.br/api/";
+  private url: string = "https://syszona.com.br/api";
   
   constructor(public http: HttpClient,
     public loadingCtrl: LoadingController,
