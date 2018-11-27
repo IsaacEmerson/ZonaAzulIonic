@@ -53,7 +53,7 @@ import { UserProvider } from '../providers/user/user';
 import { SpinnerProvider } from '../providers/spinner/spinner';
 import { Market } from '@ionic-native/market';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-
+import { ThreeDeeTouch} from '@ionic-native/three-dee-touch';
 @NgModule({
   declarations: [
     AppFooterComponent,
@@ -136,6 +136,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
     BackgroundGeolocation,
     Geolocation,
     Camera,
+    ThreeDeeTouch,
     EmailComposer,
     CardIO,
     Market,
