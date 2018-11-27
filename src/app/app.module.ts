@@ -26,6 +26,7 @@ import { CheckoutPage } from '../pages/checkout/checkout';
 import { Geolocation } from '@ionic-native/geolocation';
 import {BackgroundGeolocation} from '@ionic-native/background-geolocation';
 import { GeolocationPage } from '../pages/geolocation/geolocation';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AppFooterComponent } from '../components/app-footer/app-footer';
 import { BackgroundGeolocationPage } from '../pages/background-geolocation/background-geolocation';
 import { HistoricPage } from '../pages/historic/historic';
@@ -34,6 +35,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { PlaquesModalPage } from '../pages/plaques-modal/plaques-modal';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
+import { VacanciesPage } from '../pages/vacancies/vacancies';
 
 import { TimelineComponent } from '../components/timeline/timeline';
 import { TimelineTimeComponent } from '../components/timeline/timeline';
@@ -49,7 +51,8 @@ import { CadsPage } from '../pages/cads/cads';
 import { ActivePlaquesPage } from '../pages/active-plaques/active-plaques';
 import { UserProvider } from '../providers/user/user';
 import { SpinnerProvider } from '../providers/spinner/spinner';
-
+import { Market } from '@ionic-native/market';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @NgModule({
   declarations: [
@@ -71,6 +74,7 @@ import { SpinnerProvider } from '../providers/spinner/spinner';
     ProfilePage,
     TransactionsPage,
     ActivePlaquesPage,
+    VacanciesPage,
     IrregularitiesPage,
     CheckoutPage,
     BugReportPage,
@@ -85,7 +89,10 @@ import { SpinnerProvider } from '../providers/spinner/spinner';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+      IonicModule.forRoot(MyApp, {
+        
+        backButtonText: 'Voltar'
+       }),
     IonicStorageModule.forRoot({
       name: '__mydb',
          driverOrder: ['indexeddb', 'sqlite', 'websql']
@@ -104,6 +111,7 @@ import { SpinnerProvider } from '../providers/spinner/spinner';
     PlaquesModalPage,
     SlideTutorialPage,
     TransactionsPage,
+    VacanciesPage,
     CreditCardScanPage,
     ChangePasswordPage,
     BuyCreditsPage,
@@ -130,9 +138,12 @@ import { SpinnerProvider } from '../providers/spinner/spinner';
     Camera,
     EmailComposer,
     CardIO,
+    Market,
     AppVersion,
     UserProvider,
-    SpinnerProvider
+    SpinnerProvider,
+    LocalNotifications,
+    UniqueDeviceID
   ]
 })
 export class AppModule {}

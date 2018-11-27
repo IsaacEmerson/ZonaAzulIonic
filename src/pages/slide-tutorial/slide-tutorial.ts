@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams,Slides } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { Storage } from '@ionic/storage';
 /**
  * Generated class for the SlideTutorialPage page.
  *
@@ -19,27 +20,32 @@ export class SlideTutorialPage {
     slideIndex = 0;
     slides = [
       {
+        id:1,
         title: 'Bem Vindo ao Syszona',
         imageUrl: 'assets/imgs/tutorial/welcome.png',
-        description: 'A melhor forma de estacionar seu veículo em zona azul',
+        description: 'A melhor forma de estacionar seu veículo',
       },
       {
-        title: 'Compre créditos e troque por cards para estacionar na cidade de Juazeiro',
+        id:2,
+        title: 'Compre créditos e troque por cards para estacionar',
         imageUrl: 'assets/imgs/tutorial/slide1.png',
         description: '',
       },
       {
+        id:3,
         title: 'Menu para facilitar o uso do app',
         imageUrl: 'assets/imgs/tutorial/slide2.png',
-        description: 'Ultilize as opções do menu para comprar créditos,estacionar, ver seu histórico...',
+        description: 'Ultilize as opções do menu para comprar créditos, estacionar, ver seu histórico...',
       },
       {
+        id:3,
         title: 'Aproveite o Syszona',
         imageUrl: 'assets/imgs/tutorial/welcome.png',
         description: 'Compre seus créditos e estacione seu veículo',
       }
     ];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public storage: Storage,public navCtrl: NavController, public navParams: NavParams) {
   }
   onSlideChanged() {
     this.slideIndex = this.slider.getActiveIndex();
@@ -51,11 +57,17 @@ export class SlideTutorialPage {
     this.navCtrl.setRoot(LoginPage);
   }
   skip() {
-    this.navCtrl.setRoot(LoginPage);
-    console.log('Skip clicked');
+    this.goToApp();
   }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SlideTutorialPage');
+  ionViewDidEnter() {
+    this.storage.get('token').then((token) => {
+      console.log('token ' + token);
+      if (token != null) {
+        this.navCtrl.setRoot(LoginPage);
+      } else {
+        console.log('creeee');
+      }
+    });
   }
 
 }

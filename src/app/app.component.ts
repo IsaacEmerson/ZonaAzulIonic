@@ -15,15 +15,15 @@ import { AboutPage } from '../pages/about/about';
 import { BugReportPage } from '../pages/bug-report/bug-report';
 import { CadsPage } from '../pages/cads/cads';
 import { ActivePlaquesPage } from '../pages/active-plaques/active-plaques';
-//import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
-
+import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
+import { VacanciesPage } from '../pages/vacancies/vacancies';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = SlideTutorialPage;
 
   pages: Array<{ icon: string, title: string, component: any }>;
   tutorial;
@@ -45,6 +45,7 @@ export class MyApp {
       { icon: 'paper', title: 'Cartões Estacionamento', component: CadsPage},
       { icon: 'card', title: 'Meus Cartões', component: CreditCardScanPage },
       { icon: 'md-calendar', title: 'Meu Histórico', component: HistoricPage },
+      { icon: 'compass', title: 'Vagas por rua', component: VacanciesPage },
       //{ icon: 'ios-cash', title: 'Transações', component: TransactionsPage},
       //{ icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
       { icon: 'ios-help-circle', title: 'Fale Conosco', component: BugReportPage},
@@ -62,6 +63,7 @@ export class MyApp {
       { icon: 'cart', title: 'Comprar Créditos', component: BuyCreditsPage},
       { icon: 'card', title: 'Meus Cartões', component: CreditCardScanPage },
       { icon: 'md-calendar', title: 'Meu Histórico', component: HistoricPage },
+      { icon: 'compass', title: 'Vagas por rua', component: VacanciesPage },
      // { icon: 'ios-cash', title: 'Transações', component: TransactionsPage},
      // { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
       { icon: 'ios-help-circle', title: 'Fale Conosco', component: BugReportPage},

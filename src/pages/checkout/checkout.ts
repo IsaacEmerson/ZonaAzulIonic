@@ -1,4 +1,3 @@
-
 import { Component, NgZone, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Segment } from 'ionic-angular';
 import { PaymentHttpProvider } from '../../providers/payment-http/payment-http';
@@ -90,10 +89,10 @@ export class CheckoutPage {
         }
     });
   }
-
   ionViewDidLoad() {
     this.http.presentLoading();
-    scriptjs('https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',()=>{
+    // https://stc.pagseguro.uol.com.br https://stc.sandbox.pagseguro.uol.com.br
+    scriptjs('https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',()=>{
       this.paymentHttp.getSession().subscribe((data)=>{
         this.initSession(data);
         this.getPaymentMethods();

@@ -53,13 +53,12 @@ page-slide-tutorial {
       .slide-title {
         color: white;
         font-weight: bold;
-        
       }
       .slide-image {
 
-        width: 100%;
+        max-width: 100%;
 
-        
+        background-size: cover;
       }
       .last-slide {
         background-image: url('img/welcome-4.jpg');

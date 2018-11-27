@@ -21,7 +21,7 @@ export class SpinnerProvider {
 
   load() {
     this.loader = this.loadingCtrl.create({
-      content: ''
+      content: 'Ative sua localização..'
     });
     this.loader.present();
   }

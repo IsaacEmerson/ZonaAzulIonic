@@ -28,6 +28,8 @@ export class CadsPage {
     working_mode: 0
   };
 
+  price=0;
+
   constructor(public navCtrl: NavController, public auth: AuthProvider, public storage: Storage, public navParams: NavParams, public http: HttpServiceProvider) {
   }
 
@@ -50,6 +52,7 @@ export class CadsPage {
       if(error.error=="token_not_provided"){
         console.log(this.auth.refreshToken());
       }
+      
       console.log(error);
     });
   }
@@ -64,17 +67,21 @@ export class CadsPage {
           this.auth.showToast(result.message, 3000);
         }, error => {
           this.http.dismissLoading();
-          console.log(error.error.message);
+          console.log(error.message);
           this.auth.showToast(error.error.message, 3000);
         });
     } else {
       console.log('nops');
     }
   }
-
   cadPrice(cad:any){
-    //console.log(this.rates[this.rate_index].rate);
+    if(this.rates.length==0){
+      this.auth.showToast("Nenhuma taxa cadastrada para a cidade atual", 3000);
+      return ;
+    }
+    console.log(+(this.rates[this.rate_index].rate));
     if(this.rate_id!=0){
+    this.price = cad*this.rates[this.rate_index].rate; 
     console.log(cad*this.rates[this.rate_index].rate);
     }
   }

@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Vagas por rua</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list *ngIf="vacancies">
+    <ion-item ion-item *ngFor="let vac of vacancies">
+      <b>{{ vac.address }}</b> -- {{ vac.vacancies }}
+    </ion-item>
+  </ion-list>
+  <div *ngIf="!vacancies">
+    <p>Nenhuma informação de vaga cadastrada no sistema</p>
+  </div>
+</ion-content> 
+<app-footer></app-footer>

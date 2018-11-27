@@ -62,15 +62,15 @@ export class HistoricPage {
           // troca de crédito por card
 
           this.items[key] = {
-            title: "Troca de Card",
+            title: "Troca por Cads",
             content: [
-              { msg: "Você trocou seus créditos por cards" },
+              { msg: "Você trocou seus créditos por cads" },
               {
                 items: [
                   //TODO colocar valor negativo
-                  ["Valor", this.historics[key].amount.toFixed(2)],
-                  ["Saldo Anterior", this.historics[key].amount_before.toFixed(2)],
-                  ["Saldo Atual", this.historics[key].amount_after.toFixed(2)],
+                  ["Valor", this.historics[key].amount],
+                  ["Saldo Anterior", this.historics[key].amount_before],
+                  ["Saldo Atual", this.historics[key].amount_after],
                 ]
               },
             ],
@@ -86,11 +86,10 @@ export class HistoricPage {
           this.items[key] = {
             title: "Compra de Crédito",
             content: [
-              { msg: "Você trocou seus créditos por cards" },
+              { msg: "Você comprou créditos" },
               {
                 items: [
-                  ["Saldo Atual", this.historics[key].amount_after.toFixed(2)],
-                  ["Valor da compra ", this.historics[key].amount.toFixed(2)],
+                  ["Valor da compra ", this.historics[key].amount],
                 ]
               },
             ],
@@ -102,12 +101,12 @@ export class HistoricPage {
         case 'CP':
           //compra de cards em ponto de venda
           this.items[key] = {
-            title: "Compra de Cards",
+            title: "Compra de Cads",
             content: [
-              { msg: "Você trocou seus créditos por cards" },
+              { msg: "Você trocou seus créditos por cads" },
               {
                 items: [
-                  ["Saldo Atual", this.historics[key].amount.toFixed(2)],
+                  ["Saldo Atual", this.historics[key].amount],
                 ]
               },
             ],
@@ -122,11 +121,11 @@ export class HistoricPage {
             title: "Estacionou",
             //content:"Você estacionamento usando cards",
             content: [
-              { msg: "Você trocou seus créditos por cards" },
+              { msg: "Você estacionou seu veículo" },
               {
                 items: [
                   ["Saldo Atual", this.historics[key].amount],
-                  ["Cards", this.historics[key].total_cards],
+                  ["Cads", this.historics[key].total_cards],
                 ]
               },
             ],

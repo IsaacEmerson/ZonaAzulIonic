@@ -12,7 +12,7 @@
     <div >
       <img [src]="cardImage" />
       <ion-fab right class="pop-in" [ngClass]="{'pop-out': fabGone}" style="top: 23rem;">
-        <button hideWhen="ios" ion-fab mini (click)="scanCard()" color="dark">
+        <button  ion-fab mini (click)="scanCard()" color="dark">
           <ion-icon name="camera"></ion-icon>
         </button>
       </ion-fab>
@@ -46,26 +46,11 @@
   </div>
 
 
-  <div [hidden]="!(switch == 'list')">
-    <p style="font-size:20px;" text-center>Meus Cartões</p>
-    <ion-list>
-      <ion-item>
-        <p style="font-size:20px;">{{card.senderName}}</p>
-      </ion-item>
-    </ion-list>
-  </div>
+  
 
 </ion-content>
 
-<div class="switch">
-  <button ion-button color="light" (click)="(switch = 'card');" [class.active]="(switch == 'card')" icon-only>
-    <ion-icon name="card"></ion-icon>
-  </button>
-  <button ion-button color="light" (click)="(switch = 'list'); getCardsList();" [class.active]="(switch == 'list')"
-    icon-only>
-    <ion-icon name="list"></ion-icon>
-  </button>
-</div>
+
 
 <app-footer>
   

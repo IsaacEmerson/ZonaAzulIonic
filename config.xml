@@ -108,5 +108,6 @@
     </feature>
     <plugin name="cordova-plugin-camera" spec="4.0.3" />
     <plugin name="cordova-plugin-email-composer" spec="0.8.15" />
+    <plugin name="cordova-plugin-market" spec="1.2.0" />
     <engine name="ios" spec="4.5.5" />
 </widget>

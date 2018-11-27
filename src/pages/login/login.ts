@@ -8,7 +8,8 @@ import { Storage } from '@ionic/storage';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { AppVersion } from '@ionic-native/app-version';
 import { UserProvider } from '../../providers/user/user';
-
+import { Market } from '@ionic-native/market';
+import { Platform } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -27,11 +28,13 @@ export class LoginPage {
   };
 
   constructor(public navCtrl: NavController,
+    public plt: Platform,
     public authService: AuthProvider,
     public alertCtrl: AlertController,
     public storage: Storage,
     public menu: MenuController,
     public userProvider:UserProvider,
+    private market: Market,
     public appVersion: AppVersion,
     public http: HttpServiceProvider,
     public events: Events) {
@@ -39,7 +42,7 @@ export class LoginPage {
 
   ionViewDidLoad() {
     this.getCities();
-    this.checkVersion();
+    //this.checkVersion();
   }
 
   getCities() {
@@ -49,6 +52,8 @@ export class LoginPage {
       console.log(cities.cities);
       this.http.dismissLoading();
     }, error => {
+      this.authService.showToast('Verifique a conexão com a internet',3000);
+      this.http.dismissLoading();
       console.log(error);
     });
   }
@@ -120,10 +125,12 @@ export class LoginPage {
         this.storage.set('token', token.token).then(() => {
           //console.log(token.token);
           this.authService.setUserAuth();
+          this.http.setToken(token.token);
           this.events.publish('working_mode:' + this.working_mode);
-          this.userProvider.getUserData().then(()=>{
-            this.navCtrl.setRoot(HomePage);
-          });
+          this.navCtrl.setRoot(HomePage);
+          // this.userProvider.getUserData().then(()=>{
+          //   this.navCtrl.setRoot(HomePage);
+          // });
           this.http.dismissLoading();
         }).catch(error => {
           console.error(error);
@@ -157,7 +164,9 @@ export class LoginPage {
       // this.appVersion.getVersionNumber().then((version)=>{
       //   console.log(version);
       // });
-      return this.http.getParam('checkVersion', "app='1'&version='1.0.0'")
+      let isAndroid = this.plt.is('android');
+      let plat = isAndroid?1:0;
+      return this.http.getParam('checkVersion', "app=1&version=1.0.0&platform="+plat)
         .subscribe((result: any) => {
           console.log(result);
         }, error => {
@@ -170,6 +179,7 @@ export class LoginPage {
             alert.addButton({
               text: 'Ok',
               handler: (data: any) => {
+                this.market.open('br.com.syszona.syszonazonaazulclienteapp');
                 console.log(data);
               }
             });

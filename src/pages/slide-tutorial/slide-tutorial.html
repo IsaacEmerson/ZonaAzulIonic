@@ -2,10 +2,10 @@
   <ion-navbar transparent>
     <ion-buttons right>
       <button ion-button color="light"
-              *ngIf="slideIndex < slides.length - 1"
               class="skip-button"
               (click)="skip()">Pular</button>
     </ion-buttons>
+   
   </ion-navbar>
 </ion-header>
 <ion-content fullscreen="true" class="no-padding-top">
@@ -13,8 +13,8 @@
     <ion-slide *ngFor="let slide of slides"
                class="slide-background"
                [ngStyle]="{'background-image': 'url(' + slide.imageUrl +')'}">
-      <div class="text-wrapper">
-        <div class="slide-text">
+      <div style="background-color:#21241e96;" class="text-wrapper">
+        <div padding class="slide-text">
           <h2 class="slide-title" [innerHTML]="slide.title"></h2><br>
           <p [innerHTML]="slide.description"></p>
         </div>

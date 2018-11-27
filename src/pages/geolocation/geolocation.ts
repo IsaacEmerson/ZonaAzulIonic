@@ -1,10 +1,15 @@
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
-import { ActionSheetController, AlertController, App, LoadingController, NavController, Platform, ToastController, ViewController } from 'ionic-angular';
+import { ActionSheetController, AlertController, App, LoadingController, NavController, Platform, ToastController, ViewController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from '@ionic/storage';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { Observable } from 'rxjs/Observable';
-import { SpinnerProvider } from '../../providers/spinner/spinner'
+import { SpinnerProvider } from '../../providers/spinner/spinner';
+import { AuthProvider } from '../../providers/auth/auth';
+import { BuyCreditsPage } from '../buy-credits/buy-credits';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { UserProvider } from '../../providers/user/user';
+import { ActivePlaquesPage } from '../active-plaques/active-plaques';
 
 
 declare var google: any;
@@ -184,15 +189,25 @@ export class GeolocationPage {
     }
   ];
 
+  polygons = [];
   poligono_areas = {};
   poligono_logradouro = {};
+  quant_poly = 0;
+
+  logradouros = [];
+  ratesLogra = []
+  actual_city: any = {};
 
   constructor(
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public app: App,
+    public userPro:UserProvider,
+    public navParams: NavParams,
+    public auth: AuthProvider,
     public nav: NavController,
     public zone: NgZone,
+    private uniqueDeviceID: UniqueDeviceID,
     public viewCtrl: ViewController,
     public platform: Platform,
     public spinner: SpinnerProvider,
@@ -205,8 +220,109 @@ export class GeolocationPage {
     this.platform.ready().then(() => this.loadMaps());
   }
 
+  plaque_id = 0;
+  rate_park = {
+    valor: 0,
+    id_tarifa: 0,
+    tar_tempo_permanencia: ''
+  };
+
+  info_rate = '';
+  uuid = '';
+
+  id_logradouro = 0;
+  user_balance = 0;
+  ionViewDidLoad() {
+    this.uniqueDeviceID.get()
+      .then((uuid: any) => {
+        console.log(uuid);
+        this.uuid = uuid;
+        //this.auth.showToast(uuid,2000);
+      }).catch((error: any) => {
+        this.auth.showToast(error,2000);
+        console.log(error)
+      });
+    this.plaque_id = this.navParams.get('plaque_id');
+    this.user_balance = this.navParams.get('balance');
+  }
+
+  getLogradouros(type_area, id_area_logradouro) {
+    this.http.getParam('client/buscarLogradouros', 'type_area=' + type_area + '&id_area_logradouro=' + id_area_logradouro).subscribe((result: any) => {
+      this.logradouros = result;
+      this.ratesLogra = result[0].tarifas;
+      console.log(result);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  selecLogradouro(id_logradouro) {
+    this.http.presentLoading();
+    this.http.getParam('client/buscarLogradouros', 'type_area=1&id_area_logradouro=' + id_logradouro).subscribe((result: any) => {
+      this.logradouros = result;
+      this.id_logradouro = result[0].logradouro.id_logradouro;
+      this.ratesLogra = result[0].tarifas;
+      this.info_rate = '';
+      console.log(result);
+      this.http.dismissLoading();
+    }, error => {
+      console.log(error);
+      this.http.dismissLoading();
+    });
+  }
+
+  activeParking() {
+    console.log(this.rate_park.valor);
+    console.log(this.user_balance);
+    console.log(this.rate_park);
+    console.log('placaaa' + this.plaque_id);
+    console.log('logra' + this.id_logradouro);
+    console.log('taxa' + this.rate_park.id_tarifa);
+    if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= this.rate_park.valor) {
+      this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id, uuid:this.uuid })
+        .subscribe((res:any) => {
+          console.log(res);
+          this.auth.showToast(res.success,5000);
+          this.userPro.notification(this.rate_park.tar_tempo_permanencia);
+          this.nav.setRoot(ActivePlaquesPage);
+        });
+    } else if (this.user_balance < this.rate_park.valor) {
+      this.buyConfirm();
+    } else {
+      this.auth.showToast('Selecione a tarifa', 4000);
+    }
+  }
+
+  showRate(data) {
+    console.log(data);
+    this.info_rate = data.tar_nome + " " + data.tar_tempo_permanencia + "Hrs Preço: R$ " + data.valor.toFixed(2);
+  }
+
+  buyConfirm() {
+    let alert = this.alertCtrl.create({
+      title: 'Estacionamento',
+      message: 'Você não Possui saldo suficiente, deseja comprar?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Comprar',
+          handler: () => {
+            this.nav.setRoot(BuyCreditsPage);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
   getAreas() {
-    this.http.get('areas').subscribe((res: any) => {
+    this.http.get('client/areasLogradouros').subscribe((res: any) => {
       this.poligono_areas = res.poligono_areas;
       this.poligono_logradouro = res.poligono_logradouros;
       this.drawParkingAreas(this.poligono_areas, 0);
@@ -218,9 +334,14 @@ export class GeolocationPage {
   }
 
   drawParkingAreas(areas, cor: any) {
+    let type_area = cor;
     cor == 1 ? cor = '#FF0000' : cor = '#FFAAAA';
+    let pol = [];
+    let i = 0;
     for (let key in areas) {
-      var polygon = new google.maps.Polygon({
+      pol[i] = new google.maps.Polygon({
+        type_area: type_area,
+        id_area_logradouro: key,
         paths: areas[key],
         strokeColor: cor,
         strokeOpacity: 0.8,
@@ -228,11 +349,13 @@ export class GeolocationPage {
         fillColor: cor,
         fillOpacity: 0.30
       });
-      polygon.setMap(this.map);
-      polygon.addListener('click', (data) => {
-        console.log(data);
+      pol[i].setMap(this.map);
+      pol[i].addListener('click', (data) => {
+        console.log(key + " " + type_area);
       });
+      i++;
     }
+    this.polygons[type_area] = pol;
   }
 
   toggleSearch() {
@@ -244,25 +367,41 @@ export class GeolocationPage {
   }
 
   loadMaps() {
-    
     if (!!google) {
-      this.initializeMap();
-      this.initAutocomplete();
-      this.getAreas();
+      this.storage.get('city_actual').then((city) => {
+        this.actual_city = city;
+        this.initializeMap();
+        this.initAutocomplete();
+        this.getAreas();
+      });
     } else {
-      this.errorAlert('Error', 'Something went wrong with the Internet Connection. Please check your Internet.')
+      this.errorAlert('Error', 'Algo deu errado com a conexão com a Internet. Por favor, verifique sua Internet.')
     }
   }
 
+  findInPoly(arrayPoly, latLng) {
+    for (let poly of arrayPoly) {
+      if (google.maps.geometry.poly.containsLocation(latLng, poly)) {
+        //console.log(poly);
+        return poly;
+      }
+    }
+    return false;
+  }
+
   initializeMap() {
+    console.log(this.actual_city.lng);
     let that = this;
     that.currentLocation();
     this.zone.run(() => {
+
       var mapEle = this.mapElement.nativeElement;
       this.map = new google.maps.Map(mapEle, {
         //draggable: true,
         zoom: 16,
-        center: { lat: 51.165691, lng: 10.451526 },
+        center: this.actual_city.lat ?
+          { lat: this.actual_city.lat, lng: this.actual_city.lng } :
+          { lat: 51.165691, lng: 10.451526 },
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         styles: this.styleMap,
         disableDoubleClickZoom: false,
@@ -283,10 +422,7 @@ export class GeolocationPage {
 
       //Reload markers every time the map moves
       google.maps.event.addListener(this.map, 'dragend', () => {
-        let map_center = that.getMapCenter();
-        let latLngObj = new google.maps.LatLng(map_center.lat(), map_center.lng());
-        console.log(latLngObj);
-        that.getAddress(latLngObj);
+        this.setLogradourosAndRates(that);
       });
 
       google.maps.event.addListenerOnce(this.map, 'idle', () => {
@@ -301,6 +437,30 @@ export class GeolocationPage {
       });
 
     });
+  }
+
+  setLogradourosAndRates(that) {
+    let map_center = that.getMapCenter();
+    let latLngObj = new google.maps.LatLng(map_center.lat(), map_center.lng());
+
+    let logradouro;
+    let area;
+    if (logradouro = this.findInPoly(this.polygons[1], latLngObj)) {
+      console.log(logradouro);
+      console.log('achou na logradouro');
+      this.getLogradouros(logradouro.type_area, logradouro.id_area_logradouro);
+    } else if (area = this.findInPoly(this.polygons[0], latLngObj)) {
+      if (area) {
+        console.log(area);
+        console.log('achou na Area');
+        this.getLogradouros(area.type_area, area.id_area_logradouro);
+      }
+    } else {
+      this.logradouros = [];
+    }
+
+    console.log(latLngObj);
+    that.getAddress(latLngObj);
   }
 
   initAutocomplete(): void {
@@ -329,9 +489,10 @@ export class GeolocationPage {
       google.maps.event.addListener(autocomplete, 'place_changed', () => {
         const place = autocomplete.getPlace();
         if (!place.geometry) {
-          sub.error({
-            message: 'Autocomplete returned place with no geometry'
-          });
+          this.address = 'Autocomplete returned place with no geometry';
+          // sub.error({
+          //   message: 'Autocomplete returned place with no geometry'
+          // });
         } else {
           console.log('Search Lat', place.geometry.location.lat());
           console.log('Search Lng', place.geometry.location.lng());
@@ -385,6 +546,7 @@ export class GeolocationPage {
       return latLng;
     }, (err) => {
       console.log(err);
+      this.spinner.dismiss();
     });
   }
 
@@ -403,7 +565,7 @@ export class GeolocationPage {
 
           this.address = results[0].formatted_address;
           //this.getAddressComponentByPlace(results[0], latLngObj);
-        } else {  
+        } else {
           console.log('No results found');
           this.address = results[0].formatted_address;
           //this.getAddressComponentByPlace(results[0], latLngObj);

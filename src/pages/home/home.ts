@@ -32,6 +32,8 @@ export class HomePage {
   plaqueActive: Array<any>;
   cards = {};
 
+  quantActive = 0;
+
   user = {
     name: '',
     balance: { amount: 0 }
@@ -50,31 +52,34 @@ export class HomePage {
     public menuCtrl: MenuController) { }
 
   ionViewDidLoad() {
-
   }
 
   ionViewDidEnter() {
     this.setAllData();
+    
   }
 
   setAllData() {
-    this.storage.get('token').then(() => {
+    this.storage.get('token').then((token) => {
+      this.http.setToken(token);
       this.getUserData();
+      this.getActivePlaques();
+      this.storage.get('city_actual').then((city) => {
+        this.actualCity = city;
+        console.log(city);
+        if (this.actualCity.working_mode == 0) {
+          this.getCards();
+          this.getRates();
+        }
+        
+
+        this.isDataComplet = true;
+      }).catch((error) => {
+        this.isDataComplet = false;
+        console.log(error);
+      });
     }).catch(() => {
       console.log('error get user');
-    });
-    this.storage.get('city_actual').then((city) => {
-      this.actualCity = city;
-      console.log(city);
-      if (this.actualCity.working_mode == 0) {
-        this.getCards();
-        this.getRates();
-      }
-
-      this.isDataComplet = true;
-    }).catch((error) => {
-      this.isDataComplet = false;
-      console.log(error);
     });
   }
 
@@ -83,9 +88,35 @@ export class HomePage {
       console.log(result);
       this.cards = result;
     }, error => {
+      this.verError(error);
       console.log(error);
       this.isDataComplet = false;
     });
+  }
+  
+  getActivePlaques() {
+    this.http.get('client/activePlaques').subscribe((result: any) => {
+      this.quantActive = result.total_active_plaques;
+      console.log("qtd actv "+ this.quantActive);
+      console.log(result);
+    }),
+      error => {
+        this.verError(error);
+        this.isDataComplet = false;
+      };
+  }
+
+  verError(error){
+    if (error.error.error == "token_expired") {
+      this.refreshToken();
+    } else
+      if (error.error.error == "token_invalid" || error.error.error == "token_not_provided") {
+        console.log('invalid token');
+      } else
+        if (error.error.error == "user_not_found") {
+          this.navCtrl.setRoot(LoginPage);
+          this.storage.clear();
+        }
   }
 
   getRates() {
@@ -93,9 +124,7 @@ export class HomePage {
       this.rates = result.rates;
       console.log(this.rates);
     }, error => {
-      if (error.error.error == "token_invalid" || error.error.error == "token_expired" || error.error.error == "token_not_provided") {
-        this.refreshToken();
-      }
+      this.verError(error);
       this.isDataComplet = false;
       console.log(error);
     });
@@ -115,13 +144,7 @@ export class HomePage {
       this.http.dismissLoading();
     }, error => {
       console.log(error);
-      if (error.error.error == "token_invalid" || error.error.error == "token_expired" || error.error.error == "token_not_provided") {
-        this.refreshToken();
-      }
-      if (error.error.error == "user_not_found") {
-        this.navCtrl.setRoot(LoginPage);
-        this.storage.clear();
-      }
+      this.verError(error);
       this.isDataComplet = false;
       this.http.dismissLoading();
     });
@@ -132,6 +155,7 @@ export class HomePage {
       console.log(result.token);
       this.storage.set('token', result.token).then(() => {
         this.setAllData();
+        console.log('token added');
       });
     }, error => {
       console.log(error);
@@ -146,7 +170,7 @@ export class HomePage {
     console.log(this.plaques);
     console.log(this.rates);
     if (this.actualCity.working_mode == 0) {
-      if (this.plaque_id == 0 && this.rate_id != 0) {
+      if (this.plaque_id == 0 && this.rate_id == 0) {
         this.authService.showToast('Selecione Taxa e Placa para estacionar', 3000);
       } else {
         this.http.presentLoading();
@@ -166,15 +190,18 @@ export class HomePage {
           console.log(error);
         });
       }
-    } else if(this.actualCity.working_mode == 1) {
-      this.authService.showToast('Salvador', 3000);
+    } else if (this.actualCity.working_mode == 1) {
       this.parkCarLocation();
     }
   }
 
 
   parkCarLocation() {
-    this.navCtrl.push(GeolocationPage);
+    if (this.plaque_id == 0) {
+      this.authService.showToast('Selecione a Placa para estacionar', 3000);
+    } else {
+      this.navCtrl.push(GeolocationPage, { plaque_id: this.plaque_id, balance: this.user.balance.amount });
+    }
   }
 
   ionViewCanEnter() {

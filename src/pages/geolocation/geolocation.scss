@@ -1,23 +1,36 @@
 page-geolocation {
-    
+
+  .button{
+    margin:auto;
+    width: 250px;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #007effff;
+  }
+  .back-button-icon-ios {
+    color: #007effff;
+  }
+  .back-button-icon-md {
+    color: #007effff;
+  }
   #map {
     width: 100%;
-    height: 76%;
+    height: 45%;
   }
   .centerMarker{
   	position:absolute;
     /*url of the marker*/
     background:url(../assets/icon/marker.png) no-repeat;
     /*center the marker*/
-    top:36%;
+    top:21%;
     left:50%;
     z-index:1;
     /*fix offset when needed*/
     margin-left:-17px;
     margin-top:-20px;
     /*size of the image*/
-    height:60px;
-    width:60px;
+    height:35px;
+    width:32px;
     cursor:pointer;
   }
   .current-location {
@@ -25,7 +38,7 @@ page-geolocation {
     // background-color: #fff !important;
     right: 3%;
     width: 30px;
-    bottom: 40% !important;
+    bottom: 60% !important;
     button {
       background-color: #fff;
       height: 2.9rem;
@@ -42,7 +55,8 @@ page-geolocation {
     height: 35%;
   }
   ion-content {
-    background-color: transparent !important;
+    //background-color: transparent !important;
+    background-color: #fff;
   }
   .go-back-button, .search-button {
     background-color: transparent !important;
@@ -67,7 +81,7 @@ page-geolocation {
   }
   .search-box {
     position: absolute;
-    top: 2%;
+    top: 0%;
     z-index: 999;
   }
   ion-textarea {
@@ -84,6 +98,16 @@ page-geolocation {
       }
     }
   }
+
+  $detail-background: rgba(236,236,236,.8);
+  .listing-details ion-col {
+    padding: 0.5rem;
+    margin: 0.45rem;
+    background: $detail-background;
+    ion-icon {
+        margin-right: .5rem;
+    }
+}
 
   .switch {
     position: fixed;
@@ -105,5 +129,23 @@ page-geolocation {
         padding: 0;
     }
 }
+
+$transparent-white: rgba(255, 255, 255, .6);
+  // This is just to make the header transparent and button/icon with white color
+  .toolbar-content,
+  span {
+    color: white;
+  }
+  .toolbar-background,
+  ion-navbar,
+  ion-header {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  .header-md::after,
+  .toolbar-background-ios {
+    background-image: none;
+    border-bottom: 0;
+  }
 
 }

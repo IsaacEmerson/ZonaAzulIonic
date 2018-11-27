@@ -27,6 +27,20 @@ export class ActivePlaquesPage {
     this.getActivePlaques();
   }
   setCards() {
+    // this.cards[0] = {
+    //   imageUrl: '',
+    //   name: 'Estacionou ' + 'Carro',
+    //   ETA: '5 min restantes',
+    //   distance: 2.6,
+    //   color: this.color,
+    //   places: [
+    //     {
+    //       name: 'Placa: ' + 'GAY-0800',
+    //       address: 'Cidade: ' + 'Juazeiro',
+    //       icon: 'car'
+    //     }
+    //   ]
+    // }
     this.plaques.active_plaques.length == 0 ? this.none = "Nenhuma placa Ativa no momento" : this.none = "";
     for (let key in this.plaques.active_plaques) {
       let time_split = this.plaques.active_plaques[key].time_left.split(":");

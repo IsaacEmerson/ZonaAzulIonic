@@ -1,13 +1,27 @@
-<ion-content>
+<ion-header >
+  <ion-navbar >
+    <ion-title>Estacionar</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only  (click)='toggleSearch()'>
+        <ion-icon color="primary" name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content >
+
+  
 
   <div style="margin-top:100px;font-size:1.5em" [hidden]="!(switch == 'list')">
     <p text-center>Meus Últimos Locais</p>
     <ion-list>
-      
-            <ion-item>
-            <h2>Teste</h2>
-          </ion-item>
-         
+
+      <ion-item>
+        <h2>Teste</h2>
+      </ion-item>
+
     </ion-list>
   </div>
 
@@ -17,38 +31,67 @@
     </button>
   </ion-buttons>
 
-  <ion-searchbar [hidden]="!(switch == 'map')" autocorrect="off" autocapitalize="off" spellcheck="off" #searchbar placeholder="Search..." class="search-box"></ion-searchbar>
+  <ion-searchbar style="margin-top:0px;" [hidden]="!(switch == 'map') || !search" autocorrect="off" autocapitalize="off"
+    spellcheck="off" #searchbar placeholder="Buscar..." class="search-box">
+  </ion-searchbar>
 
   <div [hidden]="!(switch == 'map')" #map id="map" class="map"></div>
   <div [hidden]="!(switch == 'map')" class="centerMarker"></div>
-  <div class="address-view">
-    <ion-list [hidden]="!(switch == 'map')" >
-      <ion-item no-lines class="help-text">
-        Drag map to select Address
-      </ion-item>
-      <ion-item no-lines class="address-item">
-        <ion-label stacked class="title-label">ADDRESS</ion-label>
-        <ion-textarea disabled class="address" [(ngModel)]="address"></ion-textarea>
-      </ion-item>
-      <ion-item>
-      </ion-item>
-    </ion-list>
+
+  <ion-grid *ngIf="logradouros.length" class="listing-details">
+    <p text-center>Ruas Próximas com estacionamento</p>
+    <p style="color:rgb(121, 117, 117);margin-top: 0px;" text-center>(Para melhor uso ative a localização do seu
+      celular)</p>
+    <ion-scroll style="width:100%;height:30vh" scrollY="true">
+      <ion-list scroll="true">
+        <ion-item color="{{logra.periodo_valido ? 'primary' : 'dark'}}" *ngFor="let logra of logradouros" (click)="selecLogradouro(logra.logradouro.id_logradouro)">
+          <ion-avatar item-start>
+            <ion-icon *ngIf="logra.periodo_valido" style="font-size:40px" name="pin"></ion-icon>
+            <img *ngIf="!logra.periodo_valido" src="assets/no_park.png" />
+          </ion-avatar>
+          <div *ngIf="logra.logradouro">
+            <h3>{{logra.logradouro.log_nome}}</h3>
+            <p>{{logra.logradouro.log_descricao_estacionamento}}</p>
+          </div>
+          <ion-note item-end>
+            <ion-icon style="font-size:25px" name="arrow-forward"></ion-icon>
+          </ion-note>
+        </ion-item>
+        <ion-item *ngIf="logradouros.length==1 && logradouros[0].periodo_valido">
+          <p>Meu Saldo: R$ {{user_balance}}</p>
+          <ion-label>Tarifas</ion-label>
+          <ion-select (ionChange)="showRate($event)" multiple="false" [(ngModel)]="rate_park">
+            <ion-option *ngFor="let rate of ratesLogra; let i = index" selected="{{!i}}" [value]="rate">
+              {{rate.tar_nome}} {{rate.tar_tempo_permanencia}} R$ {{rate.valor.toFixed(2)}}
+            </ion-option>
+          </ion-select>
+          <p text-center>{{info_rate}}</p>
+        </ion-item>
+        
+        <button (click)="activeParking()" *ngIf="logradouros.length==1 && logradouros[0].periodo_valido" class="button"
+          ion-button color="#387ef5" block>Estacionar</button>
+        <ion-item style="margin-top:-10px;" text-center *ngIf="logradouros.length==1 && !logradouros[0].periodo_valido">
+          <h3>Sem tarifas vigentes</h3>
+          <img src="assets/no_rate.png" />
+        </ion-item>
+      </ion-list>
+    </ion-scroll>
+  </ion-grid>
+
+
+  <div style="margin-top:0px;" text-center *ngIf="!logradouros.length">
+    <p>{{address}}</p>
+    <img class="logo" src="assets/marc.png" />
+    <h4>Nenhuma área de <span style="color:rgb(36, 11, 179)">estacionamento</span> encontrada próximo o endereço atual</h4>
   </div>
 
 </ion-content>
 
 
-<div style="margin-bottom:40px;" class="switch">
-  <button ion-button color="light" (click)="(switch = 'map');" [class.active]="(switch == 'map')" icon-only>
-    <ion-icon name="map"></ion-icon>
-  </button>
-  <button ion-button color="light" (click)="(switch = 'list');" [class.active]="(switch == 'list')" icon-only>
-    <ion-icon name="list"></ion-icon>
-  </button>
-</div>
 
+<!-- 
 <ion-footer [hidden]="!(switch == 'map')">
   <button ion-button large full no-margin color="primary">
     Estacionar
   </button>
-</ion-footer>
+</ion-footer> -->
