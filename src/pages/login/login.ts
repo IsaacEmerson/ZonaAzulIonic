@@ -98,7 +98,7 @@ export class LoginPage {
   }
 
   chooseCity(city) {
-    if (city.name === "Salvador") {
+    if (city.id === 2) {
       this.imgFooter = 'assets/imgs/rodapesalvador.png';
       this.storage.set('footer', 'assets/imgs/rodapesalvador.png');
     } else {

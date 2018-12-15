@@ -17,8 +17,15 @@
 
 
 <ion-content padding>
+
+  <div *ngIf="actualCity.working_mode==1">
+    <p>Você tem x de tolerância para cancelar uma ativação</p>
+    <p>Clique para cancelar</p>
+  </div>
+
   <h3 style="text-align: center;">{{none}}</h3>
-  <ion-card *ngFor="let card of cards" class="adv-map">
+
+  <ion-card (click)="presentConfirm(2)"  *ngFor="let card of cards" class="adv-map">
 
     <ion-item *ngFor="let place of card.places">
       <ion-icon color="subtle" large item-start [name]='place.icon'></ion-icon>
@@ -26,8 +33,8 @@
       <p>{{place.address}}</p>
     </ion-item>
     <ion-item actions>
-      <span item-start ion-text class="item-bold">Tolerância : 5 min</span>
       <span item-start ion-text color="{{card.color}}" class="item-bold">{{card.ETA}}</span>
+
       <button ion-button color="primary" clear item-end icon-left>
         <ion-icon name='navigate'></ion-icon>
       </button>

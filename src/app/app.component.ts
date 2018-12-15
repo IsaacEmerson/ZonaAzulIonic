@@ -56,6 +56,7 @@ export class MyApp {
       ]
     });
 
+    //salvador
     events.subscribe('working_mode:1', () => {
       this.pages = [
       { icon: 'home', title: 'Inicio', component: HomePage},

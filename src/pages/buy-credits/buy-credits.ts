@@ -18,7 +18,11 @@ export class BuyCreditsPage {
 
   isEditable: boolean=false;
   imgFooter:any = false;
-  price =0;
+  price = 0;
+  
+  values_work1 = [3,6,9,18,30,60];
+  values_work0 = [3,6,9,18,30,60];
+
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage:Storage) {
   }
 

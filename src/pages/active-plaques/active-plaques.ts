@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the ActivePlaquesPage page.
@@ -18,13 +19,21 @@ export class ActivePlaquesPage {
   plaques;
   cards = [];
   none = null;
-  color="secondary";
-  constructor(public navCtrl: NavController, public http: HttpServiceProvider, public navParams: NavParams) {
+  color = "secondary";
+  actualCity = {
+    id: 1,
+    name: '',
+    working_mode: 0
+  };
+    constructor(public navCtrl: NavController,
+      public alertCtrl: AlertController,
+      public storage: Storage, public http: HttpServiceProvider, public navParams: NavParams,) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ActivePlaquesPage');
     this.getActivePlaques();
+    this.getCity();
   }
   setCards() {
     this.plaques.active_plaques.length == 0 ? this.none = "Nenhuma placa Ativa no momento" : this.none = "";
@@ -36,16 +45,14 @@ export class ActivePlaquesPage {
       hour = time_split[0];
       minute = time_split[1];
       if (hour == '00' || hour=="-00") {
-        if (+minute <= 20) {
+        if (+minute <= 10) {
           this.color = "warning";
-        }
-        else if (+minute <= 10) {
+        }else if (+minute <= 20) {
           this.color = "danger";
-        }
-        else {
+        }else {
           this.color = "secondary";
         }
-        time_left = minute + "min";
+        time_left = "Tempo restante "+ minute + "min";
       }
       else {
         this.color = "secondary";
@@ -69,6 +76,48 @@ export class ActivePlaquesPage {
     }
   }
 
+  getCity(){
+    this.storage.get('city_actual').then((city) => {
+      this.actualCity = city;
+      console.log(city);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  presentConfirm(id_plaque) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirmar Cancelar ativacão?',
+      message: 'A ativação só será cancelada se estiver dentro da tolerância. Seu saldo voltará para sua conta',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirmar',
+          handler: () => {
+            this.cancelParking(id_plaque);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  cancelParking(id_plaque){
+    this.http.presentLoading();
+    this.http.post('cancel', {id_plaque:id_plaque}).subscribe((result: any) => {
+      this.http.dismissLoading();
+      console.log(result);
+    }, error => {
+      this.http.dismissLoading();
+      console.log(error);
+    });
+  }
 
   getActivePlaques() {
     this.http.presentLoading();
