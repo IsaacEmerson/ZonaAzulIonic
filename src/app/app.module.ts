@@ -52,6 +52,7 @@ import { UserProvider } from '../providers/user/user';
 import { SpinnerProvider } from '../providers/spinner/spinner';
 import { Market } from '@ionic-native/market';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { VacanciesPage } from '../pages/vacancies/vacancies';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
     CreditCardScanPage,
     AboutPage,
     BackgroundGeolocationPage,
+    VacanciesPage,
     TimelineComponent,
     TimelineItemComponent,
     TimelineTimeComponent
@@ -111,6 +113,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
     BuyCreditsPage,
     AboutPage,
     CadsPage,
+    VacanciesPage,
     ActivePlaquesPage,
     BugReportPage,
     PlaquesPage,

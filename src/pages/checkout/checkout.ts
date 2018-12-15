@@ -93,7 +93,7 @@ export class CheckoutPage {
 
   ionViewDidLoad() {
     this.http.presentLoading();
-    scriptjs('https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',()=>{
+    scriptjs('https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js',()=>{
       this.paymentHttp.getSession().subscribe((data)=>{
         this.initSession(data);
         this.getPaymentMethods();

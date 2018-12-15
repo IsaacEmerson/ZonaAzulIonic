@@ -16,6 +16,7 @@ import { BugReportPage } from '../pages/bug-report/bug-report';
 import { CadsPage } from '../pages/cads/cads';
 import { ActivePlaquesPage } from '../pages/active-plaques/active-plaques';
 import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
+import { VacanciesPage } from '../pages/vacancies/vacancies';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,6 +36,7 @@ export class MyApp {
 
     this.pages = [];
     
+    //juazeiro
     events.subscribe('working_mode:0', () => {
       this.pages = [
       { icon: 'home', title: 'Inicio', component: HomePage},
@@ -45,6 +47,7 @@ export class MyApp {
       { icon: 'paper', title: 'Cartões Estacionamento', component: CadsPage},
       { icon: 'card', title: 'Meus Cartões', component: CreditCardScanPage },
       { icon: 'md-calendar', title: 'Meu Histórico', component: HistoricPage },
+      { icon: 'compass', title: 'Vagas por rua', component: VacanciesPage },
       //{ icon: 'ios-cash', title: 'Transações', component: TransactionsPage},
       //{ icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
       { icon: 'ios-bug', title: 'Reportar um Bug', component: BugReportPage},

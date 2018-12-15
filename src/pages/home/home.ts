@@ -32,6 +32,8 @@ export class HomePage {
   plaqueActive: Array<any>;
   cards = {};
 
+  quantActive = 0;
+
   user = {
     name: '',
     balance: { amount: 0 }
@@ -67,6 +69,7 @@ export class HomePage {
           this.getCards();
           this.getRates();
         }
+        this.getActivePlaques();
 
         this.isDataComplet = true;
       }).catch((error) => {
@@ -87,6 +90,17 @@ export class HomePage {
       console.log(error);
       this.isDataComplet = false;
     });
+  }
+  
+  getActivePlaques() {
+    this.http.get('client/activePlaques').subscribe((result: any) => {
+      this.quantActive = result.total_active_plaques;
+      console.log(result);
+    }),
+      error => {
+        this.verError(error);
+        this.isDataComplet = false;
+      };
   }
 
   verError(error){

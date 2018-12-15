@@ -68,9 +68,9 @@ export class HistoricPage {
               {
                 items: [
                   //TODO colocar valor negativo
-                  ["Valor", this.historics[key].amount.toFixed(2)],
-                  ["Saldo Anterior", this.historics[key].amount_before.toFixed(2)],
-                  ["Saldo Atual", this.historics[key].amount_after.toFixed(2)],
+                  ["Valor", this.historics[key].amount],
+                  ["Saldo Anterior", this.historics[key].amount_before],
+                  ["Saldo Atual", this.historics[key].amount_after],
                 ]
               },
             ],
@@ -89,8 +89,8 @@ export class HistoricPage {
               { msg: "Você trocou seus créditos por cards" },
               {
                 items: [
-                  ["Saldo Atual", this.historics[key].amount_after.toFixed(2)],
-                  ["Valor da compra ", this.historics[key].amount.toFixed(2)],
+                  ["Saldo Atual", this.historics[key].amount_after],
+                  ["Valor da compra ", this.historics[key].amount],
                 ]
               },
             ],
@@ -107,7 +107,7 @@ export class HistoricPage {
               { msg: "Você trocou seus créditos por cards" },
               {
                 items: [
-                  ["Saldo Atual", this.historics[key].amount.toFixed(2)],
+                  ["Saldo Atual", this.historics[key].amount],
                 ]
               },
             ],

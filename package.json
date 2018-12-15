@@ -1,7 +1,7 @@
 {
   "name": "syszona-cliente",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "version": "2.0.0",
+  "author": "Isaac Emerson",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
@@ -77,7 +77,8 @@
   "description": "An Ionic project",
   "cordova": {
     "platforms": [
-      "ios"
+      "ios",
+      "android"
     ],
     "plugins": {
       "cordova-plugin-app-preferences": {},

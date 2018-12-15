@@ -175,7 +175,7 @@ export class LoginPage {
               enableBackdropDismiss: false
             });
             alert.setTitle('Onde você está?');
-            alert.setMessage('Versão Antiga, baixe a nova versão em: http://syszona.com.br \n' + error.error.link);
+            alert.setMessage('Versão Antiga, baixe a nova versão em: \n' + error.error.link);
             alert.addButton({
               text: 'Ok',
               handler: (data: any) => {

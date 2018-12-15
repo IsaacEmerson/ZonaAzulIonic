@@ -84,7 +84,7 @@ export class ActivePlaquesPage {
         console.log(error.status);
         console.log(error.error); // error message as string
         console.log(error.headers);
-
+        this.http.dismissLoading();
       };
   }
 }
