@@ -25,7 +25,7 @@
 
   <h3 style="text-align: center;">{{none}}</h3>
 
-  <ion-card (click)="presentConfirm(2)"  *ngFor="let card of cards" class="adv-map">
+  <ion-card (click)="presentConfirm(card.id,actualCity.working_mode)"  *ngFor="let card of cards" class="adv-map">
 
     <ion-item *ngFor="let place of card.places">
       <ion-icon color="subtle" large item-start [name]='place.icon'></ion-icon>

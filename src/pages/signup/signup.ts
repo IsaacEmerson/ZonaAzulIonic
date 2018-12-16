@@ -111,11 +111,10 @@ export class SignupPage {
   }
 
   registerFinal(){
-    let city_actual;
+    //let id_city;
     this.storage.get('city_actual').then((city)=>{
-      city_actual = city;
-    });
-    this.http.presentLoading();
+      //id_city = city.id;
+      this.http.presentLoading();
     this.http.post('register/confirm/account',{
       token:this.user.token,
       vehicle_id:this.signFinal.controls['vehicle_id'].value,
@@ -123,7 +122,7 @@ export class SignupPage {
       plaque:this.signFinal.controls['user_plaque'].value,
       cpf: this.signFinal.controls['user_cpf'].value,
       birth_date: this.signFinal.controls['user_birth'].value,
-      city_actual: city_actual,
+      city_actual: city.id,
   }).subscribe(
     (result:any)=>{
     console.log(result.message);
@@ -136,6 +135,7 @@ export class SignupPage {
     this.showToast(error.error.errors[0],3000);
     this.http.dismissLoading();
   });
+    });
   }
 
   goToLogin(){

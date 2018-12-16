@@ -247,9 +247,12 @@ export class GeolocationPage {
   }
 
   getLogradouros(type_area, id_area_logradouro) {
-    this.http.getParam('client/buscarLogradouros', 'type_area=' + type_area + '&id_area_logradouro=' + id_area_logradouro).subscribe((result: any) => {
-      this.logradouros = result;
-      this.ratesLogra = result[0].tarifas;
+    this.http.getParam('client/buscarLogradouros', 'type_area=' + type_area + '&id_area_logradouro=' + id_area_logradouro)
+    .subscribe((result: any) => {
+      if(result.length>0){
+        this.logradouros = result;
+        this.ratesLogra = result[0].tarifas;  
+      }
       console.log(result);
     }, error => {
       console.log(error);

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { Storage } from '@ionic/storage';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the ActivePlaquesPage page.
@@ -27,6 +28,7 @@ export class ActivePlaquesPage {
   };
     constructor(public navCtrl: NavController,
       public alertCtrl: AlertController,
+      public authService: AuthProvider,
       public storage: Storage, public http: HttpServiceProvider, public navParams: NavParams,) {
   }
 
@@ -59,6 +61,7 @@ export class ActivePlaquesPage {
         time_left = "Tempo restante " + hour + ":"+ minute + "hs";
       }
         this.cards[key] = {
+          id: this.plaques.active_plaques[key].id,
           imageUrl: '',
           name: 'Estacionou ' + this.plaques.active_plaques[key].vehicle,
           ETA: time_left,
@@ -85,7 +88,10 @@ export class ActivePlaquesPage {
     });
   }
 
-  presentConfirm(id_plaque) {
+  presentConfirm(id_plaque,city_work) {
+    if(city_work!=1){
+      return;
+    }
     let alert = this.alertCtrl.create({
       title: 'Confirmar Cancelar ativacão?',
       message: 'A ativação só será cancelada se estiver dentro da tolerância. Seu saldo voltará para sua conta',
@@ -110,11 +116,13 @@ export class ActivePlaquesPage {
 
   cancelParking(id_plaque){
     this.http.presentLoading();
-    this.http.post('cancel', {id_plaque:id_plaque}).subscribe((result: any) => {
+    this.http.post('client/desistencia', {id:id_plaque}).subscribe((result: any) => {
       this.http.dismissLoading();
       console.log(result);
+      this.authService.showToast(result.success, 3000);
     }, error => {
       this.http.dismissLoading();
+      this.authService.showToast(error.error.error, 3000);
       console.log(error);
     });
   }
