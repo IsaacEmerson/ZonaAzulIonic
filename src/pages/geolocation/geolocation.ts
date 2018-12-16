@@ -282,13 +282,21 @@ export class GeolocationPage {
     console.log('logra' + this.id_logradouro);
     console.log('taxa' + this.rate_park.id_tarifa);
     if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= this.rate_park.valor) {
+      this.http.presentLoading();
+
       this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id, uuid:this.uuid })
         .subscribe((res:any) => {
+          this.http.dismissLoading();
           console.log(res);
           this.auth.showToast(res.success,5000);
           this.userPro.notification(this.rate_park.tar_tempo_permanencia);
           this.nav.setRoot(ActivePlaquesPage);
+        },error=>{
+          this.http.dismissLoading();
+          this.auth.showToast(error.error,5000);
+          console.log(error);
         });
+
     } else if (this.user_balance < this.rate_park.valor) {
       this.buyConfirm();
     } else {

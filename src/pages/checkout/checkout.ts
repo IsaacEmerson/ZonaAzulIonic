@@ -59,7 +59,8 @@ export class CheckoutPage {
 
   constructor(public navCtrl: NavController,
     public storage:Storage,
-    public formBuilder: FormBuilder,public http:HttpServiceProvider,public auth:AuthProvider, public navParams: NavParams, public paymentHttp: PaymentHttpProvider,
+    public formBuilder: FormBuilder,public http:HttpServiceProvider,public auth:AuthProvider, 
+    public navParams: NavParams, public paymentHttp: PaymentHttpProvider,
     public zone:NgZone) {
         this.creditCardForm = formBuilder.group({
             senderName: ['', [Validators.maxLength(100), Validators.required]],

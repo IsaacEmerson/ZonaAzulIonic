@@ -46,6 +46,11 @@ export class HttpServiceProvider {
     
   }
 
+  public setIp(ip){
+    this.url = "http://"+ip.ip+"/estacionamento-zona-azul/public/api";
+    console.log(this.url);
+  }
+
   getAll(endpoint): Observable<Object>{
     return this.http.get(`${this.url}/${endpoint}`,this.options);
   }

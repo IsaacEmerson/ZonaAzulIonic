@@ -41,8 +41,42 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    this.getCities();
-    this.checkVersion();
+    this.presentPrompt();
+    //this.getCities();
+    //this.checkVersion();
+  }
+
+   presentPrompt(){
+    let alert = this.alertCtrl.create({
+      title: 'configurar ip',
+      inputs: [
+        {
+          name: 'ip',
+          placeholder: 'ip',
+          type: 'text'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+            this.getCities();
+            this.checkVersion();
+          }
+        },
+        {
+          text: 'Confirmar',
+          handler: data => {
+            this.http.setIp(data);
+            this.getCities();
+            this.checkVersion();
+          }
+        }
+      ]
+    });
+   return alert.present();
   }
 
   getCities() {
