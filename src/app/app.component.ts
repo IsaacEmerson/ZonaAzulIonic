@@ -17,6 +17,8 @@ import { CadsPage } from '../pages/cads/cads';
 import { ActivePlaquesPage } from '../pages/active-plaques/active-plaques';
 import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
 import { VacanciesPage } from '../pages/vacancies/vacancies';
+import { OrientationPage } from '../pages/orientation/orientation';
+import { FaqPage } from '../pages/faq/faq';
 
 @Component({
   templateUrl: 'app.html'
@@ -69,7 +71,9 @@ export class MyApp {
      // { icon: 'ios-cash', title: 'Transações', component: TransactionsPage},
      // { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
       { icon: 'ios-bug', title: 'Reportar um Bug', component: BugReportPage},
-      { icon: 'ios-information-circle', title: 'Sobre', component: AboutPage},
+      { icon: 'information-circle', title: 'Orientações', component: OrientationPage },
+      { icon: 'help', title: 'Perguntas frequentes', component: FaqPage },
+      { icon: 'copy', title: 'Termos de uso', component: AboutPage},
       { icon: 'log-out', title: 'Sair', component: null}
       ]
     });

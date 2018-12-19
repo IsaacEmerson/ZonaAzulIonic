@@ -47,25 +47,27 @@
           </ion-avatar>
           <div *ngIf="logra.logradouro">
             <h3>{{logra.logradouro.log_nome}}</h3>
-            <p>{{logra.logradouro.log_descricao_estacionamento}}</p>
+            <p style="font-size:10px;" >{{logra.logradouro.log_descricao_estacionamento}}</p>
           </div>
           <ion-note item-end>
             <ion-icon style="font-size:25px" name="arrow-forward"></ion-icon>
           </ion-note>
         </ion-item>
+
         <ion-item *ngIf="logradouros.length==1 && logradouros[0].periodo_valido">
           <p>Meu Saldo: R$ {{user_balance}}</p>
           <ion-label>Tarifas</ion-label>
           <ion-select (ionChange)="showRate($event)" multiple="false" [(ngModel)]="rate_park">
             <ion-option *ngFor="let rate of ratesLogra; let i = index" selected="{{!i}}" [value]="rate">
-              {{rate.tar_nome}} {{rate.tar_tempo_permanencia}} R$ {{rate.valor.toFixed(2)}}
+              {{rate.tar_nome}} {{rate.tar_tempo_permanencia}} R$ {{(+rate.valor).toFixed(2)}}
             </ion-option>
           </ion-select>
-          <p text-center>{{info_rate}}</p>
         </ion-item>
-        
-        <button style="margin-top: 5px;" (click)="activeParking()" *ngIf="logradouros.length==1 && logradouros[0].periodo_valido" class="button"
-          ion-button color="#387ef5" block>Estacionar</button>
+
+        <p style="color:black;" text-center>{{info_rate}}</p>
+
+        <button style="margin-top: 5px;" (click)="activeParking()" *ngIf="logradouros.length==1 && logradouros[0].periodo_valido"
+          class="button" ion-button color="#387ef5" block>Estacionar</button>
         <ion-item style="margin-top:-10px;" text-center *ngIf="logradouros.length==1 && !logradouros[0].periodo_valido">
           <h3>Sem tarifas vigentes</h3>
           <img src="assets/no_rate.png" />

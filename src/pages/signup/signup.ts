@@ -127,7 +127,7 @@ export class SignupPage {
       city_actual: city.id,
   }).subscribe(
     (result:any)=>{
-    console.log(result.message);
+    console.log(result);
     this.http.dismissLoading();
     this.showToast(result.message,5000);
     this.navCtrl.pop();

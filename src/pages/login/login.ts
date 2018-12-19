@@ -10,6 +10,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { UserProvider } from '../../providers/user/user';
 import { Market } from '@ionic-native/market';
 import { Platform } from 'ionic-angular';
+import { OrientationPage } from '../orientation/orientation';
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -208,7 +209,7 @@ export class LoginPage {
             const alert = this.alertCtrl.create({
               enableBackdropDismiss: false
             });
-            alert.setTitle('Onde você está?');
+            alert.setTitle('Versão antiga');
             alert.setMessage('Versão Antiga, baixe a nova versão em: \n' + error.error.link);
             alert.addButton({
               text: 'Ok',
@@ -228,6 +229,10 @@ export class LoginPage {
 
     goToFogotPassword() {
       this.navCtrl.push(FogotPassPage);
+    }
+
+    info(){
+      this.navCtrl.push(OrientationPage);
     }
 
   }

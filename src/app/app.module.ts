@@ -53,10 +53,14 @@ import { SpinnerProvider } from '../providers/spinner/spinner';
 import { Market } from '@ionic-native/market';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { VacanciesPage } from '../pages/vacancies/vacancies';
+import { AccordionListComponent } from '../components/accordion-list/accordion-list';
+import { FaqPage } from '../pages/faq/faq';
+import { OrientationPage } from '../pages/orientation/orientation';
 
 @NgModule({
   declarations: [
     AppFooterComponent,
+    AccordionListComponent,
     TimelineComponent,
     TimelineItemComponent,
     TimelineTimeComponent,
@@ -72,6 +76,8 @@ import { VacanciesPage } from '../pages/vacancies/vacancies';
     HistoricPage,
     PlaquesPage,
     ProfilePage,
+    FaqPage,
+    OrientationPage,
     TransactionsPage,
     ActivePlaquesPage,
     IrregularitiesPage,
@@ -108,11 +114,15 @@ import { VacanciesPage } from '../pages/vacancies/vacancies';
     PlaquesModalPage,
     SlideTutorialPage,
     TransactionsPage,
+    OrientationPage,
+    TransactionsPage,
     CreditCardScanPage,
     ChangePasswordPage,
     BuyCreditsPage,
     AboutPage,
     CadsPage,
+    FaqPage,
+    OrientationPage,
     VacanciesPage,
     ActivePlaquesPage,
     BugReportPage,

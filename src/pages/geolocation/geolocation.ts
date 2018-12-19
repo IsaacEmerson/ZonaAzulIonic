@@ -228,7 +228,7 @@ export class GeolocationPage {
   };
 
   info_rate = '';
-  uuid = '';
+  uuid = 'BD7B8764-A134-4A93-87DC-F023E1E64E29';
 
   id_logradouro = 0;
   user_balance = 0;
@@ -241,7 +241,7 @@ export class GeolocationPage {
       }).catch((error: any) => {
         this.auth.showToast(error,2000);
         console.log(error)
-      });
+      }); 
     this.plaque_id = this.navParams.get('plaque_id');
     this.user_balance = this.navParams.get('balance');
   }
@@ -252,6 +252,9 @@ export class GeolocationPage {
       if(result.length>0){
         this.logradouros = result;
         this.ratesLogra = result[0].tarifas;  
+      }else{
+        this.logradouros = [];
+        this.ratesLogra = [];  
       }
       console.log(result);
     }, error => {
@@ -281,7 +284,7 @@ export class GeolocationPage {
     console.log('placaaa' + this.plaque_id);
     console.log('logra' + this.id_logradouro);
     console.log('taxa' + this.rate_park.id_tarifa);
-    if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= this.rate_park.valor) {
+    if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= +this.rate_park.valor) {
       this.http.presentLoading();
 
       this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id, uuid:this.uuid })
@@ -293,7 +296,7 @@ export class GeolocationPage {
           this.nav.setRoot(ActivePlaquesPage);
         },error=>{
           this.http.dismissLoading();
-          this.auth.showToast(error.error,5000);
+          this.auth.showToast(error.error.error,5000);
           console.log(error);
         });
 
@@ -306,7 +309,7 @@ export class GeolocationPage {
 
   showRate(data) {
     console.log(data);
-    this.info_rate = data.tar_nome + " " + data.tar_tempo_permanencia + "Hrs Preço: R$ " + data.valor.toFixed(2);
+    this.info_rate = data.tar_nome + " " + data.tar_tempo_permanencia + "Hrs Preço: R$ " + (+data.valor).toFixed(2);
   }
 
   buyConfirm() {
@@ -459,11 +462,13 @@ export class GeolocationPage {
     if (logradouro = this.findInPoly(this.polygons[1], latLngObj)) {
       console.log(logradouro);
       console.log('achou na logradouro');
+      this.info_rate = '';
       this.getLogradouros(logradouro.type_area, logradouro.id_area_logradouro);
     } else if (area = this.findInPoly(this.polygons[0], latLngObj)) {
       if (area) {
         console.log(area);
         console.log('achou na Area');
+        this.info_rate = '';
         this.getLogradouros(area.type_area, area.id_area_logradouro);
       }
     } else {
