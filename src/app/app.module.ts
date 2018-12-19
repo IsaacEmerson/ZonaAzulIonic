@@ -10,7 +10,6 @@ import { SignupPage } from '../pages/signup/signup';
 import { LoginPage } from '../pages/login/login';
 import { PlaquesPage } from '../pages/plaques/plaques';
 import { ProfilePage } from '../pages/profile/profile';
-import { IrregularitiesPage } from '../pages/irregularities/irregularities';
 import { FogotPassPage } from '../pages/fogot-pass/fogot-pass';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -33,7 +32,6 @@ import { HistoricPage } from '../pages/historic/historic';
 import { AppVersion } from '@ionic-native/app-version';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { PlaquesModalPage } from '../pages/plaques-modal/plaques-modal';
-import { TransactionsPage } from '../pages/transactions/transactions';
 import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
 
 import { TimelineComponent } from '../components/timeline/timeline';
@@ -78,9 +76,7 @@ import { OrientationPage } from '../pages/orientation/orientation';
     ProfilePage,
     FaqPage,
     OrientationPage,
-    TransactionsPage,
     ActivePlaquesPage,
-    IrregularitiesPage,
     CheckoutPage,
     BugReportPage,
     GeolocationPage,
@@ -113,9 +109,7 @@ import { OrientationPage } from '../pages/orientation/orientation';
     HistoricPage,
     PlaquesModalPage,
     SlideTutorialPage,
-    TransactionsPage,
     OrientationPage,
-    TransactionsPage,
     CreditCardScanPage,
     ChangePasswordPage,
     BuyCreditsPage,
@@ -128,7 +122,6 @@ import { OrientationPage } from '../pages/orientation/orientation';
     BugReportPage,
     PlaquesPage,
     ProfilePage,
-    IrregularitiesPage,
     CheckoutPage,
     GeolocationPage,
     BackgroundGeolocationPage

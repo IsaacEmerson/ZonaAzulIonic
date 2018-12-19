@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Accordion list example - Best places to visit:</p>
+  <p>Se ainda houver duvidas entre em contato</p>
 
   <accordion-list *ngFor="let item of items; let index = index"
                   [title]="item.name"
@@ -17,6 +17,8 @@
                   headerColor="#F53D3D"
                   [expanded]="index === 0">
     <!-- <img [src]="item.imageUrl"> -->
+    <h1 style="color:cadetblue" text-wrap>{{item.name}}</h1>
     <p text-wrap>{{item.description}}</p>
   </accordion-list>
 </ion-content>
+<app-footer></app-footer>
