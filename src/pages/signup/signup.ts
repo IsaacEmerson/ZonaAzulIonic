@@ -1,5 +1,5 @@
 import { Component, ViewChild} from '@angular/core';
-import { IonicPage, NavController,MenuController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController,MenuController, ToastController, AlertController, ModalController } from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LoginPage } from '../login/login';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
@@ -44,6 +44,7 @@ export class SignupPage {
   constructor(public navCtrl: NavController, public menu:MenuController, public formBuilder: FormBuilder,
     public http:HttpServiceProvider,
     public storage:Storage,
+    public modalCtrl:ModalController,
     public alertCtrl: AlertController,
     public toastCtrl: ToastController) {
     this.signInitial = formBuilder.group({
@@ -66,6 +67,7 @@ export class SignupPage {
   }
   terms(){
     this.navCtrl.push(AboutPage);
+    //this.presentAboutModal();
   }
   registerInitial(){
     this.http.presentLoading();
@@ -126,9 +128,9 @@ export class SignupPage {
   }).subscribe(
     (result:any)=>{
     console.log(result.message);
-    this.showToast(result.message,5000);
-    this.navCtrl.setRoot(LoginPage);
     this.http.dismissLoading();
+    this.showToast(result.message,5000);
+    this.navCtrl.pop();
   },error=>{
     console.log(error);
     console.log(error.error.error);
@@ -196,4 +198,17 @@ export class SignupPage {
     toast.present();
   }
 
+  presentAboutModal() {
+    let modal = this.modalCtrl.create(AboutPage, { terms:1  });
+    modal.present();
+    modal.onDidDismiss(data => {
+      console.log(data);
+      if(data.read==1){
+        this.registerFinal();
+      }
+    });
+  }
+ 
+
 }
+

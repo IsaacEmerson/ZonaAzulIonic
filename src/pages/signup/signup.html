@@ -107,7 +107,7 @@
             <ion-input type="tel" formControlName="user_birth" [brmasker]="{mask:'00/00/0000', len:10}" placeholder="DD/MM/AAAA"></ion-input>
           </ion-item>
 
-          <button ion-button block outline (click)="registerFinal()" [disabled]="!signFinal.valid" class="signup">Cadastrar</button>
+          <button ion-button block outline (click)="presentAboutModal()" [disabled]="!signFinal.valid" class="signup">Cadastrar</button>
         </form>
       </ion-slide>
 

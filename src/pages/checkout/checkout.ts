@@ -144,7 +144,6 @@ export class CheckoutPage {
             this.navCtrl.setRoot(BuyCreditsPage);
             this.http.dismissLoading();
             this.auth.showToast(result.success,5000);
-            
         },error=>{
             this.auth.showToast(error,5000);
             this.http.dismissLoading();
