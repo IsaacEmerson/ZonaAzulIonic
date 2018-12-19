@@ -20,7 +20,7 @@ export class UserProvider {
   }
 
   notification(time: string) {
-    var time = "34:26:00";
+    //var time = "34:26:00";
     var timeParts = time.split(":");
     var time_noti = (+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000) + (+timeParts[2] * 1000);
     
@@ -36,6 +36,17 @@ export class UserProvider {
       led: 'FF0000',
       sound: isAndroid ? 'file://sound.mp3' : 'file://beep.caf',
       data: { secret: key }
+    });
+  }
+
+  notifi(){
+    let isAndroid = this.plt.is('android');
+
+    this.localNotifications.schedule({
+      id: 1,
+      text: 'Notificacão teste',
+      sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
+      data: { secret: 'isaac' }
     });
   }
 

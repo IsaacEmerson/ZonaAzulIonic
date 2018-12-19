@@ -54,6 +54,7 @@ import { VacanciesPage } from '../pages/vacancies/vacancies';
 import { AccordionListComponent } from '../components/accordion-list/accordion-list';
 import { FaqPage } from '../pages/faq/faq';
 import { OrientationPage } from '../pages/orientation/orientation';
+import { AlarmPage } from '../pages/alarm/alarm';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { OrientationPage } from '../pages/orientation/orientation';
     FogotPassPage,
     LoginPage,
     HomePage,
+    AlarmPage,
     BuyCreditsPage,
     ChangePasswordPage,
     SlideTutorialPage,
@@ -113,6 +115,7 @@ import { OrientationPage } from '../pages/orientation/orientation';
     CreditCardScanPage,
     ChangePasswordPage,
     BuyCreditsPage,
+    AlarmPage,
     AboutPage,
     CadsPage,
     FaqPage,

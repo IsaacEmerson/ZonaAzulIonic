@@ -129,19 +129,16 @@ export class ActivePlaquesPage {
 
   getActivePlaques() {
     this.http.presentLoading();
-    this.http.get('client/activePlaques').subscribe((result: any) => {
+    this.http.getParam('client/activePlaques','city_id='+this.actualCity.id).subscribe((result: any) => {
       console.log(result);
       this.plaques = result;
-      console.log(this.plaques);
       this.setCards();
       this.http.dismissLoading();
-
-    }),
-      error => {
+    },error => {
         console.log(error.status);
         console.log(error.error); // error message as string
         console.log(error.headers);
         this.http.dismissLoading();
-      };
+      });
   }
 }

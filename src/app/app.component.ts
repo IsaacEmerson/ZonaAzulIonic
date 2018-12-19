@@ -19,6 +19,7 @@ import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
 import { VacanciesPage } from '../pages/vacancies/vacancies';
 import { OrientationPage } from '../pages/orientation/orientation';
 import { FaqPage } from '../pages/faq/faq';
+import { AlarmPage } from '../pages/alarm/alarm';
 
 @Component({
   templateUrl: 'app.html'
@@ -68,6 +69,7 @@ export class MyApp {
       { icon: 'cart', title: 'Comprar Créditos', component: BuyCreditsPage},
       { icon: 'card', title: 'Meus Cartões', component: CreditCardScanPage },
       { icon: 'md-calendar', title: 'Meu Histórico', component: HistoricPage },
+      { icon: 'alarm', title: 'Alarmes', component: AlarmPage },
      // { icon: 'ios-cash', title: 'Transações', component: TransactionsPage},
      // { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
       { icon: 'ios-bug', title: 'Reportar um Bug', component: BugReportPage},
