@@ -232,6 +232,10 @@ export class GeolocationPage {
 
   id_logradouro = 0;
   user_balance = 0;
+  plaque = {
+    plaque: ""
+  };
+
   ionViewDidLoad() {
     this.uniqueDeviceID.get()
       .then((uuid: any) => {
@@ -244,6 +248,8 @@ export class GeolocationPage {
       }); 
     this.plaque_id = this.navParams.get('plaque_id');
     this.user_balance = this.navParams.get('balance');
+    this.plaque = this.navParams.get('plaque');
+    console.log(this.plaque);
   }
 
   getLogradouros(type_area, id_area_logradouro) {

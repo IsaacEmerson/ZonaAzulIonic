@@ -72,7 +72,8 @@ export class ActivePlaquesPage {
         places: [
           {
             name: 'Placa: ' + this.plaques.active_plaques[key].plaque,
-            address: 'Cidade: ' + this.plaques.active_plaques[key].city,
+            address: '' + this.plaques.active_plaques[key].log_nome,
+            address_des: this.plaques.active_plaques[key].log_descricao_estacionamento,
             icon: 'car',
             past: 'Tempo decorrido ' + this.plaques.active_plaques[key].time_past,
           }

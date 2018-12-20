@@ -10,11 +10,18 @@
         </button>
         <ion-title>Fale Conosco</ion-title>
     </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
+    <p>Aqui você pode enviar uma mensagem para nossa equipe, fique a vontade.</p>
+    <ion-item>
+        <ion-label>Selecione o assunto</ion-label>
+        <ion-select (ionChange)="setSubj($event)" [(ngModel)]="subject" multiple="false">
+            <ion-option *ngFor="let sub of subjects"  value="{{sub}}">{{sub}}</ion-option>
+        </ion-select>
+    </ion-item>
+    &emsp;
     <ion-item>
         <ion-label stacked>Detalhe sua dúvida, sugestões, bugs...</ion-label>
         <ion-textarea (input)="isEnabled=true" [(ngModel)]="email.body"></ion-textarea>

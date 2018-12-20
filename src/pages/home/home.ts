@@ -26,6 +26,9 @@ export class HomePage {
 
   isDataComplet = true;
   plaques = [];
+  plaque = {
+    plaque:""
+  };
   rates = [];
   plaque_id: number = 0;
   rate_id: number = 0;
@@ -91,9 +94,9 @@ export class HomePage {
       this.isDataComplet = false;
     });
   }
-  
+
   getActivePlaques() {
-    this.http.get('client/activePlaques').subscribe((result: any) => {
+    this.http.getParam('client/activePlaques', 'city_id=' + this.actualCity.id).subscribe((result: any) => {
       this.quantActive = result.total_active_plaques;
       console.log(result);
     }),
@@ -103,7 +106,7 @@ export class HomePage {
       };
   }
 
-  verError(error){
+  verError(error) {
     if (error.error.error == "token_expired") {
       this.refreshToken();
     } else
@@ -192,12 +195,16 @@ export class HomePage {
     }
   }
 
+  checkPlaque(plaque) {
+    console.log(plaque);
+    this.plaque = plaque;
+  }
 
   parkCarLocation() {
     if (this.plaque_id == 0) {
       this.authService.showToast('Selecione a Placa para estacionar', 3000);
     } else {
-      this.navCtrl.push(GeolocationPage, { plaque_id: this.plaque_id, balance: this.user.balance.amount });
+      this.navCtrl.push(GeolocationPage, { plaque: this.plaque, plaque_id: this.plaque_id, balance: this.user.balance.amount });
     }
   }
 

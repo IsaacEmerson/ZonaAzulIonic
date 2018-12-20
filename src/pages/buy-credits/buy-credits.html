@@ -1,4 +1,3 @@
-
 <!--
   Generated template for the BuyCreditsPage page.
   See http://ionicframework.com/docs/components/#navigation for more info on
@@ -14,20 +13,35 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content overflow-scroll='false' direction="y" has-bouncing="false" padding>
+  <h2>Seu saldo: R$ {{balance}}</h2>
+
+  <p text-center>Escolha a quantidade para ser comprada</p>
+
   <ion-grid style="margin-bottom:10px;">
-      <ion-row>
-        <ion-col col-20>
-          <ion-card *ngFor="let cre of values_work1" (click)="setPrice(cre)" class="card card-1">
-              <ion-icon name="cash" color="primary"></ion-icon><br>
-              <b style="font-size: 1.3rem;">R$ {{cre.toFixed(2)}}</b>
-          </ion-card>
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col col-20>
+        <ion-card *ngFor="let cre of values_work1" (click)="setPrice(cre)" class="card card-1">
+          <ion-icon name="cash" color="primary"></ion-icon><br>
+          <b style="font-size: 1.3rem;">R$ {{cre.toFixed(2)}}</b>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </ion-grid>
   <p>Valor selecionado: R$ {{price}}.00</p>
   <button ion-button full (click)="checkout()" [disabled]="!isEditable">Prosseguir pagamento</button>
 
+  <div style="margin-top:20px;">
+    <ion-list>
+      <ion-list-header>
+        <b style="font-size: 2rem;">Regras de Estacionamento</b>
+      </ion-list-header>
+      <ion-item ion-item *ngFor="let rate of rates">
+        <ion-label>{{rate.role}}</ion-label>
+      </ion-item>
+
+    </ion-list>
+  </div>
 </ion-content>
 
 <app-footer></app-footer>

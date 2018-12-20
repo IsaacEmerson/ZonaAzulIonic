@@ -72,7 +72,7 @@ export class MyApp {
       { icon: 'alarm', title: 'Alarmes', component: AlarmPage },
      // { icon: 'ios-cash', title: 'Transações', component: TransactionsPage},
      // { icon: 'chatbubbles', title: 'Irregularidades', component: IrregularitiesPage},
-      { icon: 'ios-bug', title: 'Reportar um Bug', component: BugReportPage},
+      { icon: 'call', title: 'Fale conosco', component: BugReportPage},
       { icon: 'information-circle', title: 'Orientações', component: OrientationPage },
       { icon: 'help', title: 'Perguntas frequentes', component: FaqPage },
       { icon: 'copy', title: 'Termos de uso', component: AboutPage},

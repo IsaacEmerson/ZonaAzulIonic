@@ -2,7 +2,7 @@
 
   <ion-header>
     <ion-navbar color="primary">
-      <ion-title>Estacionar</ion-title>
+      <ion-title>Estacionar {{plaque.plaque}}</ion-title>
       <ion-buttons end>
         <button ion-button icon-only (click)='toggleSearch()'>
           <ion-icon name="search"></ion-icon>
@@ -38,7 +38,7 @@
     <p text-center>Ruas Próximas com estacionamento</p>
     <p style="color:rgb(121, 117, 117);margin-top: 0px;" text-center>(Para melhor uso ative a localização do seu
       celular)</p>
-    <ion-scroll style="width:100%;height:30vh" scrollY="true">
+    <ion-scroll style="width:100%;height:35vh" scrollY="true">
       <ion-list scroll="true">
         <ion-item color="{{logra.periodo_valido ? 'primary' : 'dark'}}" *ngFor="let logra of logradouros" (click)="selecLogradouro(logra.logradouro.id_logradouro)">
           <ion-avatar item-start>
@@ -47,7 +47,7 @@
           </ion-avatar>
           <div *ngIf="logra.logradouro">
             <h3>{{logra.logradouro.log_nome}}</h3>
-            <p style="font-size:10px;" >{{logra.logradouro.log_descricao_estacionamento}}</p>
+            <p style="font-size:10px;">{{logra.logradouro.log_descricao_estacionamento}}</p>
           </div>
           <ion-note item-end>
             <ion-icon style="font-size:25px" name="arrow-forward"></ion-icon>
@@ -55,7 +55,6 @@
         </ion-item>
 
         <ion-item *ngIf="logradouros.length==1 && logradouros[0].periodo_valido">
-          <p>Meu Saldo: R$ {{user_balance}}</p>
           <ion-label>Tarifas</ion-label>
           <ion-select (ionChange)="showRate($event)" multiple="false" [(ngModel)]="rate_park">
             <ion-option *ngFor="let rate of ratesLogra; let i = index" selected="{{!i}}" [value]="rate">
@@ -65,6 +64,7 @@
         </ion-item>
 
         <p style="color:black;" text-center>{{info_rate}}</p>
+        <p style="color:black;" text-center *ngIf="info_rate.length>0">Meu Saldo: R$ {{user_balance}}</p>
 
         <button style="margin-top: 5px;" (click)="activeParking()" *ngIf="logradouros.length==1 && logradouros[0].periodo_valido"
           class="button" ion-button color="#387ef5" block>Estacionar</button>

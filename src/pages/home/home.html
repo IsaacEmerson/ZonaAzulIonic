@@ -81,7 +81,7 @@
       </ion-list-header>
       <ion-item ion-item *ngFor="let plaque of plaques">
         <ion-label>{{plaque.plaque}} {{vehicles[plaque.vehicle_id-1].name}}</ion-label>
-        <ion-radio value="{{plaque.id}}"></ion-radio>
+        <ion-radio value="{{plaque.id}}" (ionSelect)="checkPlaque(plaque)" ></ion-radio>
       </ion-item>
 
     </ion-list>
