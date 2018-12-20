@@ -19,24 +19,24 @@
 <ion-content padding>
 
   <div *ngIf="actualCity.working_mode==1">
-    <p>Você tem x de tolerância para cancelar uma ativação</p>
-    <p>Clique para cancelar</p>
+    <p>Você tem {{actualCity.time_tolerance}} de tolerância para cancelar uma ativação.</p>
+    <p>Clique no botão vermelho para cancelar</p>
   </div>
 
   <h3 style="text-align: center;">{{none}}</h3>
 
-  <ion-card (click)="presentConfirm(card.id,actualCity.working_mode)"  *ngFor="let card of cards" class="adv-map">
+  <ion-card *ngFor="let card of cards" class="adv-map">
 
-    <ion-item *ngFor="let place of card.places">
+    <ion-item style="margin-bottom:-13px;" *ngFor="let place of card.places">
       <ion-icon color="subtle" large item-start [name]='place.icon'></ion-icon>
       <h2>{{place.name}}</h2>
       <p>{{place.address}}</p>
+      <p>{{place.past}}</p>
     </ion-item>
     <ion-item actions>
       <span item-start ion-text color="{{card.color}}" class="item-bold">{{card.ETA}}</span>
-
-      <button ion-button color="primary" clear item-end icon-left>
-        <ion-icon name='navigate'></ion-icon>
+      <button *ngIf="card.city_id==2" (click)="presentConfirm(card.id,actualCity.working_mode)" ion-button color="danger" clear item-end icon-left>
+        <ion-icon style="font-size: 30px;" name='close-circle'></ion-icon>
       </button>
     </ion-item>
   </ion-card>

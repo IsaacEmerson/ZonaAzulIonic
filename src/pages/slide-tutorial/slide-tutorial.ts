@@ -27,13 +27,13 @@ export class SlideTutorialPage {
       },
       {
         id:2,
-        title: 'Compre créditos e troque por cards para estacionar',
+        title: 'Simples de usar',
         imageUrl: 'assets/imgs/tutorial/slide1.png',
         description: '',
       },
       {
         id:3,
-        title: 'Menu para facilitar o uso do app',
+        title: 'Menu esquerdo',
         imageUrl: 'assets/imgs/tutorial/slide2.png',
         description: 'Ultilize as opções do menu para comprar créditos, estacionar, ver seu histórico...',
       },

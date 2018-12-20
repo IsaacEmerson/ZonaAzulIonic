@@ -55,6 +55,7 @@ import { AccordionListComponent } from '../components/accordion-list/accordion-l
 import { FaqPage } from '../pages/faq/faq';
 import { OrientationPage } from '../pages/orientation/orientation';
 import { AlarmPage } from '../pages/alarm/alarm';
+import { SmsPage } from '../pages/sms/sms';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { AlarmPage } from '../pages/alarm/alarm';
     LoginPage,
     HomePage,
     AlarmPage,
+    SmsPage,
     BuyCreditsPage,
     ChangePasswordPage,
     SlideTutorialPage,
@@ -119,6 +121,7 @@ import { AlarmPage } from '../pages/alarm/alarm';
     AboutPage,
     CadsPage,
     FaqPage,
+    SmsPage,
     OrientationPage,
     VacanciesPage,
     ActivePlaquesPage,

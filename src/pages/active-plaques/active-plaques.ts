@@ -22,21 +22,22 @@ export class ActivePlaquesPage {
   none = null;
   color = "secondary";
   actualCity = {
-    id: 1,
+    id: 0,
     name: '',
-    working_mode: 0
+    working_mode: 0,
+    time_tolerance: 0
   };
-    constructor(public navCtrl: NavController,
-      public alertCtrl: AlertController,
-      public authService: AuthProvider,
-      public storage: Storage, public http: HttpServiceProvider, public navParams: NavParams,) {
+  constructor(public navCtrl: NavController,
+    public alertCtrl: AlertController,
+    public authService: AuthProvider,
+    public storage: Storage, public http: HttpServiceProvider, public navParams: NavParams, ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ActivePlaquesPage');
-    this.getActivePlaques();
     this.getCity();
   }
+
   setCards() {
     this.plaques.active_plaques.length == 0 ? this.none = "Nenhuma placa Ativa no momento" : this.none = "";
     for (let key in this.plaques.active_plaques) {
@@ -46,50 +47,53 @@ export class ActivePlaquesPage {
       let time_left
       hour = time_split[0];
       minute = time_split[1];
-      if (hour == '00' || hour=="-00") {
+      if (hour == '00' || hour == "-00") {
         if (+minute <= 10) {
           this.color = "warning";
-        }else if (+minute <= 20) {
+        } else if (+minute <= 20) {
           this.color = "danger";
-        }else {
+        } else {
           this.color = "secondary";
         }
-        time_left = "Tempo restante "+ minute + "min";
+        time_left = "Tempo restante " + minute + "min";
       }
       else {
         this.color = "secondary";
-        time_left = "Tempo restante " + hour + ":"+ minute + "hs";
+        time_left = "Tempo restante " + hour + ":" + minute + "hs";
       }
-        this.cards[key] = {
-          id: this.plaques.active_plaques[key].id,
-          imageUrl: '',
-          name: 'Estacionou ' + this.plaques.active_plaques[key].vehicle,
-          ETA: time_left,
-          distance: 2.6,
-          color: this.color,
-          places: [
-            {
-              name: 'Placa: ' + this.plaques.active_plaques[key].plaque,
-              address: 'Cidade: ' + this.plaques.active_plaques[key].city,
-              icon: 'car'
-            }
-          ]
-        }
-        console.log(this.cards[key]);
+      this.cards[key] = {
+        id: this.plaques.active_plaques[key].id,
+        imageUrl: '',
+        name: 'Estacionou ' + this.plaques.active_plaques[key].vehicle,
+        ETA: time_left,
+        distance: 2.6,
+        city_id: this.plaques.active_plaques[key].city_id,
+        color: this.color,
+        places: [
+          {
+            name: 'Placa: ' + this.plaques.active_plaques[key].plaque,
+            address: 'Cidade: ' + this.plaques.active_plaques[key].city,
+            icon: 'car',
+            past: 'Tempo decorrido ' + this.plaques.active_plaques[key].time_past,
+          }
+        ]
+      }
+      console.log(this.cards[key]);
     }
   }
 
-  getCity(){
+  getCity() {
     this.storage.get('city_actual').then((city) => {
       this.actualCity = city;
       console.log(city);
+      this.getActivePlaques();
     }).catch((error) => {
       console.log(error);
     });
   }
 
-  presentConfirm(id_plaque,city_work) {
-    if(city_work!=1){
+  presentConfirm(id_plaque, city_work) {
+    if (city_work != 1) {
       return;
     }
     let alert = this.alertCtrl.create({
@@ -114,9 +118,9 @@ export class ActivePlaquesPage {
     alert.present();
   }
 
-  cancelParking(id_plaque){
+  cancelParking(id_plaque) {
     this.http.presentLoading();
-    this.http.post('client/desistencia', {id:id_plaque}).subscribe((result: any) => {
+    this.http.post('client/desistencia', { id: id_plaque }).subscribe((result: any) => {
       this.http.dismissLoading();
       console.log(result);
       this.authService.showToast(result.success, 3000);
@@ -129,16 +133,16 @@ export class ActivePlaquesPage {
 
   getActivePlaques() {
     this.http.presentLoading();
-    this.http.getParam('client/activePlaques','city_id='+this.actualCity.id).subscribe((result: any) => {
+    this.http.getParam('client/activePlaques', 'city_id=' + this.actualCity.id).subscribe((result: any) => {
       console.log(result);
       this.plaques = result;
       this.setCards();
       this.http.dismissLoading();
-    },error => {
-        console.log(error.status);
-        console.log(error.error); // error message as string
-        console.log(error.headers);
-        this.http.dismissLoading();
-      });
+    }, error => {
+      console.log(error.status);
+      console.log(error.error); // error message as string
+      console.log(error.headers);
+      this.http.dismissLoading();
+    });
   }
 }
