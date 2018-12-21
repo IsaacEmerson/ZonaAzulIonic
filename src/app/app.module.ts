@@ -56,10 +56,12 @@ import { FaqPage } from '../pages/faq/faq';
 import { OrientationPage } from '../pages/orientation/orientation';
 import { AlarmPage } from '../pages/alarm/alarm';
 import { SmsPage } from '../pages/sms/sms';
+import { TimerProgressComponent } from '../components/timer-progress/timer-progress';
 
 @NgModule({
   declarations: [
     AppFooterComponent,
+    TimerProgressComponent,
     AccordionListComponent,
     TimelineComponent,
     TimelineItemComponent,

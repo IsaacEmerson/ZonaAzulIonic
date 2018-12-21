@@ -12,7 +12,42 @@
 
 <ion-content padding>
 
-    <button ion-button class="login-button" (click)="test()">Testar</button>
+  <!-- <timer-progress #countdownTimerProgress [timeInSeconds]="100"></timer-progress> -->
 
+  <ion-list>
+    <ion-list-header>
+      Configure seus alarmes
+    </ion-list-header>
+    <ion-item>
+      <ion-icon name="alarm" item-start color="danger"></ion-icon>
+      <ion-label>20 minutos antes de expirar</ion-label>
+      <ion-toggle [(ngModel)]="alarms.um" color="secondary"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="alarm" item-start color="danger"></ion-icon>
+      <ion-label>10 minutos antes de expirar</ion-label>
+      <ion-toggle [(ngModel)]="alarms.dois" color="secondary"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="alarm" item-start color="danger"></ion-icon>
+      <ion-label>Ao expirar</ion-label>
+      <ion-toggle [(ngModel)]="alarms.tres" color="secondary"></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <ion-row class="align-center">
+      <ion-col col-6>
+        <button ion-button round full color="primary"  (click)="test()">
+            <ion-icon name='construct' is-active="false"></ion-icon>
+              Testar
+        </button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button full color="primary" round (click)="save()">
+            <ion-icon name='checkmark' is-active="false"></ion-icon>
+              Salvar
+        </button>
+      </ion-col>
+  </ion-row>
 
 </ion-content>

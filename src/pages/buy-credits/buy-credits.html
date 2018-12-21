@@ -31,13 +31,15 @@
   <p>Valor selecionado: R$ {{price}}.00</p>
   <button ion-button full (click)="checkout()" [disabled]="!isEditable">Prosseguir pagamento</button>
 
-  <div style="margin-top:20px;">
+  <div style="margin-top:20px;margin-bottom:65px;">
     <ion-list>
       <ion-list-header>
         <b style="font-size: 2rem;">Regras de Estacionamento</b>
+        <p>Confira quando for estacionar</p>
       </ion-list-header>
       <ion-item ion-item *ngFor="let rate of rates">
-        <ion-label>{{rate.role}}</ion-label>
+        <ion-icon name="alarm" item-start color="danger"></ion-icon>
+        <ion-label>{{rate.role}} {{rate.price}}</ion-label>
       </ion-item>
 
     </ion-list>

@@ -22,7 +22,6 @@ export class GeolocationPage {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
   addressElement: HTMLInputElement = null;
-
   map: any;
   address = '';
   search: boolean = false;
@@ -298,7 +297,7 @@ export class GeolocationPage {
           this.http.dismissLoading();
           console.log(res);
           this.auth.showToast(res.success,5000);
-          this.userPro.notification(this.rate_park.tar_tempo_permanencia);
+          this.userPro.setAlarms(this.rate_park.tar_tempo_permanencia);
           this.nav.setRoot(ActivePlaquesPage);
         },error=>{
           this.http.dismissLoading();
