@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { GeolocationPage } from '../geolocation/geolocation';
@@ -29,6 +29,7 @@ export class HomePage {
   plaque = {
     plaque:""
   };
+  activePlaques = [];
   rates = [];
   plaque_id: number = 0;
   rate_id: number = 0;
@@ -51,6 +52,7 @@ export class HomePage {
     public authService: AuthProvider,
     public navParams: NavParams,
     public storage: Storage,
+    public alertCtrl:AlertController,
     public http: HttpServiceProvider,
     public menuCtrl: MenuController) { }
 
@@ -98,6 +100,7 @@ export class HomePage {
   getActivePlaques() {
     this.http.getParam('client/activePlaques', 'city_id=' + this.actualCity.id).subscribe((result: any) => {
       this.quantActive = result.total_active_plaques;
+      this.activePlaques = result.active_plaques;
       console.log(result);
     }),
       error => {
@@ -191,8 +194,39 @@ export class HomePage {
         });
       }
     } else if (this.actualCity.working_mode == 1) {
-      this.parkCarLocation();
+      //salvador
+      for(let id_p of this.activePlaques){
+        if(id_p.plaque===this.plaque.plaque){
+          this.confirmParkOldPlaque();
+          return;
+        }
+      }
+
+      this.parkCarLocation(0);
     }
+  }
+
+  confirmParkOldPlaque(){
+    let alert = this.alertCtrl.create({
+      title: 'Confirmar nova Ativação',
+      message: 'Uma nova ativação para essa placa acarretará o fim da anterior.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            
+          }
+        },
+        {
+          text: 'Confirmar',
+          handler: () => {
+            this.parkCarLocation(1);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   checkPlaque(plaque) {
@@ -200,11 +234,11 @@ export class HomePage {
     this.plaque = plaque;
   }
 
-  parkCarLocation() {
+  parkCarLocation(cancelOld) {
     if (this.plaque_id == 0) {
       this.authService.showToast('Selecione a Placa para estacionar', 3000);
     } else {
-      this.navCtrl.push(GeolocationPage, { plaque: this.plaque, plaque_id: this.plaque_id, balance: this.user.balance.amount });
+      this.navCtrl.push(GeolocationPage, {cancelOld: cancelOld, plaque: this.plaque, plaque_id: this.plaque_id, balance: this.user.balance.amount });
     }
   }
 

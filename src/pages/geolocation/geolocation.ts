@@ -228,7 +228,7 @@ export class GeolocationPage {
 
   info_rate = '';
   uuid = 'BD7B8764-A134-4A93-87DC-F023E1E64E29';
-
+  tem_ativo = 0;
   id_logradouro = 0;
   user_balance = 0;
   plaque = {
@@ -248,6 +248,7 @@ export class GeolocationPage {
     this.plaque_id = this.navParams.get('plaque_id');
     this.user_balance = this.navParams.get('balance');
     this.plaque = this.navParams.get('plaque');
+    this.tem_ativo = this.navParams.get("cancelOld");
     console.log(this.plaque);
   }
 
@@ -292,7 +293,8 @@ export class GeolocationPage {
     if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= +this.rate_park.valor) {
       this.http.presentLoading();
 
-      this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro, id_plaque: this.plaque_id, uuid:this.uuid })
+      this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro,
+         id_plaque: this.plaque_id, uuid:this.uuid, tem_ativo: this.tem_ativo })
         .subscribe((res:any) => {
           this.http.dismissLoading();
           console.log(res);
