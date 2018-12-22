@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
+import { DatePicker } from '@ionic-native/date-picker';
+import { Keyboard } from '@ionic-native/keyboard';
 
 /**
  * Generated class for the HistoricPage page.
@@ -22,17 +24,43 @@ export class HistoricPage {
   }
 
   historics = [];
-  items = [];
-  type = "ALL";
+  items_histo = [];
+  type = "CES";
   none = null;
+  //type u - utilizou
+  //type cet - compra ou estorno (trans)
+  //type ces - compra ou estorno (sysz)
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpServiceProvider) {
+  constructor(public navCtrl: NavController,public keyboard : Keyboard,public datePicker: DatePicker, public navParams: NavParams, public http: HttpServiceProvider) {
 
   }
 
+  data_inicial : any;
+  data_final : any;
+
+  openDatepicker(type){
+    this.keyboard.hide();
+    this.datePicker.show({
+      date: new Date(),
+      mode: 'date',
+      androidTheme: this.datePicker.ANDROID_THEMES.THEME_DEVICE_DEFAULT_LIGHT
+    }).then(
+      date => {
+        if(type==1){
+          this.data_inicial=date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear()
+        }else if(type==2){
+          this.data_final=date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear()
+        }
+      },
+      err => console.log('Error occurred while getting date: ', err)
+    );
+  }
+
+
   getHistoric() {
     this.http.presentLoading();
-    return this.http.getParam('client/historics','type='+this.type).subscribe((result: any) => {
+    return this.http.getParam('client/historics','date_of_the_day='+this.data_inicial+
+    '&date_until_the_day='+this.data_final+'&type='+this.type).subscribe((result: any) => {
       console.log('teste'+result);
       this.historic_info.current_page = result.current_page;
       this.historic_info.total_pages = result.last_page;
@@ -50,94 +78,27 @@ export class HistoricPage {
 
   setHistoricData() {
     console.log(this.historics);
-    this.items = [];
+    this.items_histo = [];
     this.historics.length == 0? this.none = "Nenhum histórico para exibir":this.none = "";
 
-    for (let key in this.historics) {
+    for(let key in this.historics){
       let time_split = this.historics[key].created_at.split(" ");
       let aux = time_split[0].split("-");
-      time_split[0] = aux[2] + "/" + aux[1] + "/" + aux[0]
+      time_split[0] = aux[2] + "/" + aux[1] + "/" + aux[0];
       switch (this.historics[key].type) {
-        case 'T':
-          // troca de crédito por card
-
-          this.items[key] = {
-            title: "Troca de Card",
-            content: [
-              { msg: "Você trocou seus créditos por cards" },
-              {
-                items: [
-                  //TODO colocar valor negativo
-                  ["Valor", this.historics[key].amount],
-                  ["Saldo Anterior", this.historics[key].amount_before],
-                  ["Saldo Atual", this.historics[key].amount_after],
-                ]
-              },
-            ],
-            icon: "ios-card",
-            time: time_split
-
+        case 1:
+          this.items_histo[key]={
+            title: ""
           }
-          break;
-
-        case 'C':
-          // compra de crédito
-
-          this.items[key] = {
-            title: "Compra de Crédito",
-            content: [
-              { msg: "Você trocou seus créditos por cards" },
-              {
-                items: [
-                  ["Saldo Atual", this.historics[key].amount_after],
-                  ["Valor da compra ", this.historics[key].amount],
-                ]
-              },
-            ],
-            icon: "ios-cash",
-            time: time_split
-          }
-          break;
-
-        case 'CP':
-          //compra de cards em ponto de venda
-          this.items[key] = {
-            title: "Compra de Cards",
-            content: [
-              { msg: "Você trocou seus créditos por cards" },
-              {
-                items: [
-                  ["Saldo Atual", this.historics[key].amount],
-                ]
-              },
-            ],
-            icon: "ios-cash",
-            time: time_split
-          }
-          break;
-
-        case 'U':
-          // usou card para pagamento de estacionamento
-          this.items[key] = {
-            title: "Estacionou",
-            //content:"Você estacionamento usando cards",
-            content: [
-              { msg: "Você trocou seus créditos por cards" },
-              {
-                items: [
-                  ["Saldo Atual", this.historics[key].amount],
-                  ["Cards", this.historics[key].total_cards],
-                ]
-              },
-            ],
-            icon: "ios-car",
-            time: time_split
-          }
-          break;
-      }
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+      } 
     }
-    console.log('vands'+this.items);
   }
+
   ionViewDidLoad() {
     this.getHistoric().add(() => {
       this.setHistoricData();
@@ -146,7 +107,8 @@ export class HistoricPage {
 
   getHistoricPerPage(page, type: string) {
     this.http.presentLoading();
-    return this.http.getParam('client/historics', 'page=' + page + "&type=" + type).subscribe((result: any) => {
+    return this.http.getParam('client/historics', 'page='+page+'&date_of_the_day='+this.data_inicial+
+    '&date_until_the_day='+this.data_final+'&type='+this.type).subscribe((result: any) => {
       console.log(result);
       this.historic_info.current_page = result.current_page;
       this.historic_info.total_pages = result.last_page;
@@ -160,11 +122,11 @@ export class HistoricPage {
   }
 
   nextPage() {
-    this.getHistoricPerPage(this.historic_info.current_page += 1, 'ALL');
+    this.getHistoricPerPage(this.historic_info.current_page += 1, this.type);
   }
 
   previousPage() {
-    this.getHistoricPerPage(this.historic_info.current_page -= 1, 'ALL');
+    this.getHistoricPerPage(this.historic_info.current_page -= 1, this.type);
   }
 
 

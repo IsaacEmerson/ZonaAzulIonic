@@ -57,6 +57,8 @@ import { OrientationPage } from '../pages/orientation/orientation';
 import { AlarmPage } from '../pages/alarm/alarm';
 import { SmsPage } from '../pages/sms/sms';
 import { TimerProgressComponent } from '../components/timer-progress/timer-progress';
+import { DatePicker } from '@ionic-native/date-picker';
+import { Keyboard } from '@ionic-native/keyboard';
 
 @NgModule({
   declarations: [
@@ -143,6 +145,8 @@ import { TimerProgressComponent } from '../components/timer-progress/timer-progr
     PaymentHttpProvider,
     BackgroundGeolocation,
     Geolocation,
+    Keyboard,
+    DatePicker,
     Camera,
     EmailComposer,
     CardIO,
