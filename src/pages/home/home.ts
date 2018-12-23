@@ -27,7 +27,7 @@ export class HomePage {
   isDataComplet = true;
   plaques = [];
   plaque = {
-    plaque:""
+    plaque: ""
   };
   activePlaques = [];
   rates = [];
@@ -52,7 +52,7 @@ export class HomePage {
     public authService: AuthProvider,
     public navParams: NavParams,
     public storage: Storage,
-    public alertCtrl:AlertController,
+    public alertCtrl: AlertController,
     public http: HttpServiceProvider,
     public menuCtrl: MenuController) { }
 
@@ -112,16 +112,17 @@ export class HomePage {
   verError(error) {
     if (error.error.error == "token_expired") {
       this.refreshToken();
-    } else
-      if (error.error.error == "token_invalid" || error.error.error == "token_not_provided") {
-        console.log('invalid token');
-        this.storage.clear();
-        this.navCtrl.setRoot(LoginPage);
-      } else
-        if (error.error.error == "user_not_found") {
-          this.storage.clear();
-          this.navCtrl.setRoot(LoginPage);
-        }
+    } else if (error.error.error == "token_invalid" || error.error.error == "token_not_provided") {
+      console.log('invalid token');
+      this.storage.clear();
+      this.navCtrl.setRoot(LoginPage);
+    } else if (error.error.error == "user_not_found") {
+      this.storage.clear();
+      this.navCtrl.setRoot(LoginPage);
+    } else if (error.error.error == "not_a_customer") {
+      this.storage.clear();
+      this.navCtrl.setRoot(LoginPage);
+    }
   }
 
   getRates() {
@@ -197,8 +198,8 @@ export class HomePage {
       }
     } else if (this.actualCity.working_mode == 1) {
       //salvador
-      for(let id_p of this.activePlaques){
-        if(id_p.plaque===this.plaque.plaque){
+      for (let id_p of this.activePlaques) {
+        if (id_p.plaque === this.plaque.plaque) {
           this.confirmParkOldPlaque();
           return;
         }
@@ -208,7 +209,7 @@ export class HomePage {
     }
   }
 
-  confirmParkOldPlaque(){
+  confirmParkOldPlaque() {
     let alert = this.alertCtrl.create({
       title: 'Confirmar nova Ativação',
       message: 'Uma nova ativação para essa placa acarretará o fim da anterior.',
@@ -217,7 +218,7 @@ export class HomePage {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
-            
+
           }
         },
         {
@@ -240,7 +241,7 @@ export class HomePage {
     if (this.plaque_id == 0) {
       this.authService.showToast('Selecione a Placa para estacionar', 3000);
     } else {
-      this.navCtrl.push(GeolocationPage, {cancelOld: cancelOld, plaque: this.plaque, plaque_id: this.plaque_id, balance: this.user.balance.amount });
+      this.navCtrl.push(GeolocationPage, { cancelOld: cancelOld, plaque: this.plaque, plaque_id: this.plaque_id, balance: this.user.balance.amount });
     }
   }
 

@@ -30,24 +30,26 @@
       <ion-option value="U">Utilizou</ion-option>
     </ion-select>
   </ion-item>
+
   <timeline endIcon="call">
     <h2 style="text-align: center;">{{none}}</h2>
-    <timeline-item *ngFor="let histo of historics">
-      <timeline-time style="margin-bottom:-20px;" [time]="histo.time"></timeline-time>
-
-      <ion-icon style="margin-bottom:-20px;" [name]="item.icon"></ion-icon>
+    <timeline-item *ngFor="let item of items">
+        <timeline-time style="margin-bottom:-30px;" [time]="item.time"></timeline-time>
+    
+      <ion-icon style="margin-bottom:-30px;" [name]="item.icon"></ion-icon>
       <ion-card>
         <ion-card-header>
-          {{histo.title}}
+          {{item.title}}
         </ion-card-header>
         <ion-card-content>
           <span style="color: #606060">
-            {{item.content[0].msg}}
+              <p>{{item.content[0].msg}}</p>
+              <p>{{item.content[0].msg1}}</p>
           </span>
           <div *ngFor="let items of item.content[1].items">
             <ion-item>
               {{items[0]}}
-              <ion-badge item-end>R$ {{items[1]}}</ion-badge>
+              <ion-badge item-end>{{items[1]}}</ion-badge>
             </ion-item>
           </div>
         </ion-card-content>
