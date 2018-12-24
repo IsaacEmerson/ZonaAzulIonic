@@ -127,23 +127,6 @@ export class HistoricPage {
 
         }
           break;
-
-        case "CET":
-          //compra de cards em ponto de venda
-          this.items[key] = {
-            title: "Compra de Cads",
-            content: [
-              { msg: "Você trocou seus créditos por cads" },
-              {
-                items: [
-                  ["Saldo Atual", this.historics[key].amount],
-                ]
-              },
-            ],
-            icon: "ios-cash",
-            time: time_split
-          }
-          break;
       }
     }
     console.log('vands'+this.items);

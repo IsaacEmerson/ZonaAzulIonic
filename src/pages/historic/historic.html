@@ -26,9 +26,11 @@
     <ion-label>Filtrar Resultados</ion-label>
     <ion-select (ionChange)="filterHistoric($event)" [(ngModel)]="type" multiple="false">
       <ion-option selected value="CES">Compra ou estorno SYSZONA</ion-option>
-      <ion-option value="CET">Compra ou estorno TRANSALVADOR</ion-option>
       <ion-option value="U">Utilizou</ion-option>
     </ion-select>
+  </ion-item>
+  <ion-item>
+    <button class="button" (click)="getHistoric()" ion-button color="#387ef5" block>Pesquisar</button>
   </ion-item>
 
   <timeline endIcon="call">
