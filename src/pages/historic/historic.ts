@@ -23,7 +23,7 @@ export class HistoricPage {
     current_page: 1,
     total_pages: 1
   }
-
+  switch: string = "show";
   historics = [];
   items = [];
   type = "CES";
@@ -59,9 +59,17 @@ export class HistoricPage {
   }
 
   searchHisto(){
-    
+    this.auth.showToast(this.data_inicial+" "+this.data_final,6000);
     this.getHistoric();
     this.setHistoricData();
+  }
+
+  showFilter(){
+    if(this.switch=="show"){
+      this.switch = "dont_show";
+    }else{
+      this.switch = "show";
+    }
   }
 
   getHistoric() {

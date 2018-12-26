@@ -15,7 +15,7 @@ export class UserProvider {
 
   constructor(public storage: Storage,
     public plt: Platform,
-    private localNotifications: LocalNotifications, public http: HttpServiceProvider, public auth: AuthProvider, ) {
+    private localNotifications: LocalNotifications, public http: HttpServiceProvider, public auth: AuthProvider) {
     console.log('Hello UserProvider Provider');
   }
 
@@ -61,11 +61,10 @@ export class UserProvider {
   }
 
   notifi() {
-    let isAndroid = this.plt.is('android');
     this.localNotifications.hasPermission().then(() => {
       this.localNotifications.schedule({
         vibrate: true,
-        text: 'Notificacão teste',
+        text: 'Notificacão teste syszona',
         sound: this.setSound(),
         data: { secret: 'isaaac' }
       });
@@ -76,9 +75,9 @@ export class UserProvider {
 
   setSound() {
     if (this.plt.is('android')) {
-      return 'file://assets/sounds/Rooster.mp3'
+      return 'file://sound.mp3'
     } else {
-      return 'file://assets/sounds/Rooster.caf'
+      return 'file://beep.caf'
     }
   }
 
