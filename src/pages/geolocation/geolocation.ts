@@ -556,7 +556,7 @@ export class GeolocationPage {
   }
 
   currentLocation() {
-    this.spinner.load();
+    //this.spinner.load();
 
     let locationOptions = { enableHighAccuracy: true };
 
@@ -567,14 +567,14 @@ export class GeolocationPage {
       // Display  Marker
       this.map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
       this.getAddress(latLng);
-      this.spinner.dismiss();
+      //this.spinner.dismiss();
       this.storage.set('current_latlong', latLngObj);
       return latLng;
     }, (err) => {
       this.auth.showToast(err,5000);
       this.nav.setRoot(HomePage);
       console.log(err);
-      this.spinner.dismiss();
+      //this.spinner.dismiss();
     });
   }
 
