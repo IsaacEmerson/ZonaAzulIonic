@@ -200,7 +200,8 @@ export class HomePage {
       //salvador
       for (let id_p of this.activePlaques) {
         if (id_p.plaque === this.plaque.plaque) {
-          this.confirmParkOldPlaque();
+          //this.confirmParkOldPlaque();
+          this.confirmParkPlaque();
           return;
         }
       }
@@ -209,6 +210,26 @@ export class HomePage {
     }
   }
 
+  
+  //caso náo possa estacionar com a meesma placa
+  confirmParkPlaque(){
+    let alert = this.alertCtrl.create({
+      title: 'Placa já ativa',
+      message: 'Essa placa já possui uma ativação, verifique em Veículos estacionados.',
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  //caso possa estacionar ainda
   confirmParkOldPlaque() {
     let alert = this.alertCtrl.create({
       title: 'Confirmar nova Ativação',

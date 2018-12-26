@@ -12,13 +12,13 @@
     <ion-col>
       <ion-item>
         <ion-label>Data Incial</ion-label>
-        <ion-input disabled="true" type="text" name="Data Incial" (click)="openDatepicker(1)" [(ngModel)]="today" ng-readonly></ion-input>
+        <ion-input disabled="true" type="text" name="{{data_inicial}}" (click)="openDatepicker(1)" [(ngModel)]="data_inicial" ng-readonly></ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
       <ion-item>
         <ion-label>Data Final</ion-label>
-        <ion-input disabled="true" type="text" name="Data Final" (click)="openDatepicker(2)" [(ngModel)]="today" ng-readonly></ion-input>
+        <ion-input disabled="true" type="text" name="{{data_final}}" (click)="openDatepicker(2)" [(ngModel)]="data_final" ng-readonly></ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -30,12 +30,12 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <button class="button" (click)="getHistoric()" ion-button color="#387ef5" block>Pesquisar</button>
+    <button class="button" (click)="searchHisto()" ion-button color="#387ef5" block>Pesquisar</button>
   </ion-item>
 
   <timeline endIcon="call">
     <h2 style="text-align: center;">{{none}}</h2>
-    <timeline-item *ngFor="let item of items">
+    <timeline-item style="width: auto;" *ngFor="let item of items">
         <timeline-time style="margin-bottom:-30px;" [time]="item.time"></timeline-time>
     
       <ion-icon style="margin-bottom:-30px;" [name]="item.icon"></ion-icon>
@@ -46,7 +46,7 @@
         <ion-card-content>
           <span style="color: #606060">
               <p>{{item.content[0].msg}}</p>
-              <p>{{item.content[0].msg1}}</p>
+              <div style=""><p>{{item.content[0].msg1}}</p></div>
           </span>
           <div *ngFor="let items of item.content[1].items">
             <ion-item>

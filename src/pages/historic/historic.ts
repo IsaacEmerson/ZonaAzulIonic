@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { DatePicker } from '@ionic-native/date-picker';
 import { Keyboard } from '@ionic-native/keyboard';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the HistoricPage page.
@@ -31,7 +32,8 @@ export class HistoricPage {
   //type cet - compra ou estorno (trans)
   //type ces - compra ou estorno (sysz)
 
-  constructor(public navCtrl: NavController, public keyboard: Keyboard, public datePicker: DatePicker, public navParams: NavParams, public http: HttpServiceProvider) {
+  constructor(public navCtrl: NavController,public auth:AuthProvider,
+     public keyboard: Keyboard, public datePicker: DatePicker, public navParams: NavParams, public http: HttpServiceProvider) {
 
   }
 
@@ -47,15 +49,20 @@ export class HistoricPage {
     }).then(
       date => {
         if (type == 1) {
-          this.data_inicial = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear()
+          this.data_inicial = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
         } else if (type == 2) {
-          this.data_final = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear()
+          this.data_final = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
         }
       },
       err => console.log('Error occurred while getting date: ', err)
     );
   }
 
+  searchHisto(){
+    
+    this.getHistoric();
+    this.setHistoricData();
+  }
 
   getHistoric() {
     this.http.presentLoading();

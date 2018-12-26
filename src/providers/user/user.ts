@@ -19,7 +19,7 @@ export class UserProvider {
     console.log('Hello UserProvider Provider');
   }
 
-  notification(time: string, minutes_before:number) {
+  notification(time: string, minutes_before: number) {
     //var time = "34:26:00";
     var timeParts = time.split(":");
     var time_noti = (+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000) + (+timeParts[2] * 1000);
@@ -29,44 +29,57 @@ export class UserProvider {
 
     let key = 'isaac';
 
-    let isAndroid = this.plt.is('android');
-
-    // Schedule delayed notification
-    this.localNotifications.schedule({
-      id: 1,
-      vibrate: true,
-      text: 'Seu tempo de estacionamento esta acabando..',
-      trigger: { at: new Date(new Date().getTime() + time_noti-minutes) },
-      led: 'FF0000',
-      sound: isAndroid ? 'file://sound.mp3' : 'file://beep.caf',
-      data: { secret: key }
-    });
+    this.localNotifications.hasPermission().then(() => {
+      // Schedule delayed notification
+      this.localNotifications.schedule({
+        vibrate: true,
+        text: 'Seu tempo de estacionamento esta acabando..',
+        trigger: { at: new Date(new Date().getTime() + time_noti - minutes) },
+        led: 'FF0000',
+        sound: this.setSound(),
+        data: { secret: key }
+      });
+    }, error => {
+      this.auth.showToast(error, 5000);
+    })
   }
 
-  setAlarms(time){
-    this.storage.get("alarms").then((alarm)=>{
-      if(alarm.um){
-        this.notification(time,20);
+  setAlarms(time) {
+    this.storage.get("alarms").then((alarm) => {
+      if (alarm.um) {
+        this.notification(time, 20);
       }
-      if(alarm.dois){
-        this.notification(time,10);
+      if (alarm.dois) {
+        this.notification(time, 10);
       }
-      if(alarm.tres){
-        this.notification(time,0);
+      if (alarm.tres) {
+        this.notification(time, 0);
       }
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log(error);
     });
   }
 
-  notifi(){
+  notifi() {
     let isAndroid = this.plt.is('android');
-    this.localNotifications.schedule({
-      id: 1,
-      text: 'Notificacão teste',
-      sound: isAndroid? 'file://sound.mp3': 'file://beep.caf',
-      data: { secret: 'isaac' }
-    });
+    this.localNotifications.hasPermission().then(() => {
+      this.localNotifications.schedule({
+        vibrate: true,
+        text: 'Notificacão teste',
+        sound: this.setSound(),
+        data: { secret: 'isaaac' }
+      });
+    }, error => {
+      this.auth.showToast(error, 5000);
+    })
+  }
+
+  setSound() {
+    if (this.plt.is('android')) {
+      return 'file://assets/sounds/Rooster.mp3'
+    } else {
+      return 'file://assets/sounds/Rooster.caf'
+    }
   }
 
   getUserData() {
