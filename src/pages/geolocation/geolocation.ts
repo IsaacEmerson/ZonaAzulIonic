@@ -10,6 +10,7 @@ import { BuyCreditsPage } from '../buy-credits/buy-credits';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { UserProvider } from '../../providers/user/user';
 import { ActivePlaquesPage } from '../active-plaques/active-plaques';
+import { HomePage } from '../home/home';
 
 
 declare var google: any;
@@ -243,6 +244,8 @@ export class GeolocationPage {
         //this.auth.showToast(uuid,2000);
       }).catch((error: any) => {
         this.auth.showToast(error,2000);
+        this.auth.showToast("Precisamos da permissão para identificar seu dispositivo",2000);
+        this.nav.setRoot(HomePage);
         console.log(error)
       }); 
     this.plaque_id = this.navParams.get('plaque_id');
@@ -568,6 +571,8 @@ export class GeolocationPage {
       this.storage.set('current_latlong', latLngObj);
       return latLng;
     }, (err) => {
+      this.auth.showToast(err,5000);
+      this.nav.setRoot(HomePage);
       console.log(err);
       this.spinner.dismiss();
     });
