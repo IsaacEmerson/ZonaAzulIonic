@@ -49,9 +49,9 @@ export class HistoricPage {
     }).then(
       date => {
         if (type == 1) {
-          this.data_inicial = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+          this.data_inicial = date.getFullYear() + '-' +("0" + (date.getMonth() + 1)).slice(-2) + '-' +("0" + date.getDate()).slice(-2);
         } else if (type == 2) {
-          this.data_final = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+          this.data_final = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2)  + '-' +("0" + date.getDate()).slice(-2);
         }
       },
       err => console.log('Error occurred while getting date: ', err)
