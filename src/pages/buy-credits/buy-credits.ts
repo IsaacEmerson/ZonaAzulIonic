@@ -47,6 +47,12 @@ export class BuyCreditsPage {
     }
   ]
 
+  actualCity = {
+    id: 1,
+    name: '',
+    working_mode: 0
+  };
+
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage:Storage) {
   }
 
@@ -57,7 +63,15 @@ export class BuyCreditsPage {
       console.log(data);
     }).catch((error)=>{
       console.log(error);
-    });    
+    });
+ 
+    this.storage.get('city_actual').then((data)=>{
+      this.actualCity = data;
+      console.log(data);
+    }).catch((error)=>{
+      console.log(error);
+    });
+    
   }
   setPrice(price: number){
     this.price = price;
