@@ -21,8 +21,9 @@ export class BuyCreditsPage {
   price = 0;
   balance = 0;
   
+  values_work = [];
   values_work1 = [3,6,9,18,30,60];
-  values_work0 = [3,6,9,18,30,60];
+  values_work0 = [2,4,8,10,20,40];
 
   rates = [
     {
@@ -67,6 +68,11 @@ export class BuyCreditsPage {
  
     this.storage.get('city_actual').then((data)=>{
       this.actualCity = data;
+      if(this.actualCity.working_mode==1){
+        this.values_work = this.values_work1;
+      }else{
+        this.values_work = this.values_work0;
+      }
       console.log(data);
     }).catch((error)=>{
       console.log(error);

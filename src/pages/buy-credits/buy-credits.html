@@ -21,7 +21,7 @@
   <ion-grid style="margin-bottom:10px;">
     <ion-row>
       <ion-col col-20>
-        <ion-card *ngFor="let cre of values_work1" (click)="setPrice(cre)" class="card card-1">
+        <ion-card *ngFor="let cre of values_work" (click)="setPrice(cre)" class="card card-1">
           <ion-icon name="cash" color="primary"></ion-icon><br>
           <b style="font-size: 1.3rem;">R$ {{cre.toFixed(2)}}</b>
         </ion-card>

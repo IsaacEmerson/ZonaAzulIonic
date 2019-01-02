@@ -145,7 +145,7 @@ export class CheckoutPage {
             this.http.dismissLoading();
             this.auth.showToast(result.success,5000);
         },error=>{
-            this.auth.showToast(error,5000);
+            this.auth.showToast(error.error[0],5000);
             this.http.dismissLoading();
         });
     };
