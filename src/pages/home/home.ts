@@ -111,7 +111,9 @@ export class HomePage {
 
   verError(error) {
     if (error.error.error == "token_expired") {
-      this.refreshToken();
+      //this.refreshToken();
+      this.storage.clear();
+      this.navCtrl.setRoot(LoginPage);
     } else if (error.error.error == "token_invalid" || error.error.error == "token_not_provided") {
       console.log('invalid token');
       this.storage.clear();

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { DatePicker } from '@ionic-native/date-picker';
 import { Keyboard } from '@ionic-native/keyboard';
@@ -33,7 +33,9 @@ export class HistoricPage {
   //type ces - compra ou estorno (sysz)
 
   constructor(public navCtrl: NavController,public auth:AuthProvider,
-     public keyboard: Keyboard, public datePicker: DatePicker, public navParams: NavParams, public http: HttpServiceProvider) {
+    public alertCtrl: AlertController,
+     public keyboard: Keyboard, public datePicker: DatePicker,
+      public navParams: NavParams, public http: HttpServiceProvider) {
 
   }
 
@@ -150,6 +152,41 @@ export class HistoricPage {
   ionViewDidLoad() {
     this.getHistoric().add(() => {
       this.setHistoricData();
+    });
+  }
+
+  presentConfirm(id,value) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirmar Cancelamento',
+      message: 'Valor da compra: R$'+value+' será estornado: R$'+value+'. \n ATENÇÃO ESTA AÇÃO BLOQUEARÁ TEMPORARIAMENTE ESSES CRÉDITOS',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirmar',
+          handler: () => {
+            this.balanceReversal(id);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  balanceReversal(transaction_id){
+    this.http.presentLoading();
+    this.http.post('client/refund',{transaction_id:transaction_id}).subscribe((res:any)=>{
+      this.http.dismissLoading();
+      this.auth.showToast(res.success,5000);
+    },error=>{
+      this.http.dismissLoading();
+      this.auth.showToast(error.error,5000);
+      console.log(error);
     });
   }
   
