@@ -21,6 +21,7 @@ export class LoginPage {
   imgFooter: any = false;
   working_mode = 0;
   tutorial = true;
+  cities:any;
   public backgroundImage = 'assets/imgs/login/background-1.jpg';
 
   private credentials: any = {
@@ -85,6 +86,7 @@ export class LoginPage {
     this.http.get('cities').subscribe((cities: any) => {
       this.doRadioCities(cities.cities);
       console.log(cities.cities);
+      this.cities = cities.cities;
       this.http.dismissLoading();
     }, error => {
       this.authService.showToast('Verifique a conexão com a internet',3000);
@@ -111,6 +113,10 @@ export class LoginPage {
     alert.addButton({
       text: 'Ok',
       handler: (data: any) => {
+        if(data==undefined){
+          this.doRadioCities(this.cities);
+          return;
+        }
         console.log('Radio data:', data);
         this.storage.set('city_actual', data).then(() => {
           this.storage.get('token').then((token) => {
