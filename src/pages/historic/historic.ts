@@ -61,7 +61,7 @@ export class HistoricPage {
   }
 
   searchHisto(){
-    this.auth.showToast(this.data_inicial+" "+this.data_final,6000);
+    //this.auth.showToast(this.data_inicial+" "+this.data_final,6000);
     this.getHistoric();
     this.setHistoricData();
   }
