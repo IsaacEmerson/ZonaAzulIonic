@@ -69,56 +69,60 @@ export class SignupPage {
     this.navCtrl.push(AboutPage);
     //this.presentAboutModal();
   }
-  registerInitial(){
-    this.http.presentLoading();
-    this.http.post('register',{
-      email: this.signInitial.controls['user_email'].value,
-      password: this.signInitial.controls['user_pass'].value,
-      password_confirmation: this.signInitial.controls['user_pass'].value,
-      name: this.signInitial.controls['user_name'].value
-  }).subscribe(
-    (result:any)=>{
-    console.log(result.success);
-    this.showToast(result.success,6000);
-    this.signupSlider.lockSwipes(false);
-    this.signupSlider.slideNext();  
-    this.signupSlider.lockSwipes(true);
-    this.http.dismissLoading();
-  },error=>{
-    console.log(error);
-    this.showToast(error.error.errors[0],3000);
-    this.http.dismissLoading();
-  });
-  }
+  // registerInitial(){
+  //   this.http.presentLoading();
+  //   this.http.post('register',{
+  //     email: this.signInitial.controls['user_email'].value,
+  //     password: this.signInitial.controls['user_pass'].value,
+  //     password_confirmation: this.signInitial.controls['user_pass'].value,
+  //     name: this.signInitial.controls['user_name'].value
+  // }).subscribe(
+  //   (result:any)=>{
+  //   console.log(result.success);
+  //   this.showToast(result.success,6000);
+  //   this.signupSlider.lockSwipes(false);
+  //   this.signupSlider.slideNext();  
+  //   this.signupSlider.lockSwipes(true);
+  //   this.http.dismissLoading();
+  // },error=>{
+  //   console.log(error);
+  //   this.showToast(error.error.errors[0],3000);
+  //   this.http.dismissLoading();
+  // });
+  // }
 
-  valAccount(){
-    this.http.presentLoading();
-    console.log(this.tokenEmailConfirm);
-    //valida a conta e entra no cadastro final
-    this.http.getParam('register/confirm/account','token='+this.tokenEmailConfirm.trim()).
-    subscribe((result:any)=>{
-      console.log(result);
-      this.signupSlider.lockSwipes(false);
-      this.signupSlider.slideNext();  
-      this.signupSlider.lockSwipes(true);
-      this.showToast('Código de validação aceito.',5000);
-      this.user.name = result.name;
-      this.user.token = this.tokenEmailConfirm;
-      this.http.dismissLoading();
-    },error=>{
-      console.log(error);
-      this.showToast(error.error.message,3000);      
-      this.http.dismissLoading();
-    });
-  }
+  // valAccount(){
+  //   this.http.presentLoading();
+  //   console.log(this.tokenEmailConfirm);
+  //   //valida a conta e entra no cadastro final
+  //   this.http.getParam('register/confirm/account','token='+this.tokenEmailConfirm.trim()).
+  //   subscribe((result:any)=>{
+  //     console.log(result);
+  //     this.signupSlider.lockSwipes(false);
+  //     this.signupSlider.slideNext();  
+  //     this.signupSlider.lockSwipes(true);
+  //     this.showToast('Código de validação aceito.',5000);
+  //     this.user.name = result.name;
+  //     this.user.token = this.tokenEmailConfirm;
+  //     this.http.dismissLoading();
+  //   },error=>{
+  //     console.log(error);
+  //     this.showToast(error.error.message,3000);      
+  //     this.http.dismissLoading();
+  //   });
+  // }
 
   registerFinal(){
     //let id_city;
     this.storage.get('city_actual').then((city)=>{
       //id_city = city.id;
       this.http.presentLoading();
-    this.http.post('register/confirm/account',{
-      token:this.user.token,
+    this.http.post('register',{
+      email: this.signInitial.controls['user_email'].value,
+      password: this.signInitial.controls['user_pass'].value,
+      password_confirmation: this.signInitial.controls['user_pass'].value,
+      name: this.signInitial.controls['user_name'].value,
+      // token:this.user.token,
       vehicle_id:this.signFinal.controls['vehicle_id'].value,
       cell_phone:this.signFinal.controls['user_contact'].value,
       plaque:this.signFinal.controls['user_plaque'].value,
@@ -170,6 +174,7 @@ export class SignupPage {
   }
 
   goActivation(){
+    this.user.name = this.signInitial.controls['user_name'].value;
     this.signupSlider.lockSwipes(false);
     this.signupSlider.slideNext();  
     this.signupSlider.lockSwipes(true);

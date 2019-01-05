@@ -9,7 +9,7 @@
   <div class="container" padding>
     <ion-slides #signupSlider>
       <ion-slide class="passo1">
-        <p class="welcome">LEMBRE-SE: Um código de ativação será enviado para seu email</p>
+        <!-- <p class="welcome">LEMBRE-SE: Um código de ativação será enviado para seu email</p> -->
         <form [formGroup]="signInitial">
           <ion-item>
             <ion-label>Nome</ion-label>
@@ -38,18 +38,18 @@
           <p style="display:inline" class="welcome">Ao realizar seu cadastro, você estará concordando com nossos</p>
           <p class="danger" (click)="terms()">termos de uso</p>
 
-          <button ion-button block outline (click)="registerInitial()" [disabled]="!signInitial.valid" class="signup">Cadastrar</button>
+          <button ion-button block outline (click)="goActivation()" [disabled]="!signInitial.valid" class="signup">Continuar Cadastro</button>
         </form>
-        <div class="strike">
+        <!-- <div class="strike">
           <span>OU</span>
         </div>
         <button ion-button block clear (click)="goActivation()" class="codigo-ativ">
           <ion-icon class="cadeado" name="unlock"></ion-icon>
           <span>Já possui uma código de ativação?</span>
-        </button>
+        </button> -->
       </ion-slide>
 
-      <ion-slide class="passo2">
+      <!-- <ion-slide class="passo2">
         <ion-item>
           <ion-input [ngModel]="tokenEmailConfirm" (ngModelChange)="tokenEmailConfirm = $event.toLocaleUpperCase()"
             placeholder="Digite seu código de verificação"></ion-input>
@@ -61,7 +61,7 @@
           <span>OU</span>
         </div>
         <button ion-button block clear (click)="goSignup()" color="light" class="login-button">Ainda não se cadastrou?</button>
-      </ion-slide>
+      </ion-slide> -->
 
       <ion-slide class="passo3">
         <p class="welcome">Bem vindo,
