@@ -39,8 +39,8 @@ export class HistoricPage {
 
   }
 
-  data_inicial: any;
-  data_final: any;
+  data_inicial: any = null;
+  data_final: any = null;
 
   openDatepicker(type) {
     this.keyboard.hide();

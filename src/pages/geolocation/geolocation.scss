@@ -50,7 +50,7 @@ page-geolocation {
     height: 35%;
   }
   ion-content {
-    background-color: transparent !important;
+    background-color: transparent;
   }
   .go-back-button, .search-button {
     background-color: transparent !important;
@@ -133,8 +133,8 @@ $transparent-white: rgba(255, 255, 255, .6);
   .toolbar-background,
   ion-navbar,
   ion-header {
-    background: transparent !important;
-    background-color: transparent !important;
+    background: transparent;
+    background-color: transparent;
   }
   .header-md::after,
   .toolbar-background-ios {
