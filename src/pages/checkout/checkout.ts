@@ -1,4 +1,3 @@
-
 import { Component, NgZone, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Segment } from 'ionic-angular';
 import { PaymentHttpProvider } from '../../providers/payment-http/payment-http';

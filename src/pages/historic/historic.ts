@@ -32,10 +32,10 @@ export class HistoricPage {
   //type cet - compra ou estorno (trans)
   //type ces - compra ou estorno (sysz)
 
-  constructor(public navCtrl: NavController,public auth:AuthProvider,
+  constructor(public navCtrl: NavController, public auth: AuthProvider,
     public alertCtrl: AlertController,
-     public keyboard: Keyboard, public datePicker: DatePicker,
-      public navParams: NavParams, public http: HttpServiceProvider) {
+    public keyboard: Keyboard, public datePicker: DatePicker,
+    public navParams: NavParams, public http: HttpServiceProvider) {
 
   }
 
@@ -51,25 +51,26 @@ export class HistoricPage {
     }).then(
       date => {
         if (type == 1) {
-          this.data_inicial = date.getFullYear() + '-' +("0" + (date.getMonth() + 1)).slice(-2) + '-' +("0" + date.getDate()).slice(-2);
+          this.data_inicial = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
         } else if (type == 2) {
-          this.data_final = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2)  + '-' +("0" + date.getDate()).slice(-2);
+          this.data_final = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
         }
       },
       err => console.log('Error occurred while getting date: ', err)
     );
   }
 
-  searchHisto(){
+  searchHisto() {
     //this.auth.showToast(this.data_inicial+" "+this.data_final,6000);
-    this.getHistoric();
-    this.setHistoricData();
+    this.getHistoric().add(() => {
+      this.setHistoricData();
+    });
   }
 
-  showFilter(){
-    if(this.switch=="show"){
+  showFilter() {
+    if (this.switch == "show") {
       this.switch = "dont_show";
-    }else{
+    } else {
       this.switch = "show";
     }
   }
@@ -77,7 +78,7 @@ export class HistoricPage {
   getHistoric() {
     this.http.presentLoading();
     return this.http.getParam('client/historics', 'date_of_the_day=' + this.data_inicial +
-      '&date_until_the_day=' + this.data_final + '&type='+ this.type).subscribe((result: any) => {
+      '&date_until_the_day=' + this.data_final + '&type=' + this.type).subscribe((result: any) => {
         console.log('teste' + result);
         this.historic_info.current_page = result.current_page;
         this.historic_info.total_pages = result.last_page;
@@ -96,7 +97,7 @@ export class HistoricPage {
   setHistoricData() {
     console.log(this.historics);
     this.items = [];
-    this.historics.length == 0? this.none = "Nenhum histórico para exibir":this.none = "";
+    this.historics.length == 0 ? this.none = "Nenhum histórico para exibir" : this.none = "";
 
     for (let key in this.historics) {
       let time_split = this.historics[key].created_at.split(" ");
@@ -107,8 +108,9 @@ export class HistoricPage {
           this.items[key] = {
             title: this.historics[key].description,
             content: [
-              { msg: "Código de comprovante: " ,
-                msg1 : this.historics[key].code
+              {
+                msg: "Código de comprovante: ",
+                msg1: this.historics[key].code
               },
               {
                 items: [
@@ -124,29 +126,30 @@ export class HistoricPage {
           break;
 
         case "U":
-        this.items[key] = {
-          title: "Placa "+this.historics[key].ticket_Placa,
-          content: [
-            { msg: "Código de autenticação da Transalvador: " ,
-              msg1 : this.historics[key].ticket_comprovante
-            },
-            {
-              items: [
-                //TODO colocar valor negativo
-                ["Valor", "R$ "+(+this.historics[key].amount).toFixed(2)],
-                ["Logradouro", this.historics[key].logradouro_tarifa.logradouro.log_nome],
-                ["Regra", (this.historics[key].time)/12+" Hs"],
-              ]
-            },
-          ],
-          icon: "ios-card",
-          time: time_split
+          this.items[key] = {
+            title: "Placa " + this.historics[key].ticket_Placa,
+            content: [
+              {
+                msg: "Código de autenticação da Transalvador: ",
+                msg1: this.historics[key].ticket_comprovante
+              },
+              {
+                items: [
+                  //TODO colocar valor negativo
+                  ["Valor", "R$ " + (+this.historics[key].amount).toFixed(2)],
+                  ["Logradouro", this.historics[key].logradouro_tarifa.logradouro.log_nome],
+                  ["Regra", (this.historics[key].time) / 12 + " Hs"],
+                ]
+              },
+            ],
+            icon: "ios-card",
+            time: time_split
 
-        }
+          }
           break;
       }
     }
-    console.log('vands'+this.items);
+    console.log('vands' + this.items);
   }
 
   ionViewDidLoad() {
@@ -155,10 +158,10 @@ export class HistoricPage {
     });
   }
 
-  presentConfirm(id,value) {
+  presentConfirm(id, value) {
     let alert = this.alertCtrl.create({
       title: 'Confirmar Cancelamento',
-      message: 'Valor da compra: R$'+value+' será estornado: R$'+value+'. \n ATENÇÃO ESTA AÇÃO BLOQUEARÁ TEMPORARIAMENTE ESSES CRÉDITOS',
+      message: 'Valor da compra: R$' + value + ' será estornado: R$' + value + '. \n ATENÇÃO ESTA AÇÃO BLOQUEARÁ TEMPORARIAMENTE ESSES CRÉDITOS',
       buttons: [
         {
           text: 'Cancelar',
@@ -178,18 +181,18 @@ export class HistoricPage {
     alert.present();
   }
 
-  balanceReversal(transaction_id){
+  balanceReversal(transaction_id) {
     this.http.presentLoading();
-    this.http.post('client/refund',{transaction_id:transaction_id}).subscribe((res:any)=>{
+    this.http.post('client/refund', { transaction_id: transaction_id }).subscribe((res: any) => {
       this.http.dismissLoading();
-      this.auth.showToast(res.success,5000);
-    },error=>{
+      this.auth.showToast(res.success, 5000);
+    }, error => {
       this.http.dismissLoading();
-      this.auth.showToast(error.error,5000);
+      this.auth.showToast(error.error, 5000);
       console.log(error);
     });
   }
-  
+
   getHistoricPerPage(page, type: string) {
     this.http.presentLoading();
     return this.http.getParam('client/historics', 'page=' + page + '&date_of_the_day=' + this.data_inicial +

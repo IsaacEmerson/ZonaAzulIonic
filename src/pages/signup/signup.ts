@@ -137,8 +137,8 @@ export class SignupPage {
     this.navCtrl.pop();
   },error=>{
     console.log(error);
-    console.log(error.error.error);
-    this.showToast(error.error.errors[0],3000);
+    console.log(error.error);
+    this.showToast(error.error.error[0],3000);
     this.http.dismissLoading();
   });
     });
