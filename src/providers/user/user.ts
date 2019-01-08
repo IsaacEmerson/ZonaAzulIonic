@@ -75,7 +75,7 @@ export class UserProvider {
 
   setSound() {
     if (this.plt.is('android')) {
-      return 'file://sound.mp3'
+      return 'file://assets/sounds/notify.wav'
     } else {
       return 'file://beep.caf'
     }

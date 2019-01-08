@@ -25,6 +25,7 @@
     "@ionic-native/background-geolocation": "^4.16.0",
     "@ionic-native/camera": "^4.17.0",
     "@ionic-native/card-io": "^4.17.0",
+    "@ionic-native/clipboard": "^4.19.0",
     "@ionic-native/core": "~4.12.0",
     "@ionic-native/date-picker": "^4.18.0",
     "@ionic-native/email-composer": "^4.17.0",
@@ -42,6 +43,7 @@
     "card.io.cordova.mobilesdk": "^2.1.0",
     "cordova": "^8.1.2",
     "cordova-android": "7.1.2",
+    "cordova-clipboard": "1.2.1",
     "cordova-ios": "4.5.5",
     "cordova-plugin-app-event": "^1.2.1",
     "cordova-plugin-app-preferences": "git+https://github.com/vash15/me.apla.cordova.app-preferences.git",
@@ -116,7 +118,8 @@
       "cordova-plugin-uniquedeviceid": {},
       "cordova-plugin-market": {},
       "cordova-plugin-datepicker": {},
-      "cordova-plugin-local-notification": {}
+      "cordova-plugin-local-notification": {},
+      "cordova-clipboard": {}
     }
   }
 }

@@ -245,7 +245,7 @@ export class GeolocationPage {
       }).catch((error: any) => {
         this.auth.showToast(error,2000);
         this.auth.showToast("Precisamos da permissão para identificar seu dispositivo",2000);
-        this.nav.setRoot(HomePage);
+        //this.nav.setRoot(HomePage);
         console.log(error)
       }); 
     this.plaque_id = this.navParams.get('plaque_id');

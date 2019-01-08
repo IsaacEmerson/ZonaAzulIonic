@@ -57,15 +57,17 @@
         </ion-card-header>
         <ion-card-content>
           <span style="color: #606060">
+            <b text-center>{{item.status}}</b>
             <p>{{item.content[0].msg}}</p>
-            <div style="">
-              <p>{{item.content[0].msg1}}</p>
-            </div>
+            <b (click)="showCode(item.content[0].msg1)" >Clique para ver</b>
           </span>
           <div *ngFor="let items of item.content[1].items">
             <ion-item>
               {{items[0]}}
               <ion-badge item-end>{{items[1]}}</ion-badge>
+            </ion-item>
+            <ion-item (click)="presentConfirm(item.id,items[1])" style="color:crimson; font-size:15px;" *ngIf="item.check==1" >
+              Estornar ?
             </ion-item>
           </div>
         </ion-card-content>

@@ -33,6 +33,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { PlaquesModalPage } from '../pages/plaques-modal/plaques-modal';
 import {SlideTutorialPage } from '../pages/slide-tutorial/slide-tutorial';
+import { Clipboard } from '@ionic-native/clipboard';
 
 import { TimelineComponent } from '../components/timeline/timeline';
 import { TimelineTimeComponent } from '../components/timeline/timeline';
@@ -147,6 +148,7 @@ import { Keyboard } from '@ionic-native/keyboard';
     Geolocation,
     Keyboard,
     DatePicker,
+    Clipboard,
     Camera,
     EmailComposer,
     CardIO,

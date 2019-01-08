@@ -6,6 +6,7 @@ import { GeolocationPage } from '../geolocation/geolocation';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
 import { MenuController } from 'ionic-angular';
+import { ActivePlaquesPage } from '../active-plaques/active-plaques';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -202,8 +203,8 @@ export class HomePage {
       //salvador
       for (let id_p of this.activePlaques) {
         if (id_p.plaque === this.plaque.plaque) {
-          //this.confirmParkOldPlaque();
-          this.confirmParkPlaque();
+          this.confirmParkOldPlaque(id_p);
+          //this.confirmParkPlaque();
           return;
         }
       }
@@ -232,13 +233,13 @@ export class HomePage {
   }
 
   //caso possa estacionar ainda
-  confirmParkOldPlaque() {
+  confirmParkOldPlaque(plaque) {
     let alert = this.alertCtrl.create({
-      title: 'Confirmar nova Ativação',
-      message: 'Uma nova ativação para essa placa acarretará o fim da anterior.',
+      title: 'ATENÇÃO, Confirmar nova Ativação',
+      message: 'Uma nova ativação para essa placa acarretará o fim da anterior. Use a nova ativação se for se locomover para um local que possua regra diferente da ativacão atual ('+(plaque.time)/60+' Horas)',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
           handler: () => {
 

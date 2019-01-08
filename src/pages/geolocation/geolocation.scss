@@ -133,8 +133,8 @@ $transparent-white: rgba(255, 255, 255, .6);
   .toolbar-background,
   ion-navbar,
   ion-header {
-    background: transparent;
-    background-color: transparent;
+    background: transparent !important;
+    background-color: transparent !important;
   }
   .header-md::after,
   .toolbar-background-ios {

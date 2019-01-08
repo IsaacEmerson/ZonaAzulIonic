@@ -4,6 +4,7 @@ import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { DatePicker } from '@ionic-native/date-picker';
 import { Keyboard } from '@ionic-native/keyboard';
 import { AuthProvider } from '../../providers/auth/auth';
+import { Clipboard } from '@ionic-native/clipboard';
 
 /**
  * Generated class for the HistoricPage page.
@@ -18,6 +19,18 @@ import { AuthProvider } from '../../providers/auth/auth';
   templateUrl: 'historic.html',
 })
 export class HistoricPage {
+
+  status = [
+    "Aguardando pagamento", 
+    "Pagamento em análise", 
+    "Pago", 
+    "Pagamento disponível", 
+    "Pagamento em disputa", 
+    "Pagamento devolvido", 
+    "Pagamento cancelado", 
+    "Pagamento debitado", 
+    "Pagamento em retenção temporária"
+  ];
 
   historic_info = {
     current_page: 1,
@@ -34,6 +47,7 @@ export class HistoricPage {
 
   constructor(public navCtrl: NavController, public auth: AuthProvider,
     public alertCtrl: AlertController,
+    private clipboard: Clipboard,
     public keyboard: Keyboard, public datePicker: DatePicker,
     public navParams: NavParams, public http: HttpServiceProvider) {
 
@@ -106,11 +120,14 @@ export class HistoricPage {
       switch (this.type) {
         case "CES":
           this.items[key] = {
+            id:this.historics[key].id,
             title: this.historics[key].description,
+            status: this.status[this.historics[key].status],
+            check: this.historics[key].check,
             content: [
               {
                 msg: "Código de comprovante: ",
-                msg1: this.historics[key].code
+                msg1: this.historics[key].city_transation[0].numero_comprovante
               },
               {
                 items: [
@@ -128,6 +145,7 @@ export class HistoricPage {
         case "U":
           this.items[key] = {
             title: "Placa " + this.historics[key].ticket_Placa,
+            check: 0,
             content: [
               {
                 msg: "Código de autenticação da Transalvador: ",
@@ -149,7 +167,7 @@ export class HistoricPage {
           break;
       }
     }
-    console.log('vands' + this.items);
+    console.log(this.items);
   }
 
   ionViewDidLoad() {
@@ -207,6 +225,29 @@ export class HistoricPage {
         this.http.dismissLoading();
         console.log(error);
       });
+  }
+
+  showCode(code){
+    let alert = this.alertCtrl.create({
+      title: 'Código de comprovante',
+      message: code,
+      buttons: [
+        {
+          text: 'Copiar',
+          handler: () => {
+            this.clipboard.copy(code);
+          }
+        },
+        {
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   nextPage() {
