@@ -34,8 +34,9 @@
   <div [hidden]="!(switch == 'map')" #map id="map" class="map"></div>
   <div [hidden]="!(switch == 'map')" class="centerMarker"></div>
 
-  <ion-grid *ngIf="logradouros.length" class="listing-details">
-    <p text-center>Ruas Próximas com estacionamento</p>
+  <ion-grid style="margin-bottom:30px;" *ngIf="logradouros.length" class="listing-details">
+    <p style="margin-bottom: -15px;" text-center>Ruas Próximas com estacionamento</p>
+    <p style="color:chartreuse;" text-center >{{loading}}</p>
     <p style="color:rgb(121, 117, 117);margin-top: 0px;" text-center>(Para melhor uso ative a localização do seu
       celular)</p>
     <ion-scroll style="width:100%;height:35vh" scrollY="true">
@@ -81,6 +82,7 @@
     <p>{{address}}</p>
     <img class="logo" src="assets/marc.png" />
     <h4>Nenhuma área de <span style="color:rgb(36, 11, 179)">estacionamento</span> encontrada próximo o endereço atual</h4>
+    <p text-center style="color:darkblue;" >Mova o icone para atualizar</p>
   </div>
 
 </ion-content>

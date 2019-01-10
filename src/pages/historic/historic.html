@@ -54,6 +54,7 @@
       <ion-card>
         <ion-card-header>
           {{item.title}}
+          <p style="color:crimson;font-size: 14px;" *ngIf="item.canceled">Cancelado</p>
         </ion-card-header>
         <ion-card-content>
           <span style="color: #606060">

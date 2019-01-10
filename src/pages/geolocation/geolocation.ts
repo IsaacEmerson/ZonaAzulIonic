@@ -188,7 +188,7 @@ export class GeolocationPage {
       ]
     }
   ];
-
+  loading = "";
   polygons = [];
   poligono_areas = {};
   poligono_logradouro = {};
@@ -256,8 +256,10 @@ export class GeolocationPage {
   }
 
   getLogradouros(type_area, id_area_logradouro) {
+    this.loading="Carregando..";
     this.http.getParam('client/buscarLogradouros', 'type_area=' + type_area + '&id_area_logradouro=' + id_area_logradouro)
     .subscribe((result: any) => {
+      this.loading="";
       if(result.length>0){
         this.logradouros = result;
         this.ratesLogra = result[0].tarifas;  
@@ -267,6 +269,7 @@ export class GeolocationPage {
       }
       console.log(result);
     }, error => {
+      this.loading="";
       console.log(error);
     });
   }
@@ -275,6 +278,7 @@ export class GeolocationPage {
     this.http.presentLoading();
     this.http.getParam('client/buscarLogradouros', 'type_area=1&id_area_logradouro=' + id_logradouro).subscribe((result: any) => {
       this.logradouros = result;
+      console.log(result[0].logradouro.id_logradouro);
       this.id_logradouro = result[0].logradouro.id_logradouro;
       this.ratesLogra = result[0].tarifas;
       this.info_rate = '';
@@ -310,7 +314,7 @@ export class GeolocationPage {
           console.log(error);
         });
 
-    } else if (this.user_balance < this.rate_park.valor) {
+    } else if (this.user_balance < +this.rate_park.valor) {
       this.buyConfirm();
     } else {
       this.auth.showToast('Selecione a tarifa', 4000);
@@ -461,6 +465,7 @@ export class GeolocationPage {
       });
 
     });
+    this.currentLocation();
   }
 
   setLogradourosAndRates(that) {
@@ -525,6 +530,7 @@ export class GeolocationPage {
           let latLngObj = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
           this.getAddress(latLngObj);
           sub.next(place.geometry.location);
+          this.setLogradourosAndRates(this);
           //sub.complete();
         }
       });

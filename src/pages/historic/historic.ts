@@ -150,6 +150,7 @@ export class HistoricPage {
 
         case "U":
           this.items[key] = {
+            canceled: this.historics[key].canceled,
             title: "Placa " + this.historics[key].ticket_Placa,
             check: 0,
             content: [
