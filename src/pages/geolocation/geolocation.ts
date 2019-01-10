@@ -416,7 +416,7 @@ export class GeolocationPage {
   initializeMap() {
     console.log(this.actual_city.lng);
     let that = this;
-    that.currentLocation();
+    //that.currentLocation();
     this.zone.run(() => {
 
       var mapEle = this.mapElement.nativeElement;

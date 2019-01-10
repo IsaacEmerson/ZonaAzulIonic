@@ -34,7 +34,7 @@ export class UserProvider {
     this.localNotifications.hasPermission().then(() => {
       // Schedule delayed notification
       this.localNotifications.schedule({
-        id: Date.now()+this.i,
+        id: Date.now()+this.i*100,
         vibrate: true,
         text: 'Faltam '+minutes_before+" para acabar seu tempo de estacionamento.." ,
         trigger: { at: new Date(new Date().getTime() + time_noti - minutes) },
