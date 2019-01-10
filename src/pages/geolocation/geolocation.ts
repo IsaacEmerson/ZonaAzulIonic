@@ -245,7 +245,7 @@ export class GeolocationPage {
       }).catch((error: any) => {
         this.auth.showToast(error,2000);
         this.auth.showToast("Precisamos da permissão para identificar seu dispositivo",2000);
-        this.nav.setRoot(HomePage);
+        //this.nav.setRoot(HomePage);
         console.log(error)
       }); 
     this.plaque_id = this.navParams.get('plaque_id');
@@ -256,6 +256,7 @@ export class GeolocationPage {
   }
 
   getLogradouros(type_area, id_area_logradouro) {
+    this.rate_park = null;
     this.loading="Carregando..";
     this.http.getParam('client/buscarLogradouros', 'type_area=' + type_area + '&id_area_logradouro=' + id_area_logradouro)
     .subscribe((result: any) => {
@@ -275,6 +276,7 @@ export class GeolocationPage {
   }
 
   selecLogradouro(id_logradouro) {
+    this.rate_park = null;
     this.http.presentLoading();
     this.http.getParam('client/buscarLogradouros', 'type_area=1&id_area_logradouro=' + id_logradouro).subscribe((result: any) => {
       this.logradouros = result;
