@@ -21,14 +21,14 @@ import { Clipboard } from '@ionic-native/clipboard';
 export class HistoricPage {
 
   status = [
-    "Aguardando pagamento", 
-    "Pagamento em análise", 
-    "Pago", 
-    "Pago", 
-    "Pagamento em disputa", 
-    "Pagamento devolvido", 
-    "Pagamento cancelado", 
-    "Pagamento debitado", 
+    "Aguardando pagamento",
+    "Pagamento em análise",
+    "Pago",
+    "Pago",
+    "Pagamento em disputa",
+    "Pagamento devolvido",
+    "Pagamento cancelado",
+    "Pagamento debitado",
     "Pagamento em retenção temporária"
   ];
 
@@ -117,18 +117,18 @@ export class HistoricPage {
       let time_split = this.historics[key].created_at.split(" ");
       let aux = time_split[0].split("-");
       time_split[0] = aux[2] + "/" + aux[1] + "/" + aux[0];
-      let comprovante = this.historics[key].city_transation;
-      if(comprovante.length==0){
-        comprovante = "";
-      }else{
-        comprovante = this.historics[key].city_transation[0].numero_comprovante;
-      }
       switch (this.type) {
         case "CES":
+          let comprovante = this.historics[key].city_transation;
+          if (comprovante.length == 0) {
+            comprovante = "";
+          } else {
+            comprovante = this.historics[key].city_transation[0].numero_comprovante;
+          }
           this.items[key] = {
-            id:this.historics[key].id,
+            id: this.historics[key].id,
             title: this.historics[key].description,
-            status: this.status[this.historics[key].status-1],
+            status: this.status[this.historics[key].status - 1],
             check: this.historics[key].check,
             content: [
               {
@@ -233,7 +233,7 @@ export class HistoricPage {
       });
   }
 
-  showCode(code){
+  showCode(code) {
     let alert = this.alertCtrl.create({
       title: 'Código de comprovante',
       message: code,
