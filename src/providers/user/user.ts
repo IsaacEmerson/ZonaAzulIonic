@@ -19,6 +19,8 @@ export class UserProvider {
     console.log('Hello UserProvider Provider');
   }
 
+  i = 0;
+
   notification(time: string, minutes_before: number) {
     //var time = "34:26:00";
     var timeParts = time.split(":");
@@ -27,18 +29,19 @@ export class UserProvider {
     //minutes_befere tempo antes de vencer para alertar
     let minutes = minutes_before * 60000;
 
-    let key = 'isaac';
+   // let key = 'isaac';
 
     this.localNotifications.hasPermission().then(() => {
       // Schedule delayed notification
       this.localNotifications.schedule({
+        id: Date.now()+this.i,
         vibrate: true,
-        text: 'Seu tempo de estacionamento esta acabando..',
+        text: 'Faltam '+minutes_before+" para acabar seu tempo de estacionamento.." ,
         trigger: { at: new Date(new Date().getTime() + time_noti - minutes) },
         led: 'FF0000',
         sound: this.setSound(),
-        data: { secret: key }
       });
+      this.i++;
     }, error => {
       this.auth.showToast(error, 5000);
     })
@@ -63,6 +66,7 @@ export class UserProvider {
   notifi() {
     this.localNotifications.hasPermission().then(() => {
       this.localNotifications.schedule({
+        id:Date.now(),
         vibrate: true,
         text: 'Notificacão teste syszona',
         sound: this.setSound(),
@@ -75,7 +79,7 @@ export class UserProvider {
 
   setSound() {
     if (this.plt.is('android')) {
-      return 'file://assets/sounds/notify.wav'
+      return 'www/assets/sons/notiAndroid.mp3'
     } else {
       return 'file://beep.caf'
     }

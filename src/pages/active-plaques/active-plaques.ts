@@ -62,7 +62,7 @@ export class ActivePlaquesPage {
         time_left = "Tempo restante " + hour + ":" + minute + "hs";
       }
       this.cards[key] = {
-        id: this.plaques.active_plaques[key].id,
+        id: [this.plaques.active_plaques[key].id, this.plaques.active_plaques[key].id_logradouro],
         imageUrl: '',
         name: 'Estacionou ' + this.plaques.active_plaques[key].vehicle,
         ETA: time_left,
@@ -119,9 +119,9 @@ export class ActivePlaquesPage {
     alert.present();
   }
 
-  cancelParking(id_plaque) {
+  cancelParking(id) {
     this.http.presentLoading();
-    this.http.post('client/desistencia', { id: id_plaque }).subscribe((result: any) => {
+    this.http.post('client/desistencia', { id: id[0], id_logradouro:id[1] }).subscribe((result: any) => {
       this.http.dismissLoading();
       console.log(result);
       this.authService.showToast(result.success, 3000);

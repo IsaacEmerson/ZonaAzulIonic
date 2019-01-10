@@ -24,7 +24,7 @@ export class HistoricPage {
     "Aguardando pagamento", 
     "Pagamento em análise", 
     "Pago", 
-    "Pagamento disponível", 
+    "Pago", 
     "Pagamento em disputa", 
     "Pagamento devolvido", 
     "Pagamento cancelado", 
@@ -116,18 +116,24 @@ export class HistoricPage {
     for (let key in this.historics) {
       let time_split = this.historics[key].created_at.split(" ");
       let aux = time_split[0].split("-");
-      time_split[0] = aux[2] + "/" + aux[1] + "/" + aux[0]
+      time_split[0] = aux[2] + "/" + aux[1] + "/" + aux[0];
+      let comprovante = this.historics[key].city_transation;
+      if(comprovante.length==0){
+        comprovante = "";
+      }else{
+        comprovante = this.historics[key].city_transation[0].numero_comprovante;
+      }
       switch (this.type) {
         case "CES":
           this.items[key] = {
             id:this.historics[key].id,
             title: this.historics[key].description,
-            status: this.status[this.historics[key].status],
+            status: this.status[this.historics[key].status-1],
             check: this.historics[key].check,
             content: [
               {
                 msg: "Código de comprovante: ",
-                msg1: this.historics[key].city_transation[0].numero_comprovante
+                msg1: comprovante,
               },
               {
                 items: [
@@ -156,7 +162,7 @@ export class HistoricPage {
                   //TODO colocar valor negativo
                   ["Valor", "R$ " + (+this.historics[key].amount).toFixed(2)],
                   ["Logradouro", this.historics[key].logradouro_tarifa.logradouro.log_nome],
-                  ["Regra", (this.historics[key].time) / 12 + " Hs"],
+                  ["Regra", (this.historics[key].time) / 60 + " Hs"],
                 ]
               },
             ],

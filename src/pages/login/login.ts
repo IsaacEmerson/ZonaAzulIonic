@@ -149,6 +149,7 @@ export class LoginPage {
   }
 
   ionViewDidEnter() {
+    this.storage.remove("PagSession");
     this.menu.enable(false);
   }
 
@@ -207,7 +208,7 @@ export class LoginPage {
       // });
       let isAndroid = this.plt.is('android');
       let plat = isAndroid?1:0;
-      return this.http.getParam('checkVersion', "app=1&version=1.0.0&platform="+plat)
+      return this.http.getParam('checkVersion', "app=1&version=1.0.1&platform="+plat)
         .subscribe((result: any) => {
           console.log(result);
         }, error => {

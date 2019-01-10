@@ -236,7 +236,7 @@ export class HomePage {
   confirmParkOldPlaque(plaque) {
     let alert = this.alertCtrl.create({
       title: 'ATENÇÃO, Confirmar nova Ativação',
-      message: 'Uma nova ativação para essa placa acarretará o fim da anterior. Use a nova ativação se for se locomover para um local que possua regra diferente da ativacão atual ('+(plaque.time)/60+' Horas)',
+      message: 'Uma nova ativação para essa placa acarretará o fim da anterior. Use a nova ativação se for se locomover para um local que possua regra diferente da ativacão atual ('+(plaque.time)/60+' Horas), Verifique a sinalização',
       buttons: [
         {
           text: 'Cancelar',

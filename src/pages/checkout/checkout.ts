@@ -96,9 +96,14 @@ export class CheckoutPage {
     ionViewDidLoad() {
         this.http.presentLoading();
         scriptjs('https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js', () => {
-            this.paymentHttp.getSession().subscribe((data) => {
-                this.initSession(data);
+            this.storage.get('PagSession').then((id) => {
+                this.initSession(id);
                 this.getPaymentMethods();
+            }).catch(() => {
+                this.paymentHttp.getSession().subscribe((data) => {
+                    this.initSession(data);
+                    this.getPaymentMethods();
+                });
             });
         });
     }
@@ -106,6 +111,8 @@ export class CheckoutPage {
     initSession(data) {
         //sesssion id = id
         PagSeguroDirectPayment.setSessionId(data.id);
+        console.log(data);
+        this.storage.set('PagSession', { id: data.id });
     }
 
     getPaymentMethods() {
@@ -145,7 +152,7 @@ export class CheckoutPage {
                 let doPayment = () => {
                     this.paymentHttp.doPayment(data).subscribe((result: any) => {
                         console.log('deu certo');
-                        this.navCtrl.setRoot(HistoricPage);
+                        this.navCtrl.setRoot(HomePage);
                         this.http.dismissLoading();
                         this.auth.showToast(result.success, 5000);
                     }, error => {
@@ -158,22 +165,24 @@ export class CheckoutPage {
                     this.prepareCreditCard().then(() => {
                         (<any>data).creditCardToken = this.creditCard.token;
                         console.log(data);
+                        console.log(this.creditCard);
                         doPayment();
                     }, (error) => {
                         console.log(error);
-                        this.auth.showToast("Erro com sua forma de pagamento. Verifique os dados e tente novamente ", 5000);
-                        this.navCtrl.setRoot(CheckoutPage);
+                        console.log(this.creditCard);
+                        this.auth.showToast("Erro do pagseguro ao gerar token do cartão. Verifique os dados e tente novamente ", 5000);
+                        this.navCtrl.setRoot(BuyCreditsPage);
                         this.http.dismissLoading();
                     });
                     return;
                 }
 
                 doPayment();
-            }else{
-                this.auth.showToast('O nome precisa ser composto 1',5000);
+            } else {
+                this.auth.showToast('O nome precisa ser composto 1', 5000);
             }
-        }else{
-            this.auth.showToast('O nome precisa ser composto',5000);
+        } else {
+            this.auth.showToast('O nome precisa ser composto', 5000);
         }
     }
 
@@ -202,13 +211,16 @@ export class CheckoutPage {
     }
 
     getCreditCardToken(): Promise<any> {
+        let year: string = 20 + this.creditCard.expiryYear;
+        this.creditCard.expiryYear = year;
+        console.log(year);
         return new Promise((resolve, reject) => {
             PagSeguroDirectPayment.createCardToken({
                 cardNumber: this.creditCard.cardNumber,
                 brand: this.creditCard.brand,
                 cvv: this.creditCard.cvv,
                 expirationMonth: this.creditCard.expiryMonth,
-                expirationYear: '20' + this.creditCard.expiryYear,
+                expirationYear: year,
                 success: (response) => {
                     this.zone.run(() => {
                         this.creditCard.token = response.card.token;
