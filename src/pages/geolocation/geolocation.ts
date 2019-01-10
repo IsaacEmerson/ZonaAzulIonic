@@ -245,7 +245,7 @@ export class GeolocationPage {
       }).catch((error: any) => {
         this.auth.showToast(error,2000);
         this.auth.showToast("Precisamos da permissão para identificar seu dispositivo",2000);
-        //this.nav.setRoot(HomePage);
+        this.nav.setRoot(HomePage);
         console.log(error)
       }); 
     this.plaque_id = this.navParams.get('plaque_id');
@@ -556,7 +556,7 @@ export class GeolocationPage {
   }
 
   currentLocation() {
-    //this.spinner.load();
+    this.spinner.load();
 
     let locationOptions = { enableHighAccuracy: true };
 
@@ -567,14 +567,14 @@ export class GeolocationPage {
       // Display  Marker
       this.map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
       this.getAddress(latLng);
-      //this.spinner.dismiss();
+      this.spinner.dismiss();
       this.storage.set('current_latlong', latLngObj);
       return latLng;
     }, (err) => {
       this.auth.showToast(err,5000);
       this.nav.setRoot(HomePage);
       console.log(err);
-      //this.spinner.dismiss();
+      this.spinner.dismiss();
     });
   }
 
