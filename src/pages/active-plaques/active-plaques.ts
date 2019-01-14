@@ -125,7 +125,8 @@ export class ActivePlaquesPage {
       this.http.dismissLoading();
       console.log(result);
       this.authService.showToast(result.success, 3000);
-      this.getActivePlaques();
+      this.navCtrl.setRoot(ActivePlaquesPage);
+      // this.getActivePlaques();
     }, error => {
       this.http.dismissLoading();
       this.authService.showToast(error.error.error, 3000);

@@ -236,6 +236,8 @@ export class GeolocationPage {
     plaque: ""
   };
 
+  thatt;
+
   ionViewDidLoad() {
     this.uniqueDeviceID.get()
       .then((uuid: any) => {
@@ -256,17 +258,26 @@ export class GeolocationPage {
   }
 
   getLogradouros(type_area, id_area_logradouro) {
-    this.rate_park = null;
+    // if(type_area==1){
+    //   this.selecLogradouro(id_area_logradouro);
+
+    // }
+    this.info_rate = '';
+    this.rate_park = {
+      valor: 0,
+      id_tarifa: 0,
+      tar_tempo_permanencia: ''
+    };
+    this.logradouros = [];
+    this.ratesLogra = [];  
+    
     this.loading="Carregando..";
     this.http.getParam('client/buscarLogradouros', 'type_area=' + type_area + '&id_area_logradouro=' + id_area_logradouro)
     .subscribe((result: any) => {
       this.loading="";
       if(result.length>0){
         this.logradouros = result;
-        this.ratesLogra = result[0].tarifas;  
-      }else{
-        this.logradouros = [];
-        this.ratesLogra = [];  
+        this.ratesLogra = result;  
       }
       console.log(result);
     }, error => {
@@ -276,14 +287,21 @@ export class GeolocationPage {
   }
 
   selecLogradouro(id_logradouro) {
-    this.rate_park = null;
+    this.info_rate = '';
+    console.log(id_logradouro);
+    this.rate_park = {
+      valor: 0,
+      id_tarifa: 0,
+      tar_tempo_permanencia: ''
+    };
+    this.logradouros = [];
+    this.ratesLogra = []; 
+
     this.http.presentLoading();
     this.http.getParam('client/buscarLogradouros', 'type_area=1&id_area_logradouro=' + id_logradouro).subscribe((result: any) => {
       this.logradouros = result;
-      console.log(result[0].logradouro.id_logradouro);
-      this.id_logradouro = result[0].logradouro.id_logradouro;
-      this.ratesLogra = result[0].tarifas;
-      this.info_rate = '';
+      this.id_logradouro = result[0].id_logradouro;
+      this.ratesLogra = result;
       console.log(result);
       this.http.dismissLoading();
     }, error => {
@@ -318,7 +336,14 @@ export class GeolocationPage {
     that.getAddress(latLngObj);
   }
 
+  voltar(){
+    this.setLogradourosAndRates(this.thatt);
+  }
+
   activeParking() {
+    // if(this.rate_park.valor==null){
+    //   return;
+    // }
     console.log(this.rate_park.valor);
     console.log(this.user_balance);
     console.log(this.rate_park);
@@ -327,7 +352,6 @@ export class GeolocationPage {
     console.log('taxa' + this.rate_park.id_tarifa);
     if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= +this.rate_park.valor) {
       this.http.presentLoading();
-
       this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro,
          id_plaque: this.plaque_id, uuid:this.uuid, tem_ativo: this.tem_ativo })
         .subscribe((res:any) => {
@@ -448,6 +472,7 @@ export class GeolocationPage {
   initializeMap() {
     console.log(this.actual_city.lng);
     let that = this;
+    this.thatt = this;
     //that.currentLocation();
     this.zone.run(() => {
 
@@ -490,6 +515,10 @@ export class GeolocationPage {
         this.zone.run(() => {
           this.resizeMap();
         });
+      });
+
+      google.maps.event.addListener(this.map, 'zoom_changed', () => {
+        this.setLogradourosAndRates(that);
       });
 
     });
