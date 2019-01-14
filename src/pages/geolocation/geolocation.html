@@ -35,7 +35,7 @@
   <div [hidden]="!(switch == 'map')" class="centerMarker"></div>
 
   <ion-grid style="margin-bottom:30px;" *ngIf="logradouros.length" class="listing-details">
-      <div *ngIf="logradouros[0].id_tarifa" >
+      <div style="margin-bottom: -15px;" *ngIf="logradouros[0].id_tarifa" >
           <ion-icon  item-start (click)="voltar()" style="font-size:25px" name="arrow-back"></ion-icon>
       </div>
     <p style="margin-bottom: -15px;" text-center>Ruas Próximas com estacionamento</p>
