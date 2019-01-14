@@ -262,7 +262,10 @@ export class GeolocationPage {
     //   this.selecLogradouro(id_area_logradouro);
 
     // }
-    this.info_rate = '';
+    this.zone.run(() => {
+      this.info_rate = '';
+    });
+    
     this.rate_park = {
       valor: 0,
       id_tarifa: 0,

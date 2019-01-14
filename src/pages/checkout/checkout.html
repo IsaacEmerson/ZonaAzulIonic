@@ -42,7 +42,7 @@
               </ion-item>
               <ion-item>
                   <ion-icon name="ios-finger-print" item-start color="touchId"></ion-icon>
-                  <ion-input clearInput=true type="tel"  decimal="true" formControlName="senderCPF" placeholder="CPF do Titular" [brmasker]="{mask:'000.000.000-00', len:14}" [(ngModel)]="creditCard.senderCPF"></ion-input>
+                  <ion-input clearInput=true type="tel"  decimal="true" formControlName="senderCPF" placeholder="CPF/CNPJ do Titular" [brmasker]="{person: true}" [(ngModel)]="creditCard.senderCPF"></ion-input>
                 </ion-item>
                 <ion-item>
                   <!--TODO input validas para ativa concluir pagamento-->

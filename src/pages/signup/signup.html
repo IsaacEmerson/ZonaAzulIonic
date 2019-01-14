@@ -70,8 +70,8 @@
         <form [formGroup]="signFinal">
           <ion-item>
             <ion-label>CPF</ion-label>
-            <ion-input type="tel" formControlName="user_cpf" name="cpf" [brmasker]="{mask:'000.000.000-00', len:14}"
-              placeholder="Digite seu CPF..."></ion-input>
+            <ion-input type="tel" formControlName="user_cpf" name="cpf" [brmasker]="{person: true}"
+              placeholder="Digite seu CPF/CNPJ..."></ion-input>
           </ion-item>
           <p class="alert" *ngIf="!signFinal.controls.user_cpf.valid  && signFinal.controls.user_cpf.dirty">CPF
             inválido</p>
