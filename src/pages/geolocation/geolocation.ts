@@ -292,6 +292,32 @@ export class GeolocationPage {
     });
   }
 
+  setLogradourosAndRates(that) {
+    let map_center = that.getMapCenter();
+    let latLngObj = new google.maps.LatLng(map_center.lat(), map_center.lng());
+
+    let logradouro;
+    let area;
+    if (logradouro = this.findInPoly(this.polygons[1], latLngObj)) {
+      console.log(logradouro);
+      console.log('achou na logradouro');
+      this.info_rate = '';
+      this.getLogradouros(logradouro.type_area, logradouro.id_area_logradouro);
+    } else if (area = this.findInPoly(this.polygons[0], latLngObj)) {
+      if (area) {
+        console.log(area);
+        console.log('achou na Area');
+        this.info_rate = '';
+        this.getLogradouros(area.type_area, area.id_area_logradouro);
+      }
+    } else {
+      this.logradouros = [];
+    }
+
+    console.log(latLngObj);
+    that.getAddress(latLngObj);
+  }
+
   activeParking() {
     console.log(this.rate_park.valor);
     console.log(this.user_balance);
@@ -468,32 +494,6 @@ export class GeolocationPage {
 
     });
     this.currentLocation();
-  }
-
-  setLogradourosAndRates(that) {
-    let map_center = that.getMapCenter();
-    let latLngObj = new google.maps.LatLng(map_center.lat(), map_center.lng());
-
-    let logradouro;
-    let area;
-    if (logradouro = this.findInPoly(this.polygons[1], latLngObj)) {
-      console.log(logradouro);
-      console.log('achou na logradouro');
-      this.info_rate = '';
-      this.getLogradouros(logradouro.type_area, logradouro.id_area_logradouro);
-    } else if (area = this.findInPoly(this.polygons[0], latLngObj)) {
-      if (area) {
-        console.log(area);
-        console.log('achou na Area');
-        this.info_rate = '';
-        this.getLogradouros(area.type_area, area.id_area_logradouro);
-      }
-    } else {
-      this.logradouros = [];
-    }
-
-    console.log(latLngObj);
-    that.getAddress(latLngObj);
   }
 
   initAutocomplete(): void {
