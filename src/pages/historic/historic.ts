@@ -149,6 +149,7 @@ export class HistoricPage {
           break;
 
         case "U":
+        console.log(this.historics[key].logradouro_tarifa.logradouro.log_nome);
           this.items[key] = {
             canceled: this.historics[key].canceled,
             title: "Placa " + this.historics[key].ticket_Placa,
@@ -162,7 +163,7 @@ export class HistoricPage {
                 items: [
                   //TODO colocar valor negativo
                   ["Valor", "R$ " + (+this.historics[key].amount).toFixed(2)],
-                  ["Logradouro", this.historics[key].logradouro_tarifa.logradouro.log_nome],
+                  ["Logradouro", this.historics[key].logradouro_tarifa.logradouro.log_nome || ""],
                   ["Regra", (this.historics[key].time) / 60 + " Hs"],
                 ]
               },

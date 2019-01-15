@@ -302,7 +302,8 @@ export class GeolocationPage {
 
     this.http.presentLoading();
     this.http.getParam('client/buscarLogradouros', 'type_area=1&id_area_logradouro=' + id_logradouro).subscribe((result: any) => {
-      this.logradouros = result;
+      let arr = [result[0]];
+      this.logradouros = arr;
       this.id_logradouro = result[0].id_logradouro;
       this.ratesLogra = result;
       console.log(result);
