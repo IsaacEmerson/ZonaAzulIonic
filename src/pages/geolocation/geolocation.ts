@@ -231,6 +231,7 @@ export class GeolocationPage {
   uuid = 'BD7B8764-A134-4A93-87DC-F023E1E64E29';
   tem_ativo = 0;
   id_logradouro = 0;
+  id_log_tar = 0;
   user_balance = 0;
   plaque = {
     plaque: ""
@@ -290,6 +291,7 @@ export class GeolocationPage {
   }
 
   selecLogradouro(id_logradouro) {
+    this.id_log_tar = 0;
     this.info_rate = '';
     console.log(id_logradouro);
     this.rate_park = {
@@ -305,10 +307,13 @@ export class GeolocationPage {
       let arr = [result[0]];
       this.logradouros = arr;
       this.id_logradouro = result[0].id_logradouro;
+      this.id_log_tar = result[0].id_log_tar;;
       this.ratesLogra = result;
       console.log(result);
       this.http.dismissLoading();
     }, error => {
+      this.auth.showToast("Erro ao selecionar logradouro",5000);
+      this.id_log_tar = 0;
       console.log(error);
       this.http.dismissLoading();
     });
@@ -354,9 +359,9 @@ export class GeolocationPage {
     console.log('placaaa' + this.plaque_id);
     console.log('logra' + this.id_logradouro);
     console.log('taxa' + this.rate_park.id_tarifa);
-    if (this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= +this.rate_park.valor) {
+    if (this.id_log_tar!=0 && this.plaque_id != 0 && this.id_logradouro != 0 && this.rate_park.id_tarifa != 0 && this.user_balance >= +this.rate_park.valor) {
       this.http.presentLoading();
-      this.http.post('client/estacionar', { id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro,
+      this.http.post('client/estacionar', {id_log_tar:this.id_log_tar, id_tarifa: this.rate_park.id_tarifa, id_logradouro: this.id_logradouro,
          id_plaque: this.plaque_id, uuid:this.uuid, tem_ativo: this.tem_ativo })
         .subscribe((res:any) => {
           this.http.dismissLoading();
