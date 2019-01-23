@@ -62,6 +62,7 @@
             <p>{{item.content[0].msg}}</p>
             <b (click)="showCode(item.content[0].msg1)" >Clique para ver</b>
           </span>
+          <b style="color:crimson;font-size: 14px;" >{{item.troca}}</b>
           <div *ngFor="let items of item.content[1].items">
             <ion-item>
               {{items[0]}}

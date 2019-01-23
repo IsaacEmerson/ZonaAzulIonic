@@ -43,7 +43,7 @@
     "brmasker-ionic-3": "^1.5.3",
     "card.io.cordova.mobilesdk": "^2.1.0",
     "cordova": "^8.1.2",
-    "cordova-android": "7.1.2",
+    "cordova-android": "7.1.4",
     "cordova-clipboard": "1.2.1",
     "cordova-ios": "4.5.5",
     "cordova-plugin-app-event": "^1.2.1",

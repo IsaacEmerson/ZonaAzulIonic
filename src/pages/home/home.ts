@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
@@ -53,6 +53,7 @@ export class HomePage {
     public authService: AuthProvider,
     public navParams: NavParams,
     public storage: Storage,
+    public zone: NgZone,
     public alertCtrl: AlertController,
     public http: HttpServiceProvider,
     public menuCtrl: MenuController) { }
@@ -100,7 +101,9 @@ export class HomePage {
 
   getActivePlaques() {
     this.http.getParam('client/activePlaques', 'city_id=' + this.actualCity.id).subscribe((result: any) => {
-      this.quantActive = result.total_active_plaques;
+      this.zone.run(() => {
+        this.quantActive = result.total_active_plaques;
+      });
       this.activePlaques = result.active_plaques;
       console.log(result);
     }),

@@ -154,6 +154,7 @@ export class HistoricPage {
             canceled: this.historics[key].canceled,
             title: "Placa " + this.historics[key].ticket_Placa,
             check: 0,
+            troca: this.historics[key].changed?"Trocou de Logradouro":"",
             content: [
               {
                 msg: "Código de autenticação da Transalvador: ",
